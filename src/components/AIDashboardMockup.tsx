@@ -24,20 +24,39 @@ export function AIDashboardMockup({ className = "" }: { className?: string }) {
         </div>
 
         {/* Stats row */}
-        <div className="mt-4 grid grid-cols-3 gap-3">
+        <div className="mt-4 grid grid-cols-2 gap-2.5 md:grid-cols-4">
           {[
-            { l: "Posts Generated", v: "1,284" },
-            { l: "Automations", v: "37" },
-            { l: "Leads Captured", v: "412" },
+            { l: "Posts Generated", v: "1,284", w: "w-4/5" },
+            { l: "Leads Captured", v: "412", w: "w-3/5" },
+            { l: "Automations Running", v: "37", w: "w-2/3" },
+            { l: "Bookings Created", v: "92", w: "w-1/2" },
           ].map((s) => (
-            <div key={s.l} className="rounded-lg border border-white/10 bg-white/[0.04] p-2.5">
-              <p className="text-[9px] uppercase tracking-wider text-white/50">{s.l}</p>
-              <p className="mt-1 font-display text-base font-bold text-white">{s.v}</p>
-              <div className="mt-1 h-1 w-full overflow-hidden rounded-full bg-white/10">
-                <div className="h-full w-2/3 bg-gradient-to-r from-cyan to-purple" />
+            <div
+              key={s.l}
+              className="group relative overflow-hidden rounded-lg border border-white/10 bg-white/[0.04] p-2.5 transition hover:border-cyan/40"
+            >
+              <div className="pointer-events-none absolute -right-6 -top-6 h-16 w-16 rounded-full bg-cyan/20 blur-2xl" />
+              <p className="relative text-[9px] uppercase tracking-wider text-white/50">{s.l}</p>
+              <p className="relative mt-1 font-display text-base font-bold text-white">{s.v}</p>
+              <div className="relative mt-1 h-1 w-full overflow-hidden rounded-full bg-white/10">
+                <div className={`h-full ${s.w} bg-gradient-to-r from-cyan to-purple`} />
               </div>
             </div>
           ))}
+        </div>
+
+        {/* AI Assistant status pill */}
+        <div className="mt-3 flex items-center justify-between rounded-lg border border-cyan/25 bg-gradient-to-r from-cyan/10 via-electric/10 to-purple/10 px-3 py-2">
+          <div className="flex items-center gap-2">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan/70" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan" />
+            </span>
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-white/85">
+              AI Assistant · Active
+            </p>
+          </div>
+          <p className="text-[9px] font-mono text-cyan/80">3 workflows live</p>
         </div>
 
         {/* Chart */}
