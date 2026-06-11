@@ -75,8 +75,8 @@ function PricingPage() {
               <div
                 className={`relative flex flex-col rounded-3xl border p-8 transition hover:-translate-y-1 ${
                   t.featured
-                    ? "border-cyan bg-navy text-white shadow-glow lg:-mt-4"
-                    : "border-border bg-card hover:border-electric/40 hover:shadow-elegant"
+                    ? "gradient-border border-transparent bg-navy text-white shadow-glow lg:-mt-4"
+                    : "border-border bg-card hover:border-cyan/40 hover:shadow-glow"
                 }`}
               >
                 {t.featured && (
