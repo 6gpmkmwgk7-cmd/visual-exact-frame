@@ -15,10 +15,24 @@ export const SUPPORTED_LANGUAGES = [
 
 export const RTL_LANGUAGES = ["ar", "ur"];
 
+const getSavedLanguage = () => {
+  if (typeof window === "undefined") return "en";
+
+  const savedLanguage = window.localStorage.getItem("elevate_lang");
+
+  const isSupported = SUPPORTED_LANGUAGES.some(
+    (language) => language.code === savedLanguage
+  );
+
+  return isSupported ? savedLanguage : "en";
+};
+
+const initialLanguage = getSavedLanguage();
+
 if (!i18n.isInitialized) {
   i18n.use(initReactI18next).init({
     resources,
-    lng: "en",
+    lng: initialLanguage,
     fallbackLng: "en",
     interpolation: { escapeValue: false },
     react: { useSuspense: false },
@@ -27,13 +41,22 @@ if (!i18n.isInitialized) {
 
 export function applyLanguage(lng: string) {
   i18n.changeLanguage(lng);
+
   if (typeof document !== "undefined") {
     document.documentElement.lang = lng;
     document.documentElement.dir = RTL_LANGUAGES.includes(lng) ? "rtl" : "ltr";
   }
+
   if (typeof window !== "undefined") {
     window.localStorage.setItem("elevate_lang", lng);
   }
+}
+
+if (typeof document !== "undefined") {
+  document.documentElement.lang = initialLanguage;
+  document.documentElement.dir = RTL_LANGUAGES.includes(initialLanguage)
+    ? "rtl"
+    : "ltr";
 }
 
 export default i18n;
