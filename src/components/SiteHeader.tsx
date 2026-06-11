@@ -45,7 +45,7 @@ export function SiteHeader() {
 
                 <img
                   src={logo}
-                  alt="Elevate Socials Agency"
+                  alt="Elevate Social Agency"
                   className="relative h-[72px] w-[72px] md:h-[88px] md:w-[88px] object-contain bg-white p-2 rounded-full ring-1 ring-white/40 shadow-[0_8px_40px_-4px_rgba(6,182,212,0.55)] transition-all duration-500 group-hover:scale-[1.04] group-hover:shadow-[0_10px_60px_-4px_rgba(6,182,212,0.75)] animate-logo-in"
                 />
 
@@ -65,7 +65,7 @@ export function SiteHeader() {
                       color: "transparent",
                     }}
                   >
-                    Socials
+                    Social
                   </span>
                 </span>
 

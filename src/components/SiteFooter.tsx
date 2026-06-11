@@ -15,9 +15,9 @@ export function SiteFooter() {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3">
-              <img src={logo} alt="Elevate Socials Agency" className="h-14 w-14 rounded-full object-contain bg-white p-1 ring-2 ring-cyan/30" />
+              <img src={logo} alt="Elevate Social Agency" className="h-14 w-14 rounded-full object-contain bg-white p-1 ring-2 ring-cyan/30" />
               <span className="font-display text-xl font-bold text-white">
-                Elevate <span className="text-gradient">Socials</span>
+                Elevate <span className="text-gradient">Social</span>
               </span>
             </div>
             <p className="mt-5 max-w-md text-sm leading-relaxed text-white/70">
