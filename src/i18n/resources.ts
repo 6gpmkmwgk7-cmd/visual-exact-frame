@@ -23,7 +23,7 @@ const en: Dict = {
   "cta.learn_more": "Learn More",
   "cta.view_project": "View Project",
 
-  "header.tagline": "AI-Powered Content for Modern Businesses",
+  "header.tagline": "AI-powered content for modern businesses.",
   "header.ai_powered": "AI-Powered",
   "header.agency": "Agency",
 
@@ -55,7 +55,7 @@ const en: Dict = {
   "lang.label": "Language",
 
   // Home page
-  "home.hero.badge": "AI-Powered Content for Modern Businesses",
+  "home.hero.badge": "AI-powered content for modern businesses.",
   "home.hero.title_pre": "AI-Powered Marketing & Automation That Helps",
   "home.hero.title_highlight": "Small Businesses Grow Faster",
   "home.hero.subtitle": "We help restaurants, contractors, plumbers, landscapers, cleaning companies, and local businesses generate more leads, save time, and grow through AI-powered content, automation, websites, and marketing systems.",
