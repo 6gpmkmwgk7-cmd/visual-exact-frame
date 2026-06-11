@@ -42,7 +42,7 @@ export function AuthModal({ onClose, defaultMode = "login" }: AuthModalProps) {
               <Sparkles className="h-4 w-4 text-white" />
             </div>
             <span className="font-display text-lg font-semibold text-white">
-              Elevate <span className="text-cyan">Socials</span>
+              Elevate <span className="text-cyan">Social</span>
             </span>
           </div>
 
@@ -91,7 +91,7 @@ export function AuthModal({ onClose, defaultMode = "login" }: AuthModalProps) {
               <p className="mt-1 text-sm text-white/50">
                 {mode === "login"
                   ? "Sign in to manage your AI growth dashboard."
-                  : "Join Elevate Socials and start growing with AI."}
+                  : "Join Elevate Social and start growing with AI."}
               </p>
 
               <form onSubmit={handleSubmit} className="mt-6 space-y-4">
