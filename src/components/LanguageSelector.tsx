@@ -1,11 +1,50 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Globe, ChevronDown, Check } from "lucide-react";
-import { SUPPORTED_LANGUAGES, applyLanguage } from "@/i18n";
-import i18n from "@/i18n";
+import { SUPPORTED_LANGUAGES } from "@/i18n";
 
 interface Props {
   variant?: "header" | "compact" | "mobile";
+}
+
+const GOOGLE_LANG_MAP: Record<string, string> = {
+  en: "en",
+  fr: "fr",
+  es: "es",
+  ar: "ar",
+  ur: "ur",
+  hi: "hi",
+  bn: "bn",
+  zh: "zh-CN",
+};
+
+function setCookie(name: string, value: string) {
+  const maxAge = 60 * 60 * 24 * 365;
+
+  document.cookie = `${name}=${value};path=/;max-age=${maxAge}`;
+  document.cookie = `${name}=${value};path=/;domain=${window.location.hostname};max-age=${maxAge}`;
+}
+
+function deleteCookie(name: string) {
+  document.cookie = `${name}=;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+  document.cookie = `${name}=;path=/;domain=${window.location.hostname};expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+}
+
+function switchWebsiteLanguage(code: string) {
+  window.localStorage.setItem("site_translate_lang", code);
+
+  // Keep the existing React i18n source text in English.
+  // Google Translate will translate the whole page, including hard-coded text.
+  window.localStorage.setItem("elevate_lang", "en");
+
+  if (code === "en") {
+    deleteCookie("googtrans");
+  } else {
+    const googleCode = GOOGLE_LANG_MAP[code] || code;
+    setCookie("googtrans", `/en/${googleCode}`);
+  }
+
+  window.location.reload();
 }
 
 export function LanguageSelector({ variant = "header" }: Props) {
@@ -21,7 +60,7 @@ export function LanguageSelector({ variant = "header" }: Props) {
 
     const stored =
       typeof window !== "undefined"
-        ? window.localStorage.getItem("elevate_lang")
+        ? window.localStorage.getItem("site_translate_lang")
         : null;
 
     const initial =
@@ -29,15 +68,7 @@ export function LanguageSelector({ variant = "header" }: Props) {
         ? stored
         : "en";
 
-    applyLanguage(initial);
     setCurrent(initial);
-
-    const handler = (lng: string) => setCurrent(lng);
-    i18n.on("languageChanged", handler);
-
-    return () => {
-      i18n.off("languageChanged", handler);
-    };
   }, []);
 
   useLayoutEffect(() => {
@@ -156,9 +187,9 @@ export function LanguageSelector({ variant = "header" }: Props) {
                   role="option"
                   aria-selected={isActive}
                   onClick={() => {
-                    applyLanguage(l.code);
                     setCurrent(l.code);
                     setOpen(false);
+                    switchWebsiteLanguage(l.code);
                   }}
                   className={`flex w-full items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-left text-sm transition hover:bg-white/10 ${
                     isActive ? "bg-cyan/15 text-cyan" : "text-white/85"
