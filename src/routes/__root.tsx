@@ -73,8 +73,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:title", content: "Elevate Social — Grow Smarter. Automate Faster. Scale Further." },
       { property: "og:description", content: "AI-powered social media marketing and business automation agency helping small businesses worldwide grow, generate leads, and scale." },
       { name: "twitter:description", content: "AI-powered social media marketing and business automation agency helping small businesses worldwide grow, generate leads, and scale." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1137ace7-c6fa-4e28-b982-931cab8e1636/id-preview-e67ce517--9d32271e-eae0-4f94-a32a-13fd781fac14.lovable.app-1779567440496.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1137ace7-c6fa-4e28-b982-931cab8e1636/id-preview-e67ce517--9d32271e-eae0-4f94-a32a-13fd781fac14.lovable.app-1779567440496.png" },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a72c2cd0-43fd-4227-a08a-6bc462b0fa4d/id-preview-2e8b8798--dd493c23-2777-4545-9e33-2fdde941f057.lovable.app-1781148726068.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a72c2cd0-43fd-4227-a08a-6bc462b0fa4d/id-preview-2e8b8798--dd493c23-2777-4545-9e33-2fdde941f057.lovable.app-1781148726068.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
