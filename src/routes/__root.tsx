@@ -88,7 +88,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         "@type": "Organization",
         name: "Elevate Social",
         description: "AI-Powered Social Media Marketing & Business Automation Agency",
-        slogan: "Grow Smarter. Automate Faster. Scale Further.",
+        slogan: "AI-powered content for modern businesses.",
       }),
     }],
   }),
