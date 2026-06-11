@@ -65,7 +65,7 @@ export function SiteHeader() {
                       color: "transparent",
                     }}
                   >
-                    Socials
+                    Social
                   </span>
                 </span>
 
