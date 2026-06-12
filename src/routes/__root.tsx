@@ -12,7 +12,6 @@ import appCss from "../styles.css?url";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { ChatBot } from "@/components/ChatBot";
-import { GoogleTranslateBridge } from "@/components/GoogleTranslateBridge";
 import logo from "@/assets/logo.png";
 import "@/i18n";
 
@@ -112,7 +111,6 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
-      <GoogleTranslateBridge />
       <div className="flex min-h-screen flex-col">
         <SiteHeader />
         <main className="flex-1"><Outlet /></main>
