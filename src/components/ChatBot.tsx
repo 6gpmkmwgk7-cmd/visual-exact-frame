@@ -77,7 +77,7 @@ export function ChatBot() {
         }
       }
 
-      const res = await fetch("https://elevatedsocial111.app.n8n.cloud/webhook/elevate-social-superagent", {
+      const res = await fetch("https://elevatedsocial111.app.n8n.cloud/webhook/elevate-social-frontend-agent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
