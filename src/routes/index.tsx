@@ -181,9 +181,9 @@ const services = [
 
 const resultsMetrics = [
   { value: 100, suffix: "+", label: "Content Assets Created" },
-  { value: 10, suffix: "+", label: "Automation Workflows Built" },
-  { value: 3, suffix: "+", label: "Industries Served" },
-  { value: 24, suffix: "/7", label: "AI-Powered Systems" },
+  { value: 25, suffix: "+", label: "Automation Workflows Built" },
+  { value: 7, suffix: "+", label: "Industries Served" },
+  { value: 7, suffix: "/7", label: "AI-Powered Systems" },
 ];
 
 const growthSteps = [

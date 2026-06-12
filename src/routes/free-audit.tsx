@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import {
-  Share2, Globe, Sparkles, TrendingUp, CheckCircle2, ArrowRight,
+  Share2, Globe, Sparkles, TrendingUp, CheckCircle2, ArrowRight, Loader2, AlertTriangle,
   UtensilsCrossed, Wrench, Home as HomeIcon, Store, Briefcase, Rocket, AlertCircle,
 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
@@ -36,8 +36,42 @@ const who = [
 
 const reasons = ["Weak messaging", "Poor visibility", "Inconsistent branding", "Lack of automation", "Ineffective content"];
 
+const INTAKE_WEBHOOK_URL =
+  "https://YOUR-N8N-DOMAIN/webhook/elevate-social-client-intake";
+
 function FreeAuditPage() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState<string>("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    const payload = {
+      name: String(fd.get("name") || "").trim(),
+      email: String(fd.get("email") || "").trim(),
+      businessName: String(fd.get("business") || "").trim(),
+      businessType: String(fd.get("businessType") || "").trim(),
+      website: String(fd.get("website") || "").trim(),
+      message: String(fd.get("message") || "").trim(),
+      timestamp: new Date().toISOString(),
+    };
+    setStatus("sending");
+    setErrorMsg("");
+    try {
+      const res = await fetch(INTAKE_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error(`Request failed (${res.status})`);
+      setStatus("sent");
+    } catch (err) {
+      setErrorMsg(err instanceof Error ? err.message : "Network error");
+      setStatus("error");
+    }
+  };
+
   return (
     <>
       <section className="relative overflow-hidden bg-gradient-animated text-white">
@@ -140,24 +174,49 @@ function FreeAuditPage() {
             <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur md:p-10">
               <p className="text-xs font-semibold uppercase tracking-wider text-cyan">Audit Request</p>
               <h2 className="mt-2 font-display text-3xl font-bold">Request Your Free Audit</h2>
-              {sent ? (
+              {status === "sent" ? (
                 <div className="mt-8 rounded-xl bg-white/10 p-8 text-center">
                   <CheckCircle2 className="mx-auto h-10 w-10 text-cyan" />
-                  <h3 className="mt-4 font-display text-xl font-bold">Audit requested</h3>
-                  <p className="mt-2 text-sm text-white/75">We'll send your audit within 3 business days.</p>
+                  <h3 className="mt-4 font-display text-xl font-bold">Thanks!</h3>
+                  <p className="mt-2 text-sm text-white/75">
+                    We'll review your business and reply within 24 hours.
+                  </p>
                 </div>
               ) : (
-                <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="mt-8 space-y-5">
+                <form onSubmit={handleSubmit} className="mt-8 space-y-5">
                   <DarkField label="Name" name="name" required />
                   <DarkField label="Business" name="business" required />
+                  <DarkField label="Business Type" name="businessType" placeholder="e.g. Restaurant, Contractor" />
                   <DarkField label="Email" name="email" type="email" required />
                   <DarkField label="Website" name="website" placeholder="https://" />
                   <div>
                     <label className="text-sm font-medium">Biggest Marketing Challenge</label>
-                    <textarea rows={4} className="mt-2 w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/40 outline-none transition focus:border-cyan focus:ring-2 focus:ring-cyan/30" placeholder="What's holding your growth back?" />
+                    <textarea name="message" rows={4} className="mt-2 w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/40 outline-none transition focus:border-cyan focus:ring-2 focus:ring-cyan/30" placeholder="What's holding your growth back?" />
                   </div>
-                  <button type="submit" className="btn-premium inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-gold px-6 py-4 text-sm font-semibold text-white shadow-glow transition hover:opacity-95">
-                    Get My Free Audit <ArrowRight className="h-4 w-4" />
+                  {status === "error" && (
+                    <div className="flex items-start gap-2 rounded-xl border border-red-400/30 bg-red-500/10 p-3 text-sm text-red-100">
+                      <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+                      <span>
+                        Something went wrong sending your request. Please try again or
+                        email us directly.
+                        {errorMsg ? <span className="block text-xs text-white/60">({errorMsg})</span> : null}
+                      </span>
+                    </div>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={status === "sending"}
+                    className="btn-premium inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-gold px-6 py-4 text-sm font-semibold text-white shadow-glow transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-70"
+                  >
+                    {status === "sending" ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" /> Sending…
+                      </>
+                    ) : (
+                      <>
+                        Get My Free Audit <ArrowRight className="h-4 w-4" />
+                      </>
+                    )}
                   </button>
                 </form>
               )}
