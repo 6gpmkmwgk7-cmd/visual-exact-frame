@@ -11,7 +11,7 @@ import {
 import appCss from "../styles.css?url";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { ChatBot } from "@/components/ChatBot";
+import { ChatBot } from "@/components/ChatBot";import { GoogleTranslateBridge } from "@/components/GoogleTranslateBridge";
 import logo from "@/assets/logo.png";
 import "@/i18n";
 
