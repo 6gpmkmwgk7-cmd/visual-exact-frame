@@ -24,7 +24,7 @@ const getSavedLanguage = () => {
     (language) => language.code === savedLanguage
   );
 
-  return isSupported ? savedLanguage : "en";
+  return isSupported && savedLanguage ? savedLanguage : "en";
 };
 
 const initialLanguage = getSavedLanguage();
