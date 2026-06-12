@@ -84,7 +84,7 @@ export function ChatBot() {
           message: text,
           sessionId,
           channel: "lovable_website",
-          language: i18n.language || "en",
+          language: (typeof window !== "undefined" && window.localStorage.getItem("site_translate_lang")) || i18n.language || "en",
         }),
       });
 
