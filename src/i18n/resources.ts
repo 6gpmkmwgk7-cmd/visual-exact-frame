@@ -98,11 +98,11 @@ const en: Dict = {
 
   "home.safety.text": "We do not promise guaranteed sales, rankings, followers, or revenue. Instead, we build practical AI-powered systems designed to improve consistency, speed, visibility, and follow-up.",
 
-  "home.payments.eyebrow": "Secure Checkout",
+  "home.payments.eyebrow": "Flexible Global Payments",
   "home.payments.title_pre": "Secure",
   "home.payments.title_highlight": "Payment Options",
-  "home.payments.subtitle": "We offer secure and flexible payment methods for clients worldwide.",
-  "home.payments.note": "All payments are processed through secure and encrypted payment gateways.",
+  "home.payments.subtitle": "We accept secure payments in CAD, USD, GBP, EUR, and more — from anywhere in the world.",
+  "home.payments.note": "Prices in CAD by default. USD, GBP, EUR & other currencies accepted via Stripe and PayPal.",
 
   "home.audit.eyebrow": "Free AI Growth Audit",
   "home.audit.title_pre": "Discover what's",
@@ -117,7 +117,7 @@ const en: Dict = {
   "home.founder.cta": "Book a Free Consultation",
 
   "home.industries.eyebrow": "Industries We Help",
-  "home.industries.title": "Built for local businesses",
+  "home.industries.title": "Built for Small Businesses Worldwide",
 
   "home.cases.eyebrow": "Case Studies",
   "home.cases.title_pre": "Featured",
@@ -453,7 +453,7 @@ const ar = build({
   "home.cases.title_highlight": "نجاح مميزة",
   "home.cases.subtitle": "أمثلة على أنظمة العلامة التجارية والمحتوى والأتمتة المصممة لمساعدة الشركات على النمو.",
   "home.cases.challenge": "التحدي",
-  "home.cases.solution": "الحل",
+  "home.cases.solution": "الحل",h
   "home.cases.results": "النتائج",
   "home.usecases.eyebrow": "أمثلة استخدام",
   "home.usecases.title_pre": "كيف نساعد",
