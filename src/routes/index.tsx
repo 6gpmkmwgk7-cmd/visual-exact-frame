@@ -198,8 +198,8 @@ const growthSteps = [
 const paymentMethods = [
   { name: "Credit & Debit Cards", icon: "💳" },
   { name: "PayPal", icon: "🅿" },
-  { name: "Apple Pay", icon: "" },
-  { name: "Google Pay", icon: "G Pay" },
+  { name: "Interac e-Transfer", icon: "" },
+  { name: "Stripe (Multi-Currency)", icon: "Stripe" },
   { name: "Bank Transfer", icon: "🏦" },
 ];
 
