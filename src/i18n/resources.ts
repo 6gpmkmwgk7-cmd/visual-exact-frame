@@ -453,7 +453,7 @@ const ar = build({
   "home.cases.title_highlight": "نجاح مميزة",
   "home.cases.subtitle": "أمثلة على أنظمة العلامة التجارية والمحتوى والأتمتة المصممة لمساعدة الشركات على النمو.",
   "home.cases.challenge": "التحدي",
-  "home.cases.solution": "الحل",h
+  "home.cases.solution": "الحل",
   "home.cases.results": "النتائج",
   "home.usecases.eyebrow": "أمثلة استخدام",
   "home.usecases.title_pre": "كيف نساعد",
