@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, CheckCircle2, Sparkles, Rocket, Bot, Share2 } from "lucide-react";
+import { ArrowRight, BadgeCheck, CheckCircle2, Sparkles, Rocket, Bot, Share2 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { ParticleField } from "@/components/ParticleField";
 
@@ -31,14 +31,14 @@ const tiers = [
     desc: "AI-powered content systems that keep your brand consistent and growing.",
     includes: ["30-Day Content Calendar", "30 Captions", "Hashtag Strategy", "Content Planning", "Canva Design Briefs"],
     best: ["Restaurants", "Service businesses", "Growing brands"],
-    cta: "Start Growing",
+    discount: true, cta: "Start Growing",
   },
   {
     icon: Bot, name: "AI Workflow Automation Setup", price: "$299", suffix: "one-time",
     desc: "Practical AI workflows that capture leads, organize info, and reduce manual work.",
     includes: ["Lead Capture Workflow", "Google Sheets CRM", "Telegram/Email Alerts", "Client Intake Forms", "Booking & Follow-up"],
     best: ["Local businesses", "Contractors", "Service companies"],
-    cta: "Automate My Business",
+    discount: true, cta: "Automate My Business",
   },
   {
     icon: Sparkles, name: "AI Growth System", price: "$499", suffix: "/mo", featured: true,
@@ -76,6 +76,16 @@ function PricingPage() {
               Four packages designed to launch, grow, and automate your business.
             </p>
           </Reveal>
+              {/* 25% FIRST-TIMER DISCOUNT BANNER */}
+              <Reveal delay={360}>
+                <div className="mt-8 inline-flex items-center gap-3 rounded-2xl border border-cyan/30 bg-cyan/5 px-6 py-3.5 text-sm">
+                  <BadgeCheck className="h-5 w-5 shrink-0 text-cyan" />
+                  <span>
+                    <span className="font-semibold text-cyan">New clients save 25%</span>
+                    <span className="text-white/75"> — mention it when you book your free audit.</span>
+                  </span>
+                </div>
+              </Reveal>
         </div>
       </section>
 
@@ -95,6 +105,11 @@ function PricingPage() {
                     Most Popular
                   </span>
                 )}
+              {t.discount && (
+                <span className="absolute -top-3 right-4 animate-pulse rounded-full bg-cyan px-3 py-1 text-xs font-bold text-navy">
+                  Save 25%
+                </span>
+              )}
                 <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${t.featured ? "bg-gradient-gold text-white" : "bg-gradient-accent text-white"} transition hover:scale-110 hover:rotate-3`}>
                   <t.icon className="h-6 w-6" />
                 </div>

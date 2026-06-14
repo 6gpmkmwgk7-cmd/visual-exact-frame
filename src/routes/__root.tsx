@@ -178,6 +178,16 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-screen flex-col">
+                {/* ANIMATED 25% DISCOUNT BAR */}
+        <div className="relative overflow-hidden bg-gradient-to-r from-cyan/10 via-cyan/20 to-cyan/10 py-2">
+          <span
+            className="inline-block text-xs font-semibold text-cyan"
+            style={{ animation: "marquee 22s linear infinite" }}
+          >
+            🎉&nbsp;New clients save 25% — AI Content Engine &amp; AI Workflow Automation Setup&nbsp;&nbsp;✦&nbsp;&nbsp;Book your Free AI Growth Audit to claim this offer&nbsp;&nbsp;✦&nbsp;&nbsp;🎉&nbsp;New clients save 25% — Mention it when you book
+          </span>
+        </div>
+        <style>{`@keyframes marquee { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }`}</style>
         <SiteHeader />
         <main className="flex-1"><Outlet /></main>
         <SiteFooter />
