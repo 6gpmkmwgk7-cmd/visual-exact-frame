@@ -178,16 +178,22 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex min-h-screen flex-col">
-                {/* ANIMATED 25% DISCOUNT BAR */}
-        <div className="relative overflow-hidden bg-gradient-to-r from-cyan/10 via-cyan/20 to-cyan/10 py-2">
-          <span
-            className="inline-block text-xs font-semibold text-cyan"
-            style={{ animation: "marquee 22s linear infinite" }}
-          >
-            🎉&nbsp;New clients save 25% — AI Content Engine &amp; AI Workflow Automation Setup&nbsp;&nbsp;✦&nbsp;&nbsp;Book your Free AI Growth Audit to claim this offer&nbsp;&nbsp;✦&nbsp;&nbsp;🎉&nbsp;New clients save 25% — Mention it when you book
-          </span>
+        {/* PREMIUM ANNOUNCEMENT BAR */}
+        <div className="relative overflow-hidden border-b border-white/[0.06]" style={{background:'linear-gradient(135deg,#050c18 0%,#071524 50%,#050c18 100%)'}}>
+          <div className="pointer-events-none absolute inset-0" style={{background:'radial-gradient(ellipse 70% 200% at 50% 50%,rgba(0,212,255,0.06) 0%,transparent 70%)',animation:'barGlow 5s ease-in-out infinite alternate'}} />
+          <div className="relative mx-auto flex flex-wrap items-center justify-center gap-x-4 gap-y-1 px-6 py-2.5 text-sm">
+            <span className="relative flex h-1.5 w-1.5 shrink-0">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan opacity-60" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-cyan" />
+            </span>
+            <span className="rounded-full border border-cyan/20 bg-cyan/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-cyan">Limited Offer</span>
+            <span className="text-white/65 font-medium">New clients save <span className="font-bold text-white">25%</span> on AI Content Engine &amp; AI Workflow Automation Setup</span>
+            <a href="/free-audit" className="inline-flex items-center gap-1.5 rounded-full border border-cyan/30 bg-cyan/10 px-3 py-1 text-xs font-semibold text-cyan transition-all hover:bg-cyan/20 hover:border-cyan/50 hover:text-white">
+              Claim offer <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
         </div>
-        <style>{`@keyframes marquee { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }`}</style>
+        <style>{`@keyframes barGlow { 0%{opacity:.7;}100%{opacity:1;} }`}</style>
         <SiteHeader />
         <main className="flex-1"><Outlet /></main>
         <SiteFooter />
