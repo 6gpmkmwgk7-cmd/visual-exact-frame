@@ -10,10 +10,14 @@ import { NetworkNodes } from "@/components/NetworkNodes";
 export const Route = createFileRoute("/ai-solutions")({
   head: () => ({
     meta: [
-      { title: "AI Solutions — Elevate Social" },
-      { name: "description", content: "Explore the AI systems powering Elevate Social: content generation, lead capture, proposals, client onboarding, and social media automation." },
+      { title: "AI Solutions for Small Business | Chatbots, Automation & More – Elevate Social" },
+      { name: "description", content: "Discover how Elevate Social's AI solutions help small businesses automate marketing, deploy intelligent chatbots, generate content, and grow without adding staff." },
+      { property: "og:title", content: "AI Solutions for Small Business | Chatbots, Automation & More – Elevate Social" },
+      { property: "og:description", content: "AI chatbots, marketing automation, content generation, and smart workflows — built for small and local businesses." },
+      { name: "twitter:title", content: "AI Solutions for Small Business | Chatbots, Automation & More – Elevate Social" },
+      { name: "twitter:description", content: "AI chatbots, marketing automation, content generation, and smart workflows — built for small and local businesses." },
     ],
-    links: [{ rel: "canonical", href: "/ai-solutions" }],
+    links: [{ rel: "canonical", href: "https://elevatesocially.com/ai-solutions" }],
   }),
   component: AiSolutionsPage,
 });
