@@ -107,13 +107,14 @@ const workflowExamples = [
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Elevate Social — AI-Powered Marketing & Automation for Small Business Growth" },
-      { name: "description", content: "AI-powered content, social media management, and automation systems for restaurants, contractors, plumbers, and local businesses. Get your free AI growth audit." },
-      { property: "og:title", content: "Elevate Social — AI-Powered Marketing & Automation" },
-      { property: "og:description", content: "Create content faster, automate repetitive tasks, and grow your business with AI-powered marketing systems." },
-      { property: "og:url", content: "/" },
+      { title: "Elevate Social | AI Marketing Agency for Small Businesses" },
+      { name: "description", content: "Elevate Social is an AI-powered marketing, automation & web design agency for small businesses. Get more customers, automate your operations, and scale faster." },
+      { property: "og:title", content: "Elevate Social | AI Marketing Agency for Small Businesses" },
+      { property: "og:description", content: "AI-powered marketing, automation & web design for small businesses. Grow smarter, automate faster, scale further." },
+      { name: "twitter:title", content: "Elevate Social | AI Marketing Agency for Small Businesses" },
+      { name: "twitter:description", content: "AI-powered marketing, automation & web design for small businesses. Grow smarter, automate faster, scale further." },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://elevatesocially.com/" }],
   }),
   component: HomePage,
 });
