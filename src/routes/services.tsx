@@ -6,10 +6,14 @@ import { ParticleField } from "@/components/ParticleField";
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { title: "Services — Elevate Social" },
-      { name: "description", content: "Growth solutions designed for modern businesses." },
+      { title: "Our Services | AI Marketing, Automation & Web Design – Elevate Social" },
+      { name: "description", content: "Explore Elevate Social's full suite of services: AI-powered marketing, website design, business automation, content creation, SEO, chatbots, and email marketing for small businesses." },
+      { property: "og:title", content: "Our Services | AI Marketing, Automation & Web Design – Elevate Social" },
+      { property: "og:description", content: "AI marketing, website design, automation, SEO, chatbots, and more — built specifically for small and local businesses." },
+      { name: "twitter:title", content: "Our Services | AI Marketing, Automation & Web Design – Elevate Social" },
+      { name: "twitter:description", content: "AI marketing, website design, automation, SEO, chatbots, and more — built specifically for small and local businesses." },
     ],
-    links: [{ rel: "canonical", href: "/services" }],
+    links: [{ rel: "canonical", href: "https://elevatesocially.com/services" }],
   }),
   component: ServicesPage,
 });
