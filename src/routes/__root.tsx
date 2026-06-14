@@ -87,12 +87,76 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       type: "application/ld+json",
       children: JSON.stringify({
         "@context": "https://schema.org",
-        "@type": "Organization",
-        name: "Elevate Social",
-        description: "AI-Powered Social Media Marketing & Business Automation Agency",
-        slogan: "AI-powered content for modern businesses.",
-      }),
-    }],
+        "@graph": [
+          {
+            "@type": ["Organization", "LocalBusiness"],
+            "@id": "https://elevatesocially.com/#organization",
+            "name": "Elevate Social",
+            "description": "AI-powered marketing, automation, content creation, website design, and business growth agency helping small businesses increase customers and improve operations.",
+            "url": "https://elevatesocially.com",
+            "logo": "https://elevatesocially.com/logo.png",
+            "email": "masalaminglecatering@gmail.com",
+            "address": { "@type": "PostalAddress", "addressCountry": "CA" },
+            "priceRange": "$$",
+            "areaServed": "Canada",
+            "knowsAbout": ["AI Marketing", "Business Automation", "Website Design", "Content Creation", "SEO", "Local SEO", "Email Marketing"]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://elevatesocially.com/#website",
+            "url": "https://elevatesocially.com",
+            "name": "Elevate Social",
+            "description": "AI-powered marketing and business growth agency for small businesses",
+            "publisher": { "@id": "https://elevatesocially.com/#organization" },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://elevatesocially.com/?s={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          },
+          {
+            "@type": "Service",
+            "provider": { "@id": "https://elevatesocially.com/#organization" },
+            "name": "AI Marketing and Automation Services",
+            "description": "AI-powered marketing, social media management, website design, business automation, content creation, and SEO services for small businesses.",
+            "areaServed": "Canada",
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Elevate Social Services",
+              "itemListElement": [
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI-Powered Marketing" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Design and Development" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Business Automation" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Content Creation" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "SEO and Local SEO" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Chatbots" } },
+                { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Email and SMS Marketing" } }
+              ]
+            }
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What services does Elevate Social offer?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Elevate Social offers AI-powered marketing, website design, business automation, content creation, SEO, AI chatbots, and email and SMS marketing for small and local businesses." }
+              },
+              {
+                "@type": "Question",
+                "name": "Who does Elevate Social serve?",
+                "acceptedAnswer": { "@type": "Answer", "text": "We serve restaurants, contractors, landscapers, cleaning services, plumbers, local retail, and small businesses with 1 to 50 employees." }
+              },
+              {
+                "@type": "Question",
+                "name": "How does Elevate Social use AI?",
+                "acceptedAnswer": { "@type": "Answer", "text": "We use AI to automate marketing workflows, generate content, build chatbots, analyze customer data, and optimize campaigns so small businesses grow without adding staff." }
+              }
+            ]
+          }
+        ]
+      })
+    }]
   }),
   shellComponent: RootShell,
   component: RootComponent,
