@@ -4,13 +4,14 @@ import { ArrowRight, Sparkles } from "lucide-react";
 export const Route = createFileRoute("/blog")({
   head: () => ({
     meta: [
-      { title: "Blog — Elevate Social" },
-      { name: "description", content: "Insights on social media marketing, AI automation, branding, and small business growth." },
-      { property: "og:title", content: "Blog — Elevate Social" },
-      { property: "og:description", content: "Practical playbooks for modern small business marketing." },
-      { property: "og:url", content: "/blog" },
+      { title: "Blog | AI Marketing Tips for Small Businesses – Elevate Social" },
+      { name: "description", content: "Actionable AI marketing strategies, automation tips, and growth tactics for small businesses. Stay ahead with insights from the Elevate Social blog." },
+      { property: "og:title", content: "Blog | AI Marketing Tips for Small Businesses – Elevate Social" },
+      { property: "og:description", content: "AI marketing tips, automation guides, and growth strategies for small and local businesses." },
+      { name: "twitter:title", content: "Blog | AI Marketing Tips for Small Businesses – Elevate Social" },
+      { name: "twitter:description", content: "AI marketing tips, automation guides, and growth strategies for small and local businesses." },
     ],
-    links: [{ rel: "canonical", href: "/blog" }],
+    links: [{ rel: "canonical", href: "https://elevatesocially.com/blog" }],
   }),
   component: BlogPage,
 });
