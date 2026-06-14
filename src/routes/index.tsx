@@ -287,7 +287,7 @@ function HomePage() {
 
   return (
     <>
-      {/* HERO */}
+      <style>{'@keyframes orbit3d{from{transform:rotateX(68deg) rotateZ(0deg)}to{transform:rotateX(68deg) rotateZ(360deg)}}@keyframes spin3dX{from{transform:rotateX(0deg) rotateY(30deg)}to{transform:rotateX(360deg) rotateY(30deg)}}'}</style>{/* HERO */}
       <section
         ref={heroRef}
         onMouseMove={onHeroMove}
@@ -302,7 +302,7 @@ function HomePage() {
         />
         <div className="absolute inset-0 grid-pattern opacity-20" />
         <div className="absolute inset-0 bg-mesh animate-drift" />
-        <div className="absolute inset-0 bg-gradient-to-b from-navy/30 via-navy/60 to-navy" />
+        <div className="absolute inset-0 bg-gradient-to-b from-navy/30 via-navy/60 to-navy" /><div className="pointer-events-none absolute inset-0" style={{perspective:'900px',perspectiveOrigin:'68% 45%'}}><div style={{position:'absolute',top:'50%',right:'5%',marginTop:'-155px',width:'310px',height:'310px',borderRadius:'50%',border:'1.5px solid rgba(0,212,255,0.14)',animation:'orbit3d 14s linear infinite'}} /><div style={{position:'absolute',top:'50%',right:'9%',marginTop:'-100px',width:'200px',height:'200px',borderRadius:'50%',border:'1px solid rgba(139,92,246,0.12)',animation:'orbit3d 9s linear infinite reverse',animationDelay:'-5s'}} /><div style={{position:'absolute',top:'50%',right:'13%',marginTop:'-58px',width:'116px',height:'116px',borderRadius:'50%',border:'1px solid rgba(0,212,255,0.09)',animation:'spin3dX 6s linear infinite',animationDelay:'-2s'}} /></div>
 
         {/* Floating glow orbs with parallax */}
         <div
@@ -317,7 +317,7 @@ function HomePage() {
         <ParticleField count={26} />
 
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 py-24 md:py-32 lg:grid-cols-[1.05fr_0.95fr]">
-          <div>
+          <div style={{transform:'perspective(1000px) rotateX('+(-parallax.y*2)+'deg) rotateY('+(parallax.x*2)+'deg)',transition:'transform 0.2s ease-out'}}>
             <Reveal>
               <div className="inline-flex items-center gap-2 rounded-full border border-cyan/30 bg-cyan/10 px-4 py-1.5 text-xs font-semibold text-cyan backdrop-blur">
                 <Sparkles className="h-3.5 w-3.5" /> {t("home.hero.badge")}
