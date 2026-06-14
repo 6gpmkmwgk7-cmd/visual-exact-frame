@@ -1,2 +1,31 @@
+# robots.txt — Elevate Social (elevatesocially.com)
+# AI-crawler aware
+
 User-agent: *
 Allow: /
+Disallow: /api/
+
+# Block AI training scrapers
+User-agent: GPTBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+# Allow AI answer/citation bots
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+Sitemap: https://elevatesocially.com/sitemap.xml
