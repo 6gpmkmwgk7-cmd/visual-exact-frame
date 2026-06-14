@@ -10,10 +10,14 @@ import { ParticleField } from "@/components/ParticleField";
 export const Route = createFileRoute("/free-audit")({
   head: () => ({
     meta: [
-      { title: "Free Audit — Discover Your Growth Opportunities | Elevate Social" },
-      { name: "description", content: "Get a complimentary audit of your online presence." },
+      { title: "Free Marketing Audit | AI Analysis of Your Business – Elevate Social" },
+      { name: "description", content: "Get a free AI-powered marketing audit for your small business. Elevate Social will analyse your online presence, SEO, and growth opportunities — no cost, no obligation." },
+      { property: "og:title", content: "Free Marketing Audit | AI Analysis of Your Business – Elevate Social" },
+      { property: "og:description", content: "Free AI marketing audit for your small business. Discover quick wins and growth opportunities in minutes." },
+      { name: "twitter:title", content: "Free Marketing Audit | AI Analysis of Your Business – Elevate Social" },
+      { name: "twitter:description", content: "Free AI marketing audit for your small business. Discover quick wins and growth opportunities in minutes." },
     ],
-    links: [{ rel: "canonical", href: "/free-audit" }],
+    links: [{ rel: "canonical", href: "https://elevatesocially.com/free-audit" }],
   }),
   component: FreeAuditPage,
 });
