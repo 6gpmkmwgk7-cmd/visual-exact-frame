@@ -478,24 +478,24 @@ function HomePage() {
           <div className="relative grid gap-12 lg:grid-cols-2 lg:items-center">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-cyan/40 bg-cyan/10 px-4 py-1.5 text-xs font-semibold text-cyan">
-                <BadgeCheck className="h-3.5 w-3.5" /> Featured Offer
+                <BadgeCheck className="h-3.5 w-3.5" /> New Client Offer — Save 25%
               </div>
               <h2 className="mt-5 font-display text-4xl font-bold md:text-5xl">
                 AI Business <span className="text-gradient">Launch System</span>
               </h2>
               <p className="mt-5 text-white/75">
-                A complete starter package for businesses that need a professional online
-                presence and AI-powered growth recommendations.
+                Get your business online fast with a professional social media setup, AI-powered content, and smart automation — done for you.
+                
               </p>
               <div className="mt-6 flex items-baseline gap-2">
-                <span className="text-xs uppercase tracking-wider text-cyan">Starting from</span>
+                <span className="text-xs uppercase tracking-wider text-cyan">Your first-client price</span>
                 <span className="font-display text-5xl font-bold">$149</span>
               </div>
               <Link
                 to="/free-audit"
                 className="mt-8 inline-flex items-center gap-2 rounded-full bg-gradient-gold px-7 py-3.5 text-sm font-semibold text-white shadow-glow transition hover:opacity-95"
               >
-                Start with an AI Growth Audit <ArrowRight className="h-4 w-4" />
+                Claim My 25% New Client Offer <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
             <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur">
@@ -556,6 +556,15 @@ function HomePage() {
             <p className="mt-5 text-muted-foreground">
               {t("home.pricing.subtitle")}
             </p>
+
+              {/* 25% FIRST-TIMER DISCOUNT BANNER */}
+              <div className="mt-8 inline-flex items-center gap-3 rounded-2xl border border-cyan/30 bg-cyan/5 px-6 py-3.5 text-sm">
+                <BadgeCheck className="h-5 w-5 shrink-0 text-cyan" />
+                <span>
+                  <span className="font-semibold text-cyan">New clients save 25%</span>
+                  <span className="text-muted-foreground"> — mention it when you book your free audit.</span>
+                </span>
+              </div>
 
           </div>
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -709,7 +718,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* TWO-AGENT AI SYSTEM */}
+      {/* Four-Agent AI System */}
       <section className="relative overflow-hidden py-24">
         <div className="absolute inset-0 grid-pattern opacity-20" />
         <div className="absolute -top-32 right-0 h-80 w-80 rounded-full bg-cyan/10 blur-3xl" />
@@ -720,11 +729,11 @@ function HomePage() {
               <Cpu className="h-3.5 w-3.5" /> Inside Our Agency
             </div>
             <h2 className="mt-5 font-display text-4xl font-bold md:text-5xl">
-              Powered by a <span className="text-gradient">Two-Agent AI System</span>
+              Powered by a <span className="text-gradient">Four-Agent AI System</span>
             </h2>
             <p className="mt-5 text-muted-foreground">
-              Our agency system is built around two AI agents designed to support both customer
-              communication and service delivery.
+              Our agency system is powered by four specialized AI agents covering every stage of client work.
+              
             </p>
           </div>
 
@@ -756,6 +765,32 @@ function HomePage() {
                 </p>
               </div>
             </Reveal>
+          <Reveal variant="up" delay={240}>
+            <div className="group h-full rounded-3xl border border-border bg-card p-8 transition hover:-translate-y-1 hover:border-cyan/40 hover:shadow-glow">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-accent text-white transition group-hover:scale-110 group-hover:rotate-3">
+                <Sparkle className="h-6 w-6" />
+              </div>
+              <p className="mt-5 text-xs font-semibold uppercase tracking-wider text-cyan">Design AI Agent</p>
+              <h3 className="mt-1 font-display text-2xl font-bold">Creative Production</h3>
+              <p className="mt-3 text-muted-foreground">
+                Generates design briefs, Canva layout plans, brand guidelines, visual concepts,
+                and creative direction for all client deliverables.
+              </p>
+            </div>
+          </Reveal>
+          <Reveal variant="up" delay={360}>
+            <div className="group h-full rounded-3xl border border-border bg-card p-8 transition hover:-translate-y-1 hover:border-cyan/40 hover:shadow-glow">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-gold text-white transition group-hover:scale-110 group-hover:rotate-3">
+                <Megaphone className="h-6 w-6" />
+              </div>
+              <p className="mt-5 text-xs font-semibold uppercase tracking-wider text-cyan">Content AI Agent</p>
+              <h3 className="mt-1 font-display text-2xl font-bold">Marketing & Content</h3>
+              <p className="mt-3 text-muted-foreground">
+                Builds content calendars, social captions, hashtag strategies, campaign ideas,
+                and brand-consistent copy for every platform.
+              </p>
+            </div>
+          </Reveal>
           </div>
 
           <div className="mx-auto mt-8 max-w-3xl rounded-2xl border border-cyan/30 bg-cyan/5 p-5 text-center text-sm text-muted-foreground">
