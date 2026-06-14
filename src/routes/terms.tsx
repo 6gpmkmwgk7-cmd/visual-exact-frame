@@ -3,9 +3,10 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/terms")({
   head: () => ({
     meta: [
-      { title: "Terms & Conditions — Elevate Social" },
-      { name: "description", content: "Terms governing the use of Elevate Social's services." },
+      { title: "Terms of Service – Elevate Social" },
+      { name: "description", content: "Read Elevate Social's terms of service governing use of our AI marketing, automation, website design, and business growth agency services." },
     ],
+    links: [{ rel: "canonical", href: "https://elevatesocially.com/terms" }],
   }),
   component: TermsPage,
 });
