@@ -7,10 +7,14 @@ import { Counter } from "@/components/Counter";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Elevate Social" },
-      { name: "description", content: "Elevate Social helps small businesses compete in a digital-first world." },
+      { title: "About Elevate Social | AI-Powered Marketing Agency" },
+      { name: "description", content: "Learn about Elevate Social — the AI-powered marketing agency helping small businesses grow with smart automation, modern websites, and results-driven marketing strategies." },
+      { property: "og:title", content: "About Elevate Social | AI-Powered Marketing Agency" },
+      { property: "og:description", content: "We help small businesses grow with AI marketing, automation, and web design. Learn our story and mission." },
+      { name: "twitter:title", content: "About Elevate Social | AI-Powered Marketing Agency" },
+      { name: "twitter:description", content: "We help small businesses grow with AI marketing, automation, and web design. Learn our story and mission." },
     ],
-    links: [{ rel: "canonical", href: "/about" }],
+    links: [{ rel: "canonical", href: "https://elevatesocially.com/about" }],
   }),
   component: AboutPage,
 });
