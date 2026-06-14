@@ -744,10 +744,10 @@ function HomePage() {
                   <Bot className="h-6 w-6" />
                 </div>
                 <p className="mt-5 text-xs font-semibold uppercase tracking-wider text-cyan">Frontend AI Agent</p>
-                <h3 className="mt-1 font-display text-2xl font-bold">Customer Communication</h3>
+                <h3 className="mt-1 font-display text-2xl font-bold">Lead Capture & Routing</h3>
                 <p className="mt-3 text-muted-foreground">
-                  Handles website visitors, answers service questions, explains pricing starting
-                  points, qualifies leads, books calls, collects client details, and sends lead alerts.
+                              Your 24/7 AI receptionist — qualifies every visitor, answers service questions,
+                                          captures lead details, books discovery calls, and sends you a real-time alert the moment a prospect is ready to buy.
                 </p>
               </div>
             </Reveal>
@@ -756,12 +756,10 @@ function HomePage() {
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-gold text-white transition group-hover:scale-110 group-hover:rotate-3">
                   <Brain className="h-6 w-6" />
                 </div>
-                <p className="mt-5 text-xs font-semibold uppercase tracking-wider text-cyan">Production AI Agent</p>
-                <h3 className="mt-1 font-display text-2xl font-bold">Service Delivery</h3>
+                <p className="mt-5 text-xs font-semibold uppercase tracking-wider text-cyan">Pricing AI Agent</p>
+                <h3 className="mt-1 font-display text-2xl font-bold">Instant Quote Engine</h3>
                 <p className="mt-3 text-muted-foreground">
-                  Helps prepare content calendars, captions, design briefs, Canva layout plans,
-                  website copy, automation blueprints, proposals, audit reports, and client
-                  delivery drafts.
+                              Calculates transparent package pricing on demand, applies first-timer discounts            automatically, and sends clients a clear itemised quote — so they know exactly what they're getting before booking.
                 </p>
               </div>
             </Reveal>
@@ -770,11 +768,10 @@ function HomePage() {
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-accent text-white transition group-hover:scale-110 group-hover:rotate-3">
                 <Sparkle className="h-6 w-6" />
               </div>
-              <p className="mt-5 text-xs font-semibold uppercase tracking-wider text-cyan">Design AI Agent</p>
-              <h3 className="mt-1 font-display text-2xl font-bold">Creative Production</h3>
+              <p className="mt-5 text-xs font-semibold uppercase tracking-wider text-cyan">Proposal AI Agent</p>
+              <h3 className="mt-1 font-display text-2xl font-bold">Custom Proposals</h3>
               <p className="mt-3 text-muted-foreground">
-                Generates design briefs, Canva layout plans, brand guidelines, visual concepts,
-                and creative direction for all client deliverables.
+                            Listens to a client's specific business goals, recommends the right service package, and builds a tailored proposal with scope, timeline, and pricing — ready to close the deal without a sales call.
               </p>
             </div>
           </Reveal>
@@ -783,11 +780,10 @@ function HomePage() {
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-gold text-white transition group-hover:scale-110 group-hover:rotate-3">
                 <Megaphone className="h-6 w-6" />
               </div>
-              <p className="mt-5 text-xs font-semibold uppercase tracking-wider text-cyan">Content AI Agent</p>
-              <h3 className="mt-1 font-display text-2xl font-bold">Marketing & Content</h3>
+              <p className="mt-5 text-xs font-semibold uppercase tracking-wider text-cyan">Production AI Agent</p>
+              <h3 className="mt-1 font-display text-2xl font-bold">Order Processing</h3>
               <p className="mt-3 text-muted-foreground">
-                Builds content calendars, social captions, hashtag strategies, campaign ideas,
-                and brand-consistent copy for every platform.
+                            Receives confirmed bookings, triggers automated client onboarding, sends order confirmation emails, and coordinates every delivery step so nothing falls through the cracks.
               </p>
             </div>
           </Reveal>
