@@ -24,7 +24,7 @@ const serviceOptions = ["Social Media Management", "Content Creation", "Branding
 const altContacts = [
   { icon: Mail, label: "Email", value: "hello@elevatesocial.co", href: "mailto:hello@elevatesocial.co" },
   { icon: MessageCircle, label: "WhatsApp", value: "Chat with us", href: "#" },
-  { icon: Instagram, label: "Instagram", value: "@elevatesocial", href: "#" },
+  { icon: Instagram, label: "Instagram", value: "@elevatesocial", href: "https://www.instagram.com/elevates_social?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" },
   { icon: Linkedin, label: "LinkedIn", value: "Elevate Social", href: "#" },
 ];
 
