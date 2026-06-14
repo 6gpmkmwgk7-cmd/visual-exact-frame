@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Reveal } from "@/components/Reveal";
+import { BlurText } from "@/components/ui/BlurText";
+import { ShinyText } from "@/components/ui/ShinyText";
 import { Counter } from "@/components/Counter";
 import { ParticleField } from "@/components/ParticleField";
 import { AIDashboardMockup } from "@/components/AIDashboardMockup";
@@ -321,12 +323,25 @@ function HomePage() {
                 <Sparkles className="h-3.5 w-3.5" /> {t("home.hero.badge")}
               </div>
             </Reveal>
-            <Reveal delay={120}>
-              <h1 className="mt-6 font-display text-5xl font-bold leading-[1.05] md:text-7xl">
-                {t("home.hero.title_pre")}{" "}
-                <span className="text-shimmer">{t("home.hero.title_highlight")}</span>
-              </h1>
-            </Reveal>
+            <h1 className="mt-6 font-display text-5xl font-bold leading-[1.05] md:text-7xl flex flex-wrap items-baseline gap-x-1">
+              <BlurText
+                as="span"
+                text={t("home.hero.title_pre")}
+                animateBy="words"
+                direction="top"
+                delay={80}
+                stepDuration={0.4}
+              />
+              <BlurText
+                as="span"
+                text={t("home.hero.title_highlight")}
+                className="text-shimmer"
+                animateBy="words"
+                direction="top"
+                delay={80}
+                stepDuration={0.4}
+              />
+            </h1>
             <Reveal delay={240}>
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/75">
                 {t("home.hero.subtitle")}
@@ -338,7 +353,7 @@ function HomePage() {
                   to="/free-audit"
                   className="btn-premium group inline-flex items-center gap-2 rounded-full bg-gradient-gold px-7 py-3.5 text-sm font-semibold text-white shadow-glow transition hover:scale-105"
                 >
-                  {t("home.hero.cta_audit")}
+                  <ShinyText text={t("home.hero.cta_audit")} color="rgba(255,255,255,0.85)" shineColor="#ffffff" speed={3} />
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                 </Link>
                 <Link
