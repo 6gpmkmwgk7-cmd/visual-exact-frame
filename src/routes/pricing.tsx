@@ -20,25 +20,32 @@ export const Route = createFileRoute("/pricing")({
 
 const tiers = [
   {
-    icon: Rocket, name: "Business Presence Launch", price: "$99", suffix: "one-time",
+    icon: Rocket, name: "Business Presence Launch", price: "$149", suffix: "one-time",
     desc: "Get your business looking professional online in days, not months.",
-    includes: ["Facebook Business Setup", "Instagram Business Setup", "LinkedIn Setup", "Professional Bio Writing", "CTA Optimization", "Keywords & Hashtag Research"],
+    includes: ["Facebook Setup", "Instagram Setup", "LinkedIn Setup", "Professional Bio Writing", "CTA Optimization", "Keywords & Hashtags"],
     best: ["New businesses", "Local services", "Startups"],
     cta: "Launch My Presence",
   },
   {
-    icon: Share2, name: "Content Growth", price: "$199", suffix: "/month", featured: true,
-    desc: "Consistent, on-brand content that actually grows your audience.",
-    includes: ["Content Calendar", "Caption Writing", "Content Strategy", "Hashtag Optimization", "Monthly Performance Reports"],
+    icon: Share2, name: "AI Content Engine", price: "$299", suffix: "/mo",
+    desc: "AI-powered content systems that keep your brand consistent and growing.",
+    includes: ["30-Day Content Calendar", "30 Captions", "Hashtag Strategy", "Content Planning", "Canva Design Briefs"],
     best: ["Restaurants", "Service businesses", "Growing brands"],
     cta: "Start Growing",
   },
   {
-    icon: Bot, name: "AI Growth System", price: "$499", suffix: "/month",
-    desc: "Complete AI-powered system for lead generation and automation.",
-    includes: ["Lead Capture Systems", "AI Workflow Automation", "Client Onboarding Automation", "Appointment Booking Workflows", "AI Assistant Setup", "Priority Support"],
-    best: ["Established businesses", "Contractors", "Scaling brands"],
+    icon: Bot, name: "AI Workflow Automation Setup", price: "$299", suffix: "one-time",
+    desc: "Practical AI workflows that capture leads, organize info, and reduce manual work.",
+    includes: ["Lead Capture Workflow", "Google Sheets CRM", "Telegram/Email Alerts", "Client Intake Forms", "Booking & Follow-up"],
+    best: ["Local businesses", "Contractors", "Service companies"],
     cta: "Automate My Business",
+  },
+  {
+    icon: Sparkles, name: "AI Growth System", price: "$499", suffix: "/mo", featured: true,
+    desc: "Complete AI system for lead generation and business automation.",
+    includes: ["Lead Capture Systems", "AI Automation", "Client Onboarding Automation", "Appointment Booking Workflows", "AI Assistant Setup"],
+    best: ["Established businesses", "Contractors", "Scaling brands"],
+    cta: "Get the Full System",
   },
 ];
 
@@ -66,14 +73,14 @@ function PricingPage() {
           </Reveal>
           <Reveal delay={240}>
             <p className="mt-6 text-lg text-white/75">
-              Three packages designed to launch, grow, and automate your business.
+              Four packages designed to launch, grow, and automate your business.
             </p>
           </Reveal>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-24">
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2">
           {tiers.map((t, i) => (
             <Reveal key={t.name} variant="up" delay={i * 100}>
               <div
