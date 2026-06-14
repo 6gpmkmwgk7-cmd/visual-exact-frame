@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Linkedin, Mail, ShieldCheck } from "lucide-react";
+import { Instagram, Facebook, Mail, ShieldCheck } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import logo from "@/assets/logo.png";
 
@@ -24,18 +24,18 @@ export function SiteFooter() {
               {t("footer.tagline")}
             </p>
             <div className="mt-6 flex items-center gap-3">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+              <a href="https://www.instagram.com/elevatesocials/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white transition hover:border-cyan/40 hover:bg-cyan/10 hover:text-cyan">
                 <Instagram className="h-4 w-4" />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+              <a href="https://www.facebook.com/elevatesocials/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white transition hover:border-cyan/40 hover:bg-cyan/10 hover:text-cyan">
-                <Linkedin className="h-4 w-4" />
+                <Facebook className="h-4 w-4" />
               </a>
-              <Link to="/contact" aria-label="Contact"
+              <a href="mailto:masalaminglecatering@gmail.com" aria-label="Email"
                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white transition hover:border-cyan/40 hover:bg-cyan/10 hover:text-cyan">
                 <Mail className="h-4 w-4" />
-              </Link>
+                              </a>
             </div>
             <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-cyan/30 bg-cyan/10 px-3 py-1.5 text-xs font-medium text-cyan">
               <ShieldCheck className="h-3.5 w-3.5" /> {t("footer.secure")}
