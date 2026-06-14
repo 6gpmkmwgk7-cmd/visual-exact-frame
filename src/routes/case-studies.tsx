@@ -4,13 +4,14 @@ import { ArrowRight, UtensilsCrossed, Info } from "lucide-react";
 export const Route = createFileRoute("/case-studies")({
   head: () => ({
     meta: [
-      { title: "Case Studies — Elevate Social" },
-      { name: "description", content: "Sample demonstration project showing the Elevate Growth Engine™ in action. Real client stories coming soon." },
-      { property: "og:title", content: "Case Studies — Elevate Social" },
-      { property: "og:description", content: "A look at how we approach growth, with real client stories launching soon." },
-      { property: "og:url", content: "/case-studies" },
+      { title: "Case Studies | Real Results for Small Businesses – Elevate Social" },
+      { name: "description", content: "See how Elevate Social has helped restaurants, contractors, landscapers, and local businesses grow with AI marketing, automation, and web design. Real results." },
+      { property: "og:title", content: "Case Studies | Real Results for Small Businesses – Elevate Social" },
+      { property: "og:description", content: "Real growth stories from small businesses using Elevate Social's AI marketing and automation services." },
+      { name: "twitter:title", content: "Case Studies | Real Results for Small Businesses – Elevate Social" },
+      { name: "twitter:description", content: "Real growth stories from small businesses using Elevate Social's AI marketing and automation services." },
     ],
-    links: [{ rel: "canonical", href: "/case-studies" }],
+    links: [{ rel: "canonical", href: "https://elevatesocially.com/case-studies" }],
   }),
   component: CaseStudiesPage,
 });
