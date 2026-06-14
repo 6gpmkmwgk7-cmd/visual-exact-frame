@@ -7,10 +7,14 @@ import { ParticleField } from "@/components/ParticleField";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Book Your Free Consultation | Elevate Social" },
-      { name: "description", content: "Let's build your next stage of growth." },
+      { title: "Contact Us | Get a Free Consultation – Elevate Social" },
+      { name: "description", content: "Ready to grow your business with AI? Contact Elevate Social for a free consultation. We help restaurants, contractors, landscapers, and local businesses get more customers." },
+      { property: "og:title", content: "Contact Us | Get a Free Consultation – Elevate Social" },
+      { property: "og:description", content: "Get in touch with Elevate Social for a free consultation. Let's build your AI-powered marketing strategy." },
+      { name: "twitter:title", content: "Contact Us | Get a Free Consultation – Elevate Social" },
+      { name: "twitter:description", content: "Get in touch with Elevate Social for a free consultation. Let's build your AI-powered marketing strategy." },
     ],
-    links: [{ rel: "canonical", href: "/contact" }],
+    links: [{ rel: "canonical", href: "https://elevatesocially.com/contact" }],
   }),
   component: ContactPage,
 });
