@@ -41,6 +41,9 @@ function isTopicRelevant(msg: string): boolean {
 
 const OFF_TOPIC_REPLY =
   "That's a bit outside my lane! 😊 I'm Ellie, Elevate Social's AI assistant — I help with marketing, AI automation, website design, and business growth for small businesses. Want to chat about any of those, or book a free strategy call?";
+const RATE_LIMIT_DELAY_MS = 3_000;
+const RATE_LIMIT_MAX = 8;
+const RATE_LIMIT_WINDOW_MS = 60_000;
 
 export function ChatBot() {
   const { t, i18n } = useTranslation();
@@ -68,6 +71,9 @@ export function ChatBot() {
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const rateLimitLastRef = useRef<number>(0);
+    const rateLimitCountRef = useRef<number>(0);
+      const rateLimitWindowRef = useRef<number>(0);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -82,6 +88,22 @@ export function ChatBot() {
   const sendMessage = async () => {
     const text = input.trim();
     if (!text || loading) return;
+    // Client-side rate limiting
+    const now = Date.now();
+    if (now - rateLimitLastRef.current < RATE_LIMIT_DELAY_MS) {
+    setMessages((prev) => [...prev, { id: now.toString(), role: "assistant" as const, content: "⏳ Please wait a moment before sending another message.", ts: now }]);
+    return;
+    }
+    if (now - rateLimitWindowRef.current > RATE_LIMIT_WINDOW_MS) {
+    rateLimitWindowRef.current = now;
+    rateLimitCountRef.current = 0;
+    }
+    rateLimitCountRef.current += 1;
+    if (rateLimitCountRef.current > RATE_LIMIT_MAX) {
+    setMessages((prev) => [...prev, { id: now.toString(), role: "assistant" as const, content: "🚫 Too many messages — please wait a minute before trying again.", ts: now }]);
+    return;
+    }
+    rateLimitLastRef.current = now;
 
     // Offline guard — preserve input so user can retry
     if (!navigator.onLine) {
