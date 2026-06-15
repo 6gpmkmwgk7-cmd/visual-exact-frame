@@ -76,6 +76,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a72c2cd0-43fd-4227-a08a-6bc462b0fa4d/id-preview-2e8b8798--dd493c23-2777-4545-9e33-2fdde941f057.lovable.app-1781148726068.png" },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a72c2cd0-43fd-4227-a08a-6bc462b0fa4d/id-preview-2e8b8798--dd493c23-2777-4545-9e33-2fdde941f057.lovable.app-1781148726068.png" },
         { name: "google-site-verification", content: "vRcacka93KC1ZsRfyXJT917jcRSS4q6S6VCt1AmWL2k" },
+        { property: "og:url", content: "https://elevatesocially.com/" },
+        { property: "og:locale", content: "en_CA" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
