@@ -41,7 +41,7 @@ const who = [
 const reasons = ["Weak messaging", "Poor visibility", "Inconsistent branding", "Lack of automation", "Ineffective content"];
 
 const INTAKE_WEBHOOK_URL =
-  "https://YOUR-N8N-DOMAIN/webhook/elevate-social-client-intake";
+  import.meta.env.VITE_N8N_INTAKE_WEBHOOK_URL || "";
 
 function FreeAuditPage() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
@@ -63,12 +63,16 @@ function FreeAuditPage() {
     setStatus("sending");
     setErrorMsg("");
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 35000);
       const res = await fetch(INTAKE_WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
+        signal: controller.signal,
       });
       if (!res.ok) throw new Error(`Request failed (${res.status})`);
+      clearTimeout(timeoutId);
       setStatus("sent");
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : "Network error");

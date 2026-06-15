@@ -22,7 +22,7 @@ export const Route = createFileRoute("/contact")({
 const serviceOptions = ["Social Media Management", "Content Creation", "Branding", "Website Design", "AI Automation", "Growth Consulting"];
 
 const altContacts = [
-  { icon: Mail, label: "Email", value: "hello@elevatesocial.co", href: "mailto:hello@elevatesocial.co" },
+  { icon: Mail, label: "Email", value: "socialselavates@gmail.com", href: "mailto:socialselavates@gmail.com" },
     { icon: Facebook, label: "Facebook", value: "Elevate Social", href: "https://www.facebook.com/profile.php?id=61590247691371" },
     { icon: Instagram, label: "Instagram", value: "@elevates_social", href: "https://www.instagram.com/elevates_social?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" },
 ];
@@ -32,7 +32,43 @@ const callTopics = ["Current challenges", "Growth opportunities", "Marketing str
 function ContactPage() {
   const [sent, setSent] = useState(false);
   const [services, setServices] = useState<string[]>([]);
+  const [sending, setSending] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const toggle = (s: string) => setServices((prev) => prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (sending) return;
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    const payload = {
+      name: String(fd.get("name") || "").trim(),
+      business: String(fd.get("business") || "").trim(),
+      email: String(fd.get("email") || "").trim(),
+      phone: String(fd.get("phone") || "").trim(),
+      services,
+      message: String(fd.get("message") || "").trim(),
+      timestamp: new Date().toISOString(),
+    };
+    setSending(true);
+    setErrorMsg("");
+    try {
+      const ctrl = new AbortController();
+      setTimeout(() => ctrl.abort(), 35000);
+      const res = await fetch(import.meta.env.VITE_N8N_INTAKE_WEBHOOK_URL || "", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        signal: ctrl.signal,
+      });
+      if (!res.ok) throw new Error("Failed");
+      setSent(true);
+    } catch {
+      setErrorMsg("Something went wrong. Please try again.");
+    } finally {
+      setSending(false);
+    }
+  };
 
   return (
     <>
@@ -99,7 +135,7 @@ function ContactPage() {
           </Reveal>
 
           <Reveal variant="right" className="lg:col-span-3">
-            <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="rounded-3xl border border-border bg-card p-8 shadow-elegant">
+            <form onSubmit={handleSubmit} className="rounded-3xl border border-border bg-card p-8 shadow-elegant">
               {sent ? (
                 <div className="py-12 text-center">
                   <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gradient-gold text-white shadow-glow">
@@ -139,8 +175,9 @@ function ContactPage() {
                     <textarea rows={4} className="mt-2 w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/30" placeholder="Where are you today, and where do you want to be?" />
                   </div>
 
-                  <button type="submit" className="btn-premium mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-gold px-6 py-4 text-sm font-semibold text-white shadow-glow transition hover:opacity-95">
-                    Book My Free Consultation <ArrowRight className="h-4 w-4" />
+                  {errorMsg && <p className="mt-3 text-center text-sm text-red-400">{errorMsg}</p>}
+            <button type="submit" disabled={sending} className="btn-premium mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-gold px-6 py-4 text-sm font-semibold text-white shadow-glow transition hover:opacity-95">
+                    {sending ? "Sending…" : <>Book My Free Consultation <ArrowRight className="h-4 w-4" /></>}
                   </button>
                   <p className="mt-3 text-center text-xs text-muted-foreground">We'll never share your info. Reply within 24h.</p>
                 </>
