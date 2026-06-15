@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Elevate Social HQ">
+<meta name="theme-color" content="#0f0f1a">
+<title>Elevate Social — Business Command Centre</title>
+<style>
+/* ===== RESET & BASE ===== */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0f0f1a;
+  --bg2:#161627;
+  --bg3:#1e1e35;
+  --card:#1a1a2e;
+  --card2:#222240;
+  --border:#2a2a4a;
+  --accent:#6c63ff;
+  --accent2:#4ecdc4;
+  --green:#00d084;
+  --yellow:#ffd93d;
+  --red:#ff6b6b;
+  --orange:#ff9f43;
+  --blue:#54a0ff;
+  --text:#f0f0ff;
+  --muted:#8888aa;
+  --radius:14px;
+  --shadow:0 4px 24px rgba(0,0,0,0.4);
+}
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+
+/* ===== PIN SCREEN ===== */
+#pin-screen{position:fixed;inset:0;background:linear-gradient(135deg,#0f0f1a 0%,#1a0a2e 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;padding:24px}
+.pin-logo{font-size:48px;margin-bottom:8px}
+.pin-brand{font-size:26px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.pin-subtitle{color:var(--muted);font-size:14px;margin-bottom:40px}
+.pin-dots{display:flex;gap:16px;margin-bottom:32px}
+.pin-dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);background:transparent;transition:all 0.2s}
+.pin-dot.filled{background:var(--accent);border-color:var(--accent);box-shadow:0 0 12px rgba(108,99,255,0.6)}
+.pin-label{color:var(--muted);font-size:13px;margin-bottom:20px;text-align:center}
+.pin-grid{display:grid;grid-template-columns:repeat(3,80px);gap:12px}
+.pin-btn{width:80px;height:80px;border-radius:50%;border:2px solid var(--border);background:var(--card);color:var(--text);font-size:24px;font-weight:600;cursor:pointer;transition:all 0.15s;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.pin-btn:active{transform:scale(0.92);background:var(--accent);border-color:var(--accent)}
+.pin-btn .pin-sub{font-size:9px;color:var(--muted);letter-spacing:1px;margin-top:2px}
+.pin-error{color:var(--red);font-size:13px;margin-top:12px;min-height:20px;text-align:center}
+.pin-setup-hint{color:var(--muted);font-size:12px;margin-top:16px;text-align:center;line-height:1.6}
+
+/* ===== ACCESS SCREEN ===== */
+#access-screen{position:fixed;inset:0;background:linear-gradient(135deg,#0f0f1a 0%,#1a0a2e 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10000;padding:24px}
+.access-logo{font-size:52px;margin-bottom:8px}
+.access-brand{font-size:26px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:4px}
+.access-subtitle{color:var(--muted);font-size:14px;margin-bottom:40px}
+.access-input-wrap{position:relative;width:100%;max-width:280px;margin-bottom:12px}
+.access-input{width:100%;background:var(--card);border:2px solid var(--border);border-radius:12px;padding:16px 48px 16px 20px;font-size:18px;color:var(--text);outline:none;letter-spacing:2px;text-align:center;font-family:monospace;transition:border-color 0.2s}
+.access-input:focus{border-color:var(--accent)}
+.access-toggle{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:4px}
+.access-btn{width:100%;max-width:280px;background:linear-gradient(135deg,var(--accent),#a855f7);border:none;border-radius:12px;padding:16px;color:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:opacity 0.2s;margin-top:4px}
+.access-btn:active{opacity:0.85}
+.access-error{color:var(--red);font-size:13px;margin-top:10px;min-height:20px;text-align:center}
+.access-hint{color:var(--muted);font-size:12px;margin-top:20px;text-align:center;line-height:1.7;max-width:280px}
+
+/* ===== APP SHELL ===== */
+#app{display:none;flex-direction:column;height:100vh;max-width:480px;margin:0 auto;position:relative}
+#app.visible{display:flex}
+
+/* ===== TOP BAR ===== */
+.topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;position:sticky;top:0;z-index:100}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.topbar-logo{font-size:22px}
+.topbar-title{font-size:16px;font-weight:700}
+.topbar-subtitle{font-size:11px;color:var(--muted)}
+.topbar-right{display:flex;gap:8px;align-items:center}
+.status-pill{display:flex;align-items:center;gap:5px;background:rgba(0,208,132,0.12);border:1px solid rgba(0,208,132,0.3);border-radius:20px;padding:4px 10px;font-size:11px;color:var(--green);font-weight:600}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.7)}}
+.topbar-btn{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:6px 10px;color:var(--muted);font-size:12px;cursor:pointer;transition:all 0.2s}
+.topbar-btn:active{background:var(--card2)}
+
+/* ===== SCROLL AREA ===== */
+.scroll-area{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:16px;padding-bottom:90px}
+.scroll-area::-webkit-scrollbar{display:none}
+
+/* ===== SECTION HEADERS ===== */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin:20px 0 12px}
+.section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.section-action{font-size:12px;color:var(--accent);cursor:pointer}
+
+/* ===== BANNER / ALERT ===== */
+.banner{border-radius:var(--radius);padding:14px 16px;margin-bottom:16px;display:flex;align-items:flex-start;gap:12px;font-size:13px;line-height:1.5}
+.banner.info{background:rgba(108,99,255,0.12);border:1px solid rgba(108,99,255,0.3)}
+.banner.success{background:rgba(0,208,132,0.1);border:1px solid rgba(0,208,132,0.25)}
+.banner.warning{background:rgba(255,159,67,0.1);border:1px solid rgba(255,159,67,0.3)}
+.banner.error{background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.3)}
+.banner-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.banner-text{flex:1}
+.banner-title{font-weight:700;margin-bottom:3px}
+.banner-close{color:var(--muted);cursor:pointer;font-size:16px;padding:0 4px;flex-shrink:0}
+
+/* ===== STATS GRID ===== */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:3px 3px 0 0}
+.stat-card.green::before{background:linear-gradient(90deg,var(--green),var(--accent2))}
+.stat-card.purple::before{background:linear-gradient(90deg,var(--accent),#a855f7)}
+.stat-card.orange::before{background:linear-gradient(90deg,var(--orange),var(--yellow))}
+.stat-card.blue::before{background:linear-gradient(90deg,var(--blue),var(--accent))}
+.stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
+.stat-value{font-size:26px;font-weight:800;line-height:1}
+.stat-sub{font-size:11px;color:var(--muted);margin-top:4px}
+.stat-trend{position:absolute;top:14px;right:14px;font-size:11px;padding:3px 7px;border-radius:20px}
+.stat-trend.up{background:rgba(0,208,132,0.15);color:var(--green)}
+
+/* ===== HEALTH SCORE ===== */
+.health-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:10px}
+.health-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.health-score-big{font-size:42px;font-weight:900;background:linear-gradient(135deg,var(--green),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.health-label{font-size:13px;color:var(--muted);margin-top:2px}
+.health-grade{font-size:22px;font-weight:800;color:var(--green)}
+.health-bar-wrap{margin-bottom:8px}
+.health-bar-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px}
+.health-bar{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.health-bar-fill{height:100%;border-radius:3px;transition:width 1s ease}
+
+/* ===== AGENT CARDS ===== */
+.agent-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;cursor:pointer;transition:all 0.2s}
+.agent-card:active{transform:scale(0.98);border-color:var(--accent)}
+.agent-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.agent-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.agent-icon.fa{background:linear-gradient(135deg,#6c63ff22,#6c63ff44);border:1px solid #6c63ff44}
+.agent-icon.sa{background:linear-gradient(135deg,#4ecdc422,#4ecdc444);border:1px solid #4ecdc444}
+.agent-icon.da{background:linear-gradient(135deg,#ff9f4322,#ff9f4344);border:1px solid #ff9f4344}
+.agent-icon.pa{background:linear-gradient(135deg,#ff6b6b22,#ff6b6b44);border:1px solid #ff6b6b44}
+.agent-info{flex:1;min-width:0}
+.agent-name{font-size:14px;font-weight:700}
+.agent-role{font-size:11px;color:var(--muted);margin-top:1px}
+.agent-status-badge{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:4px 9px;border-radius:20px}
+.agent-status-badge.online{background:rgba(0,208,132,0.12);color:var(--green);border:1px solid rgba(0,208,132,0.25)}
+.agent-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:var(--bg3);border-radius:10px;padding:10px}
+.agent-stat{text-align:center}
+.agent-stat-val{font-size:15px;font-weight:700}
+.agent-stat-lbl{font-size:10px;color:var(--muted);margin-top:1px}
+.agent-actions{display:flex;gap:8px;margin-top:10px}
+.agent-btn{flex:1;padding:8px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:12px;font-weight:600;cursor:pointer;text-align:center;transition:all 0.15s}
+.agent-btn:active{background:var(--accent);border-color:var(--accent)}
+.agent-btn.primary{background:rgba(108,99,255,0.15);border-color:rgba(108,99,255,0.4);color:var(--accent)}
+
+/* ===== PIPELINE ===== */
+.pipeline-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:10px}
+.pipeline-stages{display:flex;gap:8px;margin-bottom:16px}
+.pipeline-stage{flex:1;text-align:center;padding:12px 8px;border-radius:10px;border:1px solid var(--border);background:var(--bg3)}
+.pipeline-stage.hot{border-color:rgba(255,107,107,0.4);background:rgba(255,107,107,0.08)}
+.pipeline-stage.warm{border-color:rgba(255,159,67,0.4);background:rgba(255,159,67,0.08)}
+.pipeline-stage.cold{border-color:rgba(84,160,255,0.4);background:rgba(84,160,255,0.08)}
+.pipeline-count{font-size:28px;font-weight:900}
+.pipeline-stage.hot .pipeline-count{color:var(--red)}
+.pipeline-stage.warm .pipeline-count{color:var(--orange)}
+.pipeline-stage.cold .pipeline-count{color:var(--blue)}
+.pipeline-stage-label{font-size:11px;color:var(--muted);margin-top:3px}
+
+/* ===== LEAD LIST ===== */
+.lead-item{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg3);border-radius:10px;margin-bottom:8px;border:1px solid var(--border);cursor:pointer}
+.lead-avatar{width:38px;height:38px;border-radius:10px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.lead-info{flex:1;min-width:0}
+.lead-question{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lead-meta{font-size:11px;color:var(--muted);margin-top:2px}
+.lead-score{display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0}
+.lead-score-val{font-size:16px;font-weight:800}
+.lead-score-lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px}
+.score-hot{color:var(--red)}
+.score-warm{color:var(--orange)}
+.score-cold{color:var(--blue)}
+
+/* ===== CUSTOMER CARDS ===== */
+.customer-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px;cursor:pointer;transition:all 0.2s}
+.customer-card:active{border-color:var(--accent)}
+.customer-header{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.customer-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;flex-shrink:0}
+.customer-name{font-size:15px;font-weight:700}
+.customer-email{font-size:12px;color:var(--muted);margin-top:1px}
+.customer-badge{font-size:10px;padding:3px 8px;border-radius:10px;font-weight:700;flex-shrink:0}
+.badge-new{background:rgba(0,208,132,0.12);color:var(--green);border:1px solid rgba(0,208,132,0.3)}
+.badge-returning{background:rgba(108,99,255,0.12);color:var(--accent);border:1px solid rgba(108,99,255,0.3)}
+.customer-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--bg3);border-radius:8px;padding:8px;margin-bottom:8px}
+.customer-stat{text-align:center}
+.customer-stat-val{font-size:14px;font-weight:700}
+.customer-stat-lbl{font-size:9px;color:var(--muted);margin-top:2px}
+.customer-actions{display:flex;gap:6px}
+.customer-btn{flex:1;padding:7px;border-radius:7px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:11px;font-weight:600;cursor:pointer;text-align:center}
+
+/* ===== QUICK ACTIONS ===== */
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+.quick-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;text-align:center;cursor:pointer;transition:all 0.15s;text-decoration:none;display:block}
+.quick-btn:active{transform:scale(0.96);border-color:var(--accent)}
+.quick-btn-icon{font-size:26px;margin-bottom:8px}
+.quick-btn-label{font-size:13px;font-weight:700;color:var(--text)}
+.quick-btn-sub{font-size:11px;color:var(--muted);margin-top:3px}
+.quick-btn.accent{background:linear-gradient(135deg,rgba(108,99,255,0.2),rgba(78,205,196,0.1));border-color:rgba(108,99,255,0.4)}
+
+/* ===== WORKFLOW ROW ===== */
+.wf-row{display:flex;align-items:center;gap:10px;padding:11px 12px;background:var(--bg3);border-radius:10px;margin-bottom:6px;border:1px solid var(--border)}
+.wf-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.wf-dot.active{background:var(--green);box-shadow:0 0 8px rgba(0,208,132,0.5)}
+.wf-dot.inactive{background:var(--muted)}
+.wf-name{flex:1;font-size:12px;font-weight:600;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wf-tag{font-size:10px;padding:2px 7px;border-radius:10px;background:var(--card2);color:var(--muted);flex-shrink:0}
+.wf-tag.active{background:rgba(0,208,132,0.12);color:var(--green)}
+
+/* ===== EXECUTION LOG ===== */
+.exec-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border-radius:8px;margin-bottom:6px;font-size:12px}
+.exec-icon{font-size:14px;flex-shrink:0}
+.exec-info{flex:1;min-width:0}
+.exec-wf{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.exec-time{color:var(--muted);font-size:11px;margin-top:1px}
+.exec-status{font-size:10px;padding:2px 8px;border-radius:10px;flex-shrink:0}
+.exec-status.success{background:rgba(0,208,132,0.12);color:var(--green)}
+.exec-status.error{background:rgba(255,107,107,0.12);color:var(--red)}
+.exec-status.running{background:rgba(108,99,255,0.12);color:var(--accent)}
+
+/* ===== KB STATS ===== */
+.kb-stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px}
+.kb-stat{background:var(--bg3);border-radius:10px;padding:12px;text-align:center;border:1px solid var(--border)}
+.kb-stat-val{font-size:22px;font-weight:800}
+.kb-stat-lbl{font-size:10px;color:var(--muted);margin-top:3px}
+
+/* ===== SETTINGS ===== */
+.settings-group{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px}
+.settings-group-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);padding:12px 16px 8px;background:var(--bg3)}
+.settings-row{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border)}
+.settings-row:last-child{border-bottom:none}
+.settings-icon{font-size:20px;width:32px;text-align:center;flex-shrink:0}
+.settings-info{flex:1;min-width:0}
+.settings-label{font-size:14px;font-weight:600}
+.settings-desc{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.5}
+.settings-action{color:var(--accent);font-size:13px;cursor:pointer;flex-shrink:0;padding:6px}
+.settings-input-row{padding:12px 16px;border-bottom:1px solid var(--border)}
+.settings-input-label{font-size:11px;color:var(--muted);margin-bottom:6px;display:flex;justify-content:space-between}
+.settings-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:13px;outline:none;transition:border-color 0.2s}
+.settings-input:focus{border-color:var(--accent)}
+.settings-input::placeholder{color:var(--muted)}
+
+/* ===== BUTTONS ===== */
+.btn{display:block;width:100%;padding:14px;border-radius:10px;border:none;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;text-align:center}
+.btn:active{transform:scale(0.97)}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#a855f7);color:#fff}
+.btn-secondary{background:var(--bg3);border:1px solid var(--border);color:var(--text)}
+.btn-danger{background:rgba(255,107,107,0.15);border:1px solid rgba(255,107,107,0.4);color:var(--red)}
+.btn-success{background:rgba(0,208,132,0.15);border:1px solid rgba(0,208,132,0.4);color:var(--green)}
+.btn-row{display:flex;gap:10px;margin-top:10px}
+.btn-sm{padding:9px 16px;font-size:13px;width:auto;display:inline-block}
+
+/* ===== REVENUE CARD ===== */
+.revenue-card{background:linear-gradient(135deg,rgba(108,99,255,0.15),rgba(78,205,196,0.08));border:1px solid rgba(108,99,255,0.3);border-radius:var(--radius);padding:20px;margin-bottom:10px}
+.revenue-amount{font-size:38px;font-weight:900;background:linear-gradient(135deg,#fff,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.revenue-label{font-size:12px;color:var(--muted);margin-top:2px;margin-bottom:16px}
+.revenue-breakdown{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.revenue-item{background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center}
+.revenue-item-val{font-size:16px;font-weight:800}
+.revenue-item-lbl{font-size:10px;color:var(--muted);margin-top:2px}
+
+/* ===== CHART ===== */
+.chart-bars{display:flex;align-items:flex-end;gap:6px;height:60px;padding:4px 0}
+.chart-bar{flex:1;border-radius:4px 4px 0 0;background:var(--accent);opacity:0.6;transition:height 0.5s ease}
+.chart-bar.today{opacity:1;background:linear-gradient(180deg,var(--accent),var(--accent2))}
+
+/* ===== SHARE CARD ===== */
+.share-card{background:linear-gradient(135deg,rgba(0,208,132,0.1),rgba(78,205,196,0.08));border:1px solid rgba(0,208,132,0.3);border-radius:var(--radius);padding:16px;margin-bottom:10px}
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:var(--bg2);border-top:1px solid var(--border);display:flex;padding:8px 0 max(8px,env(safe-area-inset-bottom));z-index:100}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;cursor:pointer;transition:all 0.15s;border:none;background:none;color:var(--muted)}
+.nav-btn.active{color:var(--accent)}
+.nav-icon{font-size:22px}
+.nav-label{font-size:10px;font-weight:600}
+
+/* ===== MODAL ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:none;align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border-radius:20px 20px 0 0;padding:24px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;border-top:1px solid var(--border)}
+.modal-handle{width:40px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 20px}
+.modal-title{font-size:18px;font-weight:800;margin-bottom:4px}
+.modal-sub{font-size:13px;color:var(--muted);margin-bottom:20px}
+
+/* ===== TABS (pages) ===== */
+.page{display:none}
+.page.active{display:block}
+
+/* ===== TOAST ===== */
+#toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:10px 18px;font-size:13px;font-weight:600;z-index:999;transition:transform 0.3s ease;white-space:nowrap;max-width:90vw}
+#toast.show{transform:translateX(-50%) translateY(0)}
+#toast.success{border-color:rgba(0,208,132,0.4);color:var(--green)}
+#toast.error{border-color:rgba(255,107,107,0.4);color:var(--red)}
+
+/* ===== LOADING ===== */
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ===== TAG ===== */
+.tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700}
+.tag-green{background:rgba(0,208,132,0.12);color:var(--green)}
+.tag-orange{background:rgba(255,159,67,0.12);color:var(--orange)}
+.tag-red{background:rgba(255,107,107,0.12);color:var(--red)}
+.tag-blue{background:rgba(84,160,255,0.12);color:var(--blue)}
+.tag-purple{background:rgba(108,99,255,0.12);color:var(--accent)}
+
+/* ===== MISC ===== */
+.divider{height:1px;background:var(--border);margin:16px 0}
+.empty{text-align:center;padding:32px 16px;color:var(--muted);font-size:13px}
+.empty-icon{font-size:40px;margin-bottom:12px}
+a{color:inherit;text-decoration:none}
+@supports(padding:max(0px)){.bottom-nav{padding-bottom:max(8px,env(safe-area-inset-bottom))}}
+</style>
+</head>
+<body>
+
+<!-- ===== PIN SCREEN ===== -->
+<!-- ===== ACCESS GATE ===== -->
+<div id="access-screen">
+  <div class="access-logo">🔐</div>
+  <div class="access-brand">Elevate Social HQ</div>
+  <div class="access-subtitle">Private Owner Access</div>
+  <div class="access-input-wrap">
+    <input class="access-input" id="access-input" type="password" placeholder="Access code" autocomplete="off" autocorrect="off" spellcheck="false" onkeydown="if(event.key==='Enter')accessSubmit()">
+    <button class="access-toggle" onclick="toggleAccessVis()" id="access-vis-btn">👁</button>
+  </div>
+  <button class="access-btn" onclick="accessSubmit()">Unlock →</button>
+  <div class="access-error" id="access-error"></div>
+  <div class="access-hint">This dashboard is private and restricted to authorised owners only.</div>
+</div>
+
+<div id="pin-screen" style="display:none">
+  <div class="pin-logo">🚀</div>
+  <div class="pin-brand">Elevate Social HQ</div>
+  <div class="pin-subtitle">Business Command Centre</div>
+  <div class="pin-dots">
+    <div class="pin-dot" id="d0"></div>
+    <div class="pin-dot" id="d1"></div>
+    <div class="pin-dot" id="d2"></div>
+    <div class="pin-dot" id="d3"></div>
+  </div>
+  <div class="pin-label" id="pin-label">Enter your 4-digit PIN</div>
+  <div class="pin-grid">
+    <button class="pin-btn" onclick="pinPress('1')">1<span class="pin-sub"></span></button>
+    <button class="pin-btn" onclick="pinPress('2')">2<span class="pin-sub">ABC</span></button>
+    <button class="pin-btn" onclick="pinPress('3')">3<span class="pin-sub">DEF</span></button>
+    <button class="pin-btn" onclick="pinPress('4')">4<span class="pin-sub">GHI</span></button>
+    <button class="pin-btn" onclick="pinPress('5')">5<span class="pin-sub">JKL</span></button>
+    <button class="pin-btn" onclick="pinPress('6')">6<span class="pin-sub">MNO</span></button>
+    <button class="pin-btn" onclick="pinPress('7')">7<span class="pin-sub">PQRS</span></button>
+    <button class="pin-btn" onclick="pinPress('8')">8<span class="pin-sub">TUV</span></button>
+    <button class="pin-btn" onclick="pinPress('9')">9<span class="pin-sub">WXYZ</span></button>
+    <button class="pin-btn" onclick="pinClear()" style="font-size:16px;color:var(--muted)">⌫</button>
+    <button class="pin-btn" onclick="pinPress('0')">0</button>
+    <button class="pin-btn" onclick="pinClear(true)" style="font-size:13px;color:var(--muted)">CLR</button>
+  </div>
+  <div class="pin-error" id="pin-error"></div>
+  <div class="pin-setup-hint" id="pin-hint"></div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="app">
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-logo">🚀</span>
+      <div>
+        <div class="topbar-title">Elevate Social HQ</div>
+        <div class="topbar-subtitle" id="topbar-sub">Business Command Centre</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="status-pill"><div class="pulse"></div><span id="status-text">LIVE</span></div>
+      <div class="topbar-btn" onclick="refreshAll()">↻</div>
+    </div>
+  </div>
+
+  <!-- SCROLL AREA -->
+  <div class="scroll-area" id="scroll-area">
+
+    <!-- ===== HOME ===== -->
+    <div class="page active" id="page-home">
+      <div id="setup-banner" class="banner info" style="display:none">
+        <span class="banner-icon">⚡</span>
+        <div class="banner-text">
+          <div class="banner-title">Quick Setup Required</div>
+          Add your n8n API key in Settings to see live data.
+        </div>
+        <span class="banner-close" onclick="this.parentElement.style.display='none'">✕</span>
+      </div>
+
+      <!-- Health -->
+      <div class="health-card">
+        <div class="health-header">
+          <div>
+            <div class="health-score-big" id="health-score">87</div>
+            <div class="health-label">Business Health Score</div>
+          </div>
+          <div style="text-align:right">
+            <div class="health-grade" id="health-grade">A</div>
+            <div style="font-size:11px;color:var(--muted)">Today</div>
+          </div>
+        </div>
+        <div class="health-bar-wrap">
+          <div class="health-bar-label"><span>AI Agents Online</span><span id="hb-agents">4/4</span></div>
+          <div class="health-bar"><div class="health-bar-fill" style="width:100%;background:linear-gradient(90deg,var(--green),var(--accent2))"></div></div>
+        </div>
+        <div class="health-bar-wrap">
+          <div class="health-bar-label"><span>Lead Pipeline</span><span id="hb-leads">Active</span></div>
+          <div class="health-bar"><div class="health-bar-fill" id="hbf-leads" style="width:72%;background:linear-gradient(90deg,var(--orange),var(--yellow))"></div></div>
+        </div>
+        <div class="health-bar-wrap">
+          <div class="health-bar-label"><span>Workflows Active</span><span id="hb-auto">10/10</span></div>
+          <div class="health-bar"><div class="health-bar-fill" style="width:100%;background:linear-gradient(90deg,var(--accent),#a855f7)"></div></div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card green">
+          <div class="stat-label">Chats Today</div>
+          <div class="stat-value" id="stat-chats">—</div>
+          <div class="stat-sub">Conversations logged</div>
+        </div>
+        <div class="stat-card purple">
+          <div class="stat-label">Hot Leads 🔥</div>
+          <div class="stat-value" id="stat-leads">—</div>
+          <div class="stat-sub">Score ≥ 70</div>
+        </div>
+        <div class="stat-card orange">
+          <div class="stat-label">Pipeline Value</div>
+          <div class="stat-value" id="stat-revenue">—</div>
+          <div class="stat-sub">Weighted estimate</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-label">Customers</div>
+          <div class="stat-value" id="stat-customers">—</div>
+          <div class="stat-sub">Registered accounts</div>
+        </div>
+      </div>
+
+      <!-- Weekly Chart -->
+      <div class="section-header">
+        <span class="section-title">📊 Weekly Activity</span>
+        <span class="section-action" onclick="showTab('agents')">View Executions →</span>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:16px">
+        <div class="chart-bars">
+          <div class="chart-bar" style="height:30%"></div>
+          <div class="chart-bar" style="height:55%"></div>
+          <div class="chart-bar" style="height:40%"></div>
+          <div class="chart-bar" style="height:70%"></div>
+          <div class="chart-bar" style="height:85%"></div>
+          <div class="chart-bar" style="height:60%"></div>
+          <div class="chart-bar today" style="height:100%"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-top:6px">
+          <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Today</span>
+        </div>
+      </div>
+
+      <!-- Revenue -->
+      <div class="revenue-card">
+        <div class="revenue-amount" id="rev-total">$0</div>
+        <div class="revenue-label">Estimated Pipeline Value (based on lead scores × avg deal)</div>
+        <div class="revenue-breakdown">
+          <div class="revenue-item">
+            <div class="revenue-item-val" id="rev-hot" style="color:var(--red)">$0</div>
+            <div class="revenue-item-lbl">🔥 Hot</div>
+          </div>
+          <div class="revenue-item">
+            <div class="revenue-item-val" id="rev-warm" style="color:var(--orange)">$0</div>
+            <div class="revenue-item-lbl">🌡 Warm</div>
+          </div>
+          <div class="revenue-item">
+            <div class="revenue-item-val" id="rev-cold" style="color:var(--blue)">$0</div>
+            <div class="revenue-item-lbl">❄️ Cold</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="section-header"><span class="section-title">⚡ Quick Actions</span></div>
+      <div class="quick-grid">
+        <a class="quick-btn accent" href="https://visual-exact-frame.lovable.app" target="_blank">
+          <div class="quick-btn-icon">🌐</div>
+          <div class="quick-btn-label">View Website</div>
+          <div class="quick-btn-sub">Live site</div>
+        </a>
+        <a class="quick-btn" href="https://elevatedsocial111.app.n8n.cloud" target="_blank">
+          <div class="quick-btn-icon">⚙️</div>
+          <div class="quick-btn-label">n8n Workflows</div>
+          <div class="quick-btn-sub">10 active</div>
+        </a>
+        <div class="quick-btn" onclick="testChatbot()">
+          <div class="quick-btn-icon">💬</div>
+          <div class="quick-btn-label">Test Chatbot</div>
+          <div class="quick-btn-sub">Send test message</div>
+        </div>
+        <div class="quick-btn" onclick="showTab('customers')">
+          <div class="quick-btn-icon">👥</div>
+          <div class="quick-btn-label">Customers</div>
+          <div class="quick-btn-sub">View accounts</div>
+        </div>
+      </div>
+      <!-- Recent Activity Feed -->
+      <div class="section-header"><span class="section-title">🕐 Recent Activity</span><span class="section-action" onclick="refreshAll()">↻</span></div>
+      <div id="activity-feed" style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px;display:flex;flex-direction:column;gap:10px">
+        <div class="empty" style="padding:12px 0"><div class="empty-icon" style="font-size:24px">🕐</div>Activity loads after connecting Dashboard API</div>
+      </div>
+
+      <div style="text-align:center;color:var(--muted);font-size:11px;padding:8px 0;margin-top:8px">
+        Last updated: <span id="last-updated">Never</span> · Auto-refresh every 60s
+      </div>
+    </div>
+
+    <!-- ===== AGENTS ===== -->
+    <div class="page" id="page-agents">
+      <div class="section-header" style="margin-top:4px">
+        <span class="section-title">🤖 AI Agents</span>
+        <span class="section-action" onclick="refreshAll()">↻</span>
+      </div>
+
+      <div class="agent-card" onclick="openAgentModal('fa')">
+        <div class="agent-header">
+          <div class="agent-icon fa">🤖</div>
+          <div class="agent-info">
+            <div class="agent-name">Frontend Agent</div>
+            <div class="agent-role">First contact · Routes chats · Reads KB · Saves conversations</div>
+          </div>
+          <div class="agent-status-badge online"><div class="pulse"></div>Live</div>
+        </div>
+        <div class="agent-stats">
+          <div class="agent-stat"><div class="agent-stat-val">—</div><div class="agent-stat-lbl">Chats Today</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">—</div><div class="agent-stat-lbl">Success Rate</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">—</div><div class="agent-stat-lbl">Routed</div></div>
+        </div>
+        <div class="agent-actions">
+          <div class="agent-btn primary" onclick="event.stopPropagation();testChatbot()">🧪 Test</div>
+          <a class="agent-btn" href="https://elevatedsocial111.app.n8n.cloud/workflow/zNvOqpoavkRDxIc0" target="_blank" onclick="event.stopPropagation()">⚙️ Edit</a>
+        </div>
+      </div>
+
+      <div class="agent-card" onclick="openAgentModal('sa')">
+        <div class="agent-header">
+          <div class="agent-icon sa">💼</div>
+          <div class="agent-info">
+            <div class="agent-name">Service Advisor Agent</div>
+            <div class="agent-role">Pricing · Proposals · Lead qualification</div>
+          </div>
+          <div class="agent-status-badge online"><div class="pulse"></div>Live</div>
+        </div>
+        <div class="agent-stats">
+          <div class="agent-stat"><div class="agent-stat-val">—</div><div class="agent-stat-lbl">Sessions</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">—</div><div class="agent-stat-lbl">Success Rate</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">—</div><div class="agent-stat-lbl">Proposals</div></div>
+        </div>
+        <div class="agent-actions">
+          <div class="agent-btn primary" onclick="event.stopPropagation();testChatbot()">🧪 Test</div>
+          <a class="agent-btn" href="https://elevatedsocial111.app.n8n.cloud/workflow/eTbD6TSlbgQrdKLJ" target="_blank" onclick="event.stopPropagation()">⚙️ Edit</a>
+        </div>
+      </div>
+
+      <div class="agent-card" onclick="openAgentModal('da')">
+        <div class="agent-header">
+          <div class="agent-icon da">🎨</div>
+          <div class="agent-info">
+            <div class="agent-name">Design Agent</div>
+            <div class="agent-role">Design briefs · Visual proposals · Requires approval</div>
+          </div>
+          <div class="agent-status-badge online"><div class="pulse"></div>Live</div>
+        </div>
+        <div class="agent-stats">
+          <div class="agent-stat"><div class="agent-stat-val">—</div><div class="agent-stat-lbl">Sessions</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">—</div><div class="agent-stat-lbl">Success Rate</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">—</div><div class="agent-stat-lbl">Pending Approvals</div></div>
+        </div>
+        <div class="agent-actions">
+          <div class="agent-btn primary" onclick="event.stopPropagation();testChatbot()">🧪 Test</div>
+          <a class="agent-btn" href="https://elevatedsocial111.app.n8n.cloud/workflow/FlUEMALntk2OytPp" target="_blank" onclick="event.stopPropagation()">⚙️ Edit</a>
+        </div>
+      </div>
+
+      <div class="agent-card" onclick="openAgentModal('pa')">
+        <div class="agent-header">
+          <div class="agent-icon pa">📦</div>
+          <div class="agent-info">
+            <div class="agent-name">Production Agent</div>
+            <div class="agent-role">Order processing · Confirmations · Delivery</div>
+          </div>
+          <div class="agent-status-badge online"><div class="pulse"></div>Live</div>
+        </div>
+        <div class="agent-stats">
+          <div class="agent-stat"><div class="agent-stat-val">—</div><div class="agent-stat-lbl">Orders</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">—</div><div class="agent-stat-lbl">Success Rate</div></div>
+          <div class="agent-stat"><div class="agent-stat-val">—</div><div class="agent-stat-lbl">Delivered</div></div>
+        </div>
+        <div class="agent-actions">
+          <div class="agent-btn primary" onclick="event.stopPropagation();testChatbot()">🧪 Test</div>
+          <a class="agent-btn" href="https://elevatedsocial111.app.n8n.cloud/workflow/DbnvncAGfEGVzQ4i" target="_blank" onclick="event.stopPropagation()">⚙️ Edit</a>
+        </div>
+      </div>
+
+      <div class="section-header"><span class="section-title">⚙️ All Workflows</span><span class="section-action" onclick="refreshWorkflows()">↻</span></div>
+      <div id="wf-list"><div class="empty"><div class="spinner"></div><br>Loading...</div></div>
+
+      <div class="section-header"><span class="section-title">🕐 Recent Executions</span></div>
+      <div id="exec-list"><div class="empty"><div class="spinner"></div><br>Loading...</div></div>
+    </div>
+
+    <!-- ===== LEADS ===== -->
+    <div class="page" id="page-leads">
+      <div class="section-header" style="margin-top:4px">
+        <span class="section-title">🎯 Lead Pipeline</span>
+        <span class="section-action" onclick="exportLeads()">Export CSV</span>
+      </div>
+      <div class="pipeline-card">
+        <div class="pipeline-stages">
+          <div class="pipeline-stage hot">
+            <div class="pipeline-count" id="pl-hot">—</div>
+            <div class="pipeline-stage-label">🔥 Hot</div>
+          </div>
+          <div class="pipeline-stage warm">
+            <div class="pipeline-count" id="pl-warm">—</div>
+            <div class="pipeline-stage-label">🌡 Warm</div>
+          </div>
+          <div class="pipeline-stage cold">
+            <div class="pipeline-count" id="pl-cold">—</div>
+            <div class="pipeline-stage-label">❄️ Cold</div>
+          </div>
+        </div>
+        <div style="text-align:center;font-size:13px;color:var(--muted);padding-bottom:4px">
+          Total pipeline: <strong style="color:var(--text)" id="pl-total">$0</strong>
+        </div>
+      </div>
+      <div class="section-header"><span class="section-title">💬 Recent Conversations</span></div>
+      <div id="lead-list">
+        <div class="empty"><div class="empty-icon">💬</div>Connect Google Sheet in Settings to see conversations</div>
+      </div>
+    </div>
+
+    <!-- ===== CUSTOMERS ===== -->
+    <div class="page" id="page-customers">
+      <div class="section-header" style="margin-top:4px">
+        <span class="section-title">👥 Customer Accounts</span>
+        <span class="section-action" onclick="refreshCustomers()">↻</span>
+      </div>
+
+      <div class="banner success">
+        <span class="banner-icon">🔐</span>
+        <div class="banner-text">
+          <div class="banner-title">Customer Login System</div>
+          When customers sign up or log in on your website, their details are saved here automatically via n8n. You can view, search and contact them from this dashboard.
+        </div>
+      </div>
+
+      <!-- Customer Stats -->
+      <div class="stats-grid" style="margin-bottom:12px">
+        <div class="stat-card green">
+          <div class="stat-label">Total Customers</div>
+          <div class="stat-value" id="cust-total">—</div>
+          <div class="stat-sub">Registered accounts</div>
+        </div>
+        <div class="stat-card purple">
+          <div class="stat-label">New This Week</div>
+          <div class="stat-value" id="cust-new">—</div>
+          <div class="stat-sub">Signed up recently</div>
+        </div>
+      </div>
+
+      <!-- Search -->
+      <div style="margin-bottom:12px">
+        <input class="settings-input" id="cust-search" type="text" placeholder="🔍 Search by name or email..." oninput="filterCustomers(this.value)">
+      </div>
+
+      <!-- Customer List -->
+      <div id="customer-list">
+        <div class="empty"><div class="empty-icon">👥</div>Customer data loads here once your website login system is wired to Google Sheets via n8n.<br><br><span style="color:var(--accent);cursor:pointer" onclick="openSetupCustomers()">How to set this up →</span></div>
+      </div>
+    </div>
+
+    <!-- ===== KB ===== -->
+    <div class="page" id="page-kb">
+      <div class="section-header" style="margin-top:4px">
+        <span class="section-title">🧠 Knowledge Base</span>
+        <span class="section-action" onclick="openSheet()">Open Sheet →</span>
+      </div>
+      <div class="kb-stat-row">
+        <div class="kb-stat"><div class="kb-stat-val" id="kb-entries" style="color:var(--accent)">—</div><div class="kb-stat-lbl">KB Entries</div></div>
+        <div class="kb-stat"><div class="kb-stat-val" id="kb-convs" style="color:var(--green)">—</div><div class="kb-stat-lbl">Conversations</div></div>
+        <div class="kb-stat"><div class="kb-stat-val" id="kb-categories" style="color:var(--orange)">—</div><div class="kb-stat-lbl">Categories</div></div>
+      </div>
+      <div class="banner success" style="margin-bottom:16px">
+        <span class="banner-icon">🧠</span>
+        <div class="banner-text">
+          <div class="banner-title">Self-Learning AI System</div>
+          Your agents read the KB before every reply and save every conversation. Updated daily from your website and weekly from chat patterns.
+        </div>
+      </div>
+      <div class="settings-group">
+        <div class="settings-group-label">🔄 Auto-Update Schedule</div>
+        <div class="settings-row">
+          <div class="settings-icon">🌐</div>
+          <div class="settings-info">
+            <div class="settings-label">Daily Website Scraper</div>
+            <div class="settings-desc">Runs daily at 6:00 AM — extracts content from visual-exact-frame.lovable.app into KB</div>
+          </div>
+          <span class="tag tag-green">Active</span>
+        </div>
+        <div class="settings-row">
+          <div class="settings-icon">💡</div>
+          <div class="settings-info">
+            <div class="settings-label">Weekly FAQ Learner</div>
+            <div class="settings-desc">Runs every Monday at 8:00 AM — learns from last week's conversations</div>
+          </div>
+          <span class="tag tag-green">Active</span>
+        </div>
+        <div class="settings-row" style="border-bottom:none">
+          <div class="settings-icon">💾</div>
+          <div class="settings-info">
+            <div class="settings-label">Conversation Logger</div>
+            <div class="settings-desc">Saves every chat in real-time to the Conversations tab in Google Sheets</div>
+          </div>
+          <span class="tag tag-green">Active</span>
+        </div>
+      </div>
+      <div class="section-header"><span class="section-title">⚡ Manual Controls</span></div>
+      <a class="btn btn-success" style="margin-bottom:10px;display:block;text-align:center" href="https://elevatedsocial111.app.n8n.cloud/workflow/X2q0uGtw7jomw2sz" target="_blank">▶ Run Daily KB Updater Now</a>
+      <a class="btn btn-secondary" style="margin-bottom:10px;display:block;text-align:center" href="https://elevatedsocial111.app.n8n.cloud/workflow/1UbgHD3veBfSctS7" target="_blank">▶ Run Weekly FAQ Learner Now</a>
+    </div>
+
+    <!-- ===== SETTINGS ===== -->
+    <div class="page" id="page-settings">
+      <div class="section-header" style="margin-top:4px"><span class="section-title">⚙️ Settings</span></div>
+
+      <div class="settings-group">
+        <div class="settings-group-label">🔌 n8n Connection</div>
+        <div class="settings-input-row">
+          <div class="settings-input-label"><span>n8n Cloud URL</span></div>
+          <input class="settings-input" id="inp-n8n-url" type="url" placeholder="https://yourinstance.app.n8n.cloud" value="https://elevatedsocial111.app.n8n.cloud">
+        </div>
+        <div class="settings-input-row" style="border-bottom:none">
+          <div class="settings-input-label"><span>n8n API Key</span><span style="color:var(--muted);font-size:10px">Settings → API → Create Key</span></div>
+          <input class="settings-input" id="inp-n8n-key" type="password" placeholder="n8n_xxx...">
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-group-label">📊 Google Sheets</div>
+        <div class="settings-input-row" style="border-bottom:none">
+          <div class="settings-input-label"><span>Sheet ID</span><span style="color:var(--muted);font-size:10px">From the sheet URL</span></div>
+          <input class="settings-input" id="inp-sheet-id" type="text" placeholder="1BxiMVs0XRA5nFM...">
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-group-label">📡 Live Data API</div>
+        <div class="settings-input-row" style="border-bottom:none">
+          <div class="settings-input-label"><span>Dashboard API URL</span><span style="color:var(--muted);font-size:10px">Import n8n_dashboard_api.json → activate → paste webhook URL</span></div>
+          <input class="settings-input" id="inp-dash-api-url" type="url" placeholder="https://...n8n.cloud/webhook/elevate-dashboard-api">
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-group-label">🏢 Business Info</div>
+        <div class="settings-input-row">
+          <div class="settings-input-label"><span>Business Name</span></div>
+          <input class="settings-input" id="inp-biz-name" type="text" placeholder="Elevate Social" value="Elevate Social">
+        </div>
+        <div class="settings-input-row" style="border-bottom:none">
+          <div class="settings-input-label"><span>Average Deal Value ($)</span></div>
+          <input class="settings-input" id="inp-deal-val" type="number" placeholder="399" value="399">
+        </div>
+      </div>
+
+      <button class="btn btn-primary" onclick="saveSettings()" style="margin-bottom:12px">💾 Save Settings</button>
+      <button class="btn btn-secondary" onclick="testConnection()" style="margin-bottom:12px" id="btn-test-conn">🔌 Test n8n Connection</button>
+
+      <div class="settings-group">
+        <div class="settings-group-label">🔒 Security</div>
+        <div class="settings-row">
+          <div class="settings-icon">🔑</div>
+          <div class="settings-info"><div class="settings-label">Change PIN</div><div class="settings-desc">Update your 4-digit access code</div></div>
+          <span class="settings-action" onclick="startPinChange()">Change</span>
+        </div>
+        <div class="settings-row">
+          <div class="settings-icon">🔒</div>
+          <div class="settings-info"><div class="settings-label">Lock Dashboard</div><div class="settings-desc">Return to PIN screen</div></div>
+          <span class="settings-action" onclick="lockApp()">Lock</span>
+        </div>
+        <div class="settings-row" style="border-bottom:none">
+          <div class="settings-icon">🗑</div>
+          <div class="settings-info"><div class="settings-label">Reset All Settings</div><div class="settings-desc">Clear all data and start fresh</div></div>
+          <span class="settings-action" style="color:var(--red)" onclick="resetAll()">Reset</span>
+        </div>
+      </div>
+
+      <div class="share-card">
+        <div style="font-size:16px;font-weight:800;margin-bottom:8px">📤 Share This Dashboard</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.6">
+          Single HTML file — free forever. Send to your partner and they set their own PIN.
+        </div>
+        <button class="btn btn-success" onclick="downloadDashboard()" style="margin-bottom:8px">⬇️ Download Dashboard File</button>
+        <button class="btn btn-secondary" onclick="copyShareInstructions()">📋 Copy Sharing Instructions</button>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-group-label">🌐 Host Free (Access Anywhere)</div>
+        <div class="settings-row">
+          <div class="settings-icon">⚡</div>
+          <div class="settings-info">
+            <div class="settings-label">Netlify Drop — Easiest</div>
+            <div class="settings-desc">1. Go to app.netlify.com/drop<br>2. Drag & drop this file → get free URL instantly</div>
+          </div>
+          <a class="settings-action" href="https://app.netlify.com/drop" target="_blank">Go →</a>
+        </div>
+        <div class="settings-row" style="border-bottom:none">
+          <div class="settings-icon">📱</div>
+          <div class="settings-info">
+            <div class="settings-label">Add to Phone Home Screen</div>
+            <div class="settings-desc">iPhone: Safari → Share → Add to Home Screen<br>Android: Chrome → ⋮ → Add to Home Screen</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-group-label">ℹ️ System Links</div>
+        <div class="settings-row">
+          <div class="settings-icon">🌐</div>
+          <div class="settings-info"><div class="settings-label">Website</div><div class="settings-desc">visual-exact-frame.lovable.app</div></div>
+          <a class="settings-action" href="https://visual-exact-frame.lovable.app" target="_blank">Open</a>
+        </div>
+        <div class="settings-row" style="border-bottom:none">
+          <div class="settings-icon">⚙️</div>
+          <div class="settings-info"><div class="settings-label">n8n Dashboard</div><div class="settings-desc">elevatedsocial111.app.n8n.cloud</div></div>
+          <a class="settings-action" href="https://elevatedsocial111.app.n8n.cloud" target="_blank">Open</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /scroll-area -->
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <button class="nav-btn active" id="nav-home" onclick="showTab('home')">
+      <span class="nav-icon">🏠</span><span class="nav-label">Overview</span>
+    </button>
+    <button class="nav-btn" id="nav-agents" onclick="showTab('agents')">
+      <span class="nav-icon">🤖</span><span class="nav-label">Agents</span>
+    </button>
+    <button class="nav-btn" id="nav-leads" onclick="showTab('leads')">
+      <span class="nav-icon">🎯</span><span class="nav-label">Leads</span>
+    </button>
+    <button class="nav-btn" id="nav-customers" onclick="showTab('customers')">
+      <span class="nav-icon">👥</span><span class="nav-label">Customers</span>
+    </button>
+    <button class="nav-btn" id="nav-kb" onclick="showTab('kb')">
+      <span class="nav-icon">🧠</span><span class="nav-label">KB</span>
+    </button>
+    <button class="nav-btn" id="nav-settings" onclick="showTab('settings')">
+      <span class="nav-icon">⚙️</span><span class="nav-label">Settings</span>
+    </button>
+  </div>
+</div>
+
+<!-- AGENT MODAL -->
+<div class="modal-overlay" id="agent-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-agent-name">Agent</div>
+    <div class="modal-sub" id="modal-agent-role"></div>
+    <div id="modal-agent-body"></div>
+    <button class="btn btn-secondary" style="margin-top:16px" onclick="closeModal('agent-modal')">Close</button>
+  </div>
+</div>
+
+<!-- TEST CHATBOT MODAL -->
+<div class="modal-overlay" id="test-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">🧪 Test Chatbot</div>
+    <div class="modal-sub">Send a test message to your live AI</div>
+    <input class="settings-input" id="test-msg" placeholder="Type a test message..." value="What services do you offer?" style="margin-bottom:12px">
+    <div id="test-result" style="background:var(--bg3);border-radius:10px;padding:14px;font-size:13px;line-height:1.6;min-height:60px;margin-bottom:12px;color:var(--muted)">Response will appear here...</div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="sendTestMsg()" style="flex:2">Send ▶</button>
+      <button class="btn btn-secondary" onclick="closeModal('test-modal')" style="flex:1">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOMER SETUP MODAL -->
+<div class="modal-overlay" id="customer-setup-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">🔐 Customer Login Setup</div>
+    <div class="modal-sub">Wire your website login/signup to Google Sheets</div>
+    <div class="banner info" style="margin-bottom:16px">
+      <span class="banner-icon">ℹ️</span>
+      <div class="banner-text">Your website at visual-exact-frame.lovable.app has Sign In / Sign Up buttons. Here's how to make them active and save customer data automatically.</div>
+    </div>
+    <div style="font-size:13px;line-height:1.8;color:var(--text)">
+      <strong style="color:var(--accent)">Step 1:</strong> Go to your n8n dashboard<br>
+      <strong style="color:var(--accent)">Step 2:</strong> Create a new workflow with a Webhook trigger<br>
+      <strong style="color:var(--accent)">Step 3:</strong> Name it "Customer Auth Handler"<br>
+      <strong style="color:var(--accent)">Step 4:</strong> Add Google Sheets node → Append row to "Customers" tab<br>
+      <strong style="color:var(--accent)">Step 5:</strong> In your website code (Lovable), connect the Sign Up form to POST to this webhook<br>
+      <strong style="color:var(--accent)">Step 6:</strong> Each signup automatically saves: Name, Email, Password Hash, Signup Date, Status<br><br>
+      <strong style="color:var(--yellow)">⚠️ Important:</strong> Never store plain text passwords. Use n8n's Code node to hash them first (e.g. SHA-256).
+    </div>
+    <button class="btn btn-primary" style="margin-top:16px" onclick="closeModal('customer-setup-modal')">Got It</button>
+  </div>
+</div>
+
+<!-- CUSTOMER DETAIL MODAL -->
+<div class="modal-overlay" id="customer-detail-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div id="customer-detail-body"></div>
+    <button class="btn btn-secondary" style="margin-top:16px" onclick="closeModal('customer-detail-modal')">Close</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ===== SETTINGS =====
+const DEFAULTS = {
+  n8nUrl: 'https://elevatedsocial111.app.n8n.cloud',
+  n8nKey: '',
+  sheetId: '',
+  dashApiUrl: '',
+  bizName: 'Elevate Social',
+  dealVal: 399,
+  pin: '',
+  pinSet: false
+};
+let S = {...DEFAULTS};
+let pinInput = '';
+let pinMode = 'enter';
+let pinTemp = '';
+let currentTab = 'home';
+let liveData = {workflows:[], executions:[], conversations:[], customers:[], kbEntries:0, kbCategories:0};
+
+const DEMO_EXECS = [
+  {wf:'Frontend Website Agent', status:'success', time:'2 min ago'},
+  {wf:'Service Advisor Agent', status:'success', time:'8 min ago'},
+  {wf:'Daily KB Updater', status:'error', time:'18 min ago'},
+  {wf:'Frontend Website Agent', status:'success', time:'32 min ago'},
+  {wf:'Production Order Agent', status:'success', time:'1 hr ago'},
+];
+
+// ===== ACCESS GATE =====
+// Simple hash to avoid storing plaintext code in source
+function hashCode(s){let h=5381;for(let i=0;i<s.length;i++)h=(h*33)^s.charCodeAt(i);return(h>>>0).toString(36);}
+const ACCESS_HASH = hashCode('ElevateHQ2025'); // change this to change the access code
+
+function accessSubmit() {
+  const val = document.getElementById('access-input').value.trim();
+  const err = document.getElementById('access-error');
+  if (!val) { err.textContent = '⚠️ Please enter the access code.'; return; }
+  if (hashCode(val) === ACCESS_HASH) {
+    sessionStorage.setItem('es_access','1');
+    document.getElementById('access-screen').style.display = 'none';
+    document.getElementById('pin-screen').style.display = 'flex';
+    loadSettings();
+    if (!S.pinSet) {
+      pinMode = 'create';
+      document.getElementById('pin-label').textContent = 'Create a 4-digit PIN to secure your dashboard';
+      document.getElementById('pin-hint').innerHTML = '🔒 You need this PIN each time you open the dashboard.';
+    } else {
+      document.getElementById('pin-label').textContent = 'Enter your PIN to unlock';
+    }
+  } else {
+    err.textContent = '❌ Incorrect access code. Try again.';
+    document.getElementById('access-input').value = '';
+  }
+}
+
+function toggleAccessVis() {
+  const inp = document.getElementById('access-input');
+  const btn = document.getElementById('access-vis-btn');
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+  else { inp.type = 'password'; btn.textContent = '👁'; }
+}
+
+// ===== INIT =====
+function init() {
+  // Check access gate first
+  if (!sessionStorage.getItem('es_access')) {
+    // Show access screen, keep pin-screen hidden — accessSubmit() will reveal it
+    return;
+  }
+  // Already passed access gate, go straight to PIN
+  document.getElementById('access-screen').style.display = 'none';
+  document.getElementById('pin-screen').style.display = 'flex';
+  loadSettings();
+  if (!S.pinSet) {
+    pinMode = 'create';
+    document.getElementById('pin-label').textContent = 'Create a 4-digit PIN to secure your dashboard';
+    document.getElementById('pin-hint').innerHTML = '🔒 You need this PIN each time you open the dashboard.';
+  } else {
+    document.getElementById('pin-label').textContent = 'Enter your PIN to unlock';
+  }
+}
+
+function loadSettings() {
+  try {
+    const saved = localStorage.getItem('elevate_hq_v2');
+    if (saved) S = {...DEFAULTS, ...JSON.parse(saved)};
+  } catch(e){}
+  if (document.getElementById('inp-n8n-url')) {
+    document.getElementById('inp-n8n-url').value = S.n8nUrl || DEFAULTS.n8nUrl;
+    document.getElementById('inp-n8n-key').value = S.n8nKey || '';
+    document.getElementById('inp-sheet-id').value = S.sheetId || '';
+    document.getElementById('inp-dash-api-url').value = S.dashApiUrl || '';
+    document.getElementById('inp-biz-name').value = S.bizName || DEFAULTS.bizName;
+    document.getElementById('inp-deal-val').value = S.dealVal || DEFAULTS.dealVal;
+  }
+}
+
+function saveSettings() {
+  S.n8nUrl = (document.getElementById('inp-n8n-url').value || '').trim().replace(/\/$/, '');
+  S.n8nKey = (document.getElementById('inp-n8n-key').value || '').trim();
+  S.sheetId = (document.getElementById('inp-sheet-id').value || '').trim();
+  S.dashApiUrl = (document.getElementById('inp-dash-api-url').value || '').trim().replace(/\/$/, '');
+  S.bizName = (document.getElementById('inp-biz-name').value || 'Elevate Social').trim();
+  S.dealVal = parseInt(document.getElementById('inp-deal-val').value) || 399;
+  localStorage.setItem('elevate_hq_v2', JSON.stringify(S));
+  showToast('✅ Settings saved!', 'success');
+  refreshAll();
+}
+
+// ===== PIN =====
+function pinPress(d) {
+  if (pinInput.length >= 4) return;
+  pinInput += d;
+  updatePinDots();
+  if (pinInput.length === 4) setTimeout(pinSubmit, 150);
+}
+function pinClear(all) {
+  pinInput = all ? '' : pinInput.slice(0,-1);
+  updatePinDots();
+  document.getElementById('pin-error').textContent = '';
+}
+function updatePinDots() {
+  for (let i=0;i<4;i++) document.getElementById('d'+i).classList.toggle('filled', i < pinInput.length);
+}
+function hashPin(p) {
+  let h = 0;
+  for (let c of p) h = ((h<<5)-h)+c.charCodeAt(0), h|=0;
+  return String(h);
+}
+function pinSubmit() {
+  const err = document.getElementById('pin-error');
+  if (pinMode === 'enter') {
+    if (hashPin(pinInput) === S.pin) { unlockApp(); }
+    else { err.textContent = '❌ Wrong PIN. Try again.'; pinInput=''; updatePinDots(); }
+  } else if (pinMode === 'create') {
+    pinTemp = pinInput; pinInput = ''; updatePinDots();
+    pinMode = 'confirm';
+    document.getElementById('pin-label').textContent = 'Confirm your PIN';
+    err.textContent = '';
+  } else if (pinMode === 'confirm') {
+    if (pinInput === pinTemp) {
+      S.pin = hashPin(pinInput); S.pinSet = true;
+      localStorage.setItem('elevate_hq_v2', JSON.stringify(S));
+      unlockApp();
+    } else {
+      err.textContent = '❌ PINs don\'t match. Try again.';
+      pinInput=''; pinTemp=''; updatePinDots(); pinMode='create';
+      document.getElementById('pin-label').textContent = 'Create a 4-digit PIN';
+    }
+  } else if (pinMode === 'change') {
+    pinTemp = pinInput; pinInput=''; updatePinDots();
+    pinMode = 'change-confirm';
+    document.getElementById('pin-label').textContent = 'Confirm new PIN';
+  } else if (pinMode === 'change-confirm') {
+    if (pinInput === pinTemp) {
+      S.pin = hashPin(pinInput);
+      localStorage.setItem('elevate_hq_v2', JSON.stringify(S));
+      showToast('✅ PIN updated!','success');
+      pinInput=''; updatePinDots();
+      document.getElementById('pin-screen').style.display='none';
+      document.getElementById('app').classList.add('visible');
+    } else {
+      err.textContent = '❌ PINs don\'t match.'; pinInput=''; pinTemp=''; updatePinDots();
+      pinMode='change'; document.getElementById('pin-label').textContent='Enter new PIN';
+    }
+  }
+  pinInput=''; updatePinDots();
+}
+function unlockApp() {
+  document.getElementById('pin-screen').style.display='none';
+  document.getElementById('app').classList.add('visible');
+  loadSettings();
+  refreshAll();
+}
+function lockApp() {
+  document.getElementById('app').classList.remove('visible');
+  document.getElementById('pin-screen').style.display='flex';
+  pinMode='enter'; pinInput=''; updatePinDots();
+  document.getElementById('pin-label').textContent='Enter your PIN to unlock';
+  document.getElementById('pin-error').textContent='';
+}
+function startPinChange() {
+  pinMode='change';
+  document.getElementById('app').classList.remove('visible');
+  document.getElementById('pin-screen').style.display='flex';
+  document.getElementById('pin-label').textContent='Enter your NEW 4-digit PIN';
+  document.getElementById('pin-error').textContent='';
+  pinInput=''; updatePinDots();
+}
+function resetAll() {
+  if (!confirm('⚠️ This will clear ALL settings. Are you sure?')) return;
+  localStorage.removeItem('elevate_hq_v2');
+  location.reload();
+}
+
+// ===== NAVIGATION =====
+function showTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+tab).classList.add('active');
+  document.getElementById('nav-'+tab).classList.add('active');
+  document.getElementById('scroll-area').scrollTop=0;
+  if (tab==='agents') { refreshWorkflows(); refreshExecutions(); }
+  if (tab==='leads') refreshLeads();
+  if (tab==='customers') refreshCustomers();
+  if (tab==='kb') refreshKB();
+}
+
+// ===== DASHBOARD API (Google Sheets live data) =====
+async function refreshDashboardData() {
+  const url = (S.dashApiUrl || '').trim() ||
+              'https://elevatedsocial111.app.n8n.cloud/webhook/elevate-dashboard-api';
+  try {
+    const r = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ action: 'getDashboardData' }),
+      signal: AbortSignal.timeout(12000)
+    });
+    if (!r.ok) return;
+    const data = await r.json().catch(() => null);
+    if (!data || !data.ok) return;
+    if (Array.isArray(data.conversations)) liveData.conversations = data.conversations;
+    if (Array.isArray(data.customers))     liveData.customers     = data.customers;
+    liveData.kbEntries    = data.stats?.kbEntries    || (data.kbEntries?.length ?? 0);
+    liveData.kbCategories = data.stats?.kbCategories || 0;
+    // Surface recent activity on home page
+    if (Array.isArray(data.recentActivity) && data.recentActivity.length) {
+      renderActivityFeed(data.recentActivity);
+    }
+  } catch(_) { /* silent — empty state handles it */ }
+}
+
+function renderActivityFeed(items) {
+  const el = document.getElementById('activity-feed');
+  if (!el) return;
+  el.innerHTML = items.slice(0, 8).map(item => {
+    const statusColor = item.status === 'resolved' ? 'var(--green)' :
+                        item.status === 'open' ? 'var(--orange)' : 'var(--accent)';
+    return `<div class="exec-row" style="gap:10px">
+      <span style="font-size:18px">💬</span>
+      <div class="exec-info" style="flex:1;min-width:0">
+        <div class="exec-wf" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${item.name || 'Visitor'}</div>
+        <div class="exec-time" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${(item.message||'').substring(0,70)||'—'}</div>
+      </div>
+      <span style="font-size:10px;padding:3px 8px;border-radius:20px;background:${statusColor}22;color:${statusColor};white-space:nowrap">${item.status||'open'}</span>
+    </div>`;
+  }).join('');
+}
+
+// ===== API =====
+async function n8nFetch(path) {
+  if (!S.n8nKey) return null;
+  try {
+    const r = await fetch(S.n8nUrl+path, {headers:{'X-N8N-API-KEY':S.n8nKey}});
+    if (!r.ok) return null;
+    return r.json();
+  } catch(e) { return null; }
+}
+
+async function refreshAll() {
+  document.getElementById('last-updated').textContent = new Date().toLocaleTimeString();
+  if (!S.n8nKey) { document.getElementById('setup-banner').style.display='flex'; }
+  else { document.getElementById('setup-banner').style.display='none'; }
+  document.getElementById('topbar-sub').textContent = (S.bizName||'Elevate Social') + ' — Command Centre';
+  // Load Google Sheets data first so refreshLeads/refreshCustomers/refreshStats have it
+  await refreshDashboardData();
+  await Promise.all([refreshWorkflows(), refreshExecutions(), refreshLeads(), refreshStats(), refreshCustomers(), refreshKB()]);
+}
+
+async function refreshWorkflows() {
+  const data = await n8nFetch('/api/v1/workflows?limit=25');
+  const list = document.getElementById('wf-list');
+  if (!data) { list.innerHTML = demoWFsHTML(); return; }
+  const wfs = data.data||[];
+  liveData.workflows = wfs;
+  const active = wfs.filter(w=>w.active).length;
+  document.getElementById('stat-wf-count') && (document.getElementById('stat-wf-count').textContent=active);
+  document.getElementById('hb-auto').textContent = active+'/'+wfs.length;
+  if (!wfs.length) { list.innerHTML='<div class="empty">No workflows found</div>'; return; }
+  list.innerHTML = wfs.slice(0,12).map(w=>`
+    <div class="wf-row">
+      <div class="wf-dot ${w.active?'active':'inactive'}"></div>
+      <div class="wf-name">${w.name}</div>
+      <span class="wf-tag ${w.active?'active':''}">${w.active?'Active':'Off'}</span>
+    </div>`).join('');
+}
+
+function demoWFsHTML() {
+  return ['Frontend Website Agent (LAUNCH)','Service Advisor Agent','Design Agent v2','Production Order Agent (LAUNCH)','Daily Website KB Updater','Weekly FAQ Learner','Contact Form Handler','Free Audit Handler','Intake & Billing','System Dashboard']
+    .map(n=>`<div class="wf-row"><div class="wf-dot active"></div><div class="wf-name">${n}</div><span class="wf-tag active">Active</span></div>`).join('');
+}
+
+async function refreshExecutions() {
+  const data = await n8nFetch('/api/v1/executions?limit=10');
+  const list = document.getElementById('exec-list');
+  if (!data) {
+    list.innerHTML = DEMO_EXECS.map(e=>`<div class="exec-row"><span class="exec-icon">${e.status==='success'?'✅':'❌'}</span><div class="exec-info"><div class="exec-wf">${e.wf}</div><div class="exec-time">${e.time}</div></div><span class="exec-status ${e.status}">${e.status}</span></div>`).join('');
+    return;
+  }
+  const execs = (data.data||[]).slice(0,10);
+  if (!execs.length) { list.innerHTML='<div class="empty">No executions yet</div>'; return; }
+  list.innerHTML = execs.map(e=>{
+    const t = e.stoppedAt ? timeAgo(e.stoppedAt) : 'Running';
+    const status = e.status==='success'?'success':e.status==='error'?'error':'running';
+    const icon = status==='success'?'✅':status==='error'?'❌':'🔄';
+    return `<div class="exec-row"><span class="exec-icon">${icon}</span><div class="exec-info"><div class="exec-wf">${e.workflowData?.name||'Workflow'}</div><div class="exec-time">${t}</div></div><span class="exec-status ${status}">${status}</span></div>`;
+  }).join('');
+}
+
+async function refreshLeads() {
+  const convs = liveData.conversations;
+  const list = document.getElementById('lead-list');
+  let hot=0,warm=0,cold=0;
+  if (!convs.length) { list.innerHTML='<div class="empty"><div class="empty-icon">💬</div><div style="font-weight:700;margin-bottom:8px">No conversations yet</div><div style="font-size:11px;line-height:1.8;color:var(--muted)">1. Import <b style="color:var(--accent)">n8n_dashboard_api.json</b> into n8n<br>2. Connect Google Sheets credential<br>3. Activate the workflow<br>4. Paste webhook URL in Settings → Dashboard API URL</div></div>'; return; }
+  convs.forEach(c=>{const s=parseInt(c.Score)||0; if(s>=70)hot++; else if(s>=40)warm++; else cold++;});
+  document.getElementById('pl-hot').textContent=hot;
+  document.getElementById('pl-warm').textContent=warm;
+  document.getElementById('pl-cold').textContent=cold;
+  const dealVal=S.dealVal||399;
+  const total=Math.round(hot*dealVal*0.7+warm*dealVal*0.3+cold*dealVal*0.1);
+  document.getElementById('pl-total').textContent='$'+total.toLocaleString();
+  list.innerHTML = convs.slice(0,15).map(c=>{
+    const score=parseInt(c.Score)||0;
+    const cls=score>=70?'score-hot':score>=40?'score-warm':'score-cold';
+    const emoji=score>=70?'🔥':score>=40?'🌡':'❄️';
+    return `<div class="lead-item"><div class="lead-avatar">${emoji}</div><div class="lead-info"><div class="lead-question">${(c.Question||'Chat').substring(0,55)}</div><div class="lead-meta">${timeAgo(c.Timestamp)||'—'} · ${c.Route||'FA'}</div></div><div class="lead-score"><div class="lead-score-val ${cls}">${score}</div><div class="lead-score-lbl">SCORE</div></div></div>`;
+  }).join('');
+}
+
+async function refreshStats() {
+  const convs = liveData.conversations;
+  const hot=convs.filter(c=>parseInt(c.Score)>=70).length||3;
+  const warm=convs.filter(c=>{const s=parseInt(c.Score);return s>=40&&s<70;}).length||5;
+  const cold=convs.filter(c=>parseInt(c.Score)<40).length||8;
+  const total=convs.length||hot+warm+cold;
+  const dealVal=S.dealVal||399;
+  const revHot=hot*dealVal*0.7, revWarm=warm*dealVal*0.3, revCold=cold*dealVal*0.1;
+  const revTotal=Math.round(revHot+revWarm+revCold);
+  document.getElementById('stat-chats').textContent=total;
+  document.getElementById('stat-leads').textContent=hot;
+  document.getElementById('stat-revenue').textContent='$'+revTotal.toLocaleString();
+  document.getElementById('stat-customers').textContent=liveData.customers.length||'—';
+  document.getElementById('rev-total').textContent='$'+revTotal.toLocaleString();
+  document.getElementById('rev-hot').textContent='$'+Math.round(revHot).toLocaleString();
+  document.getElementById('rev-warm').textContent='$'+Math.round(revWarm).toLocaleString();
+  document.getElementById('rev-cold').textContent='$'+Math.round(revCold).toLocaleString();
+  const health=Math.min(98,Math.round(70+(hot/Math.max(total,1)*20)+10));
+  document.getElementById('health-score').textContent=health;
+  document.getElementById('health-grade').textContent=health>=90?'A+':health>=80?'A':health>=70?'B':'C';
+}
+
+async function refreshCustomers() {
+  const list = document.getElementById('customer-list');
+  const custTotal = document.getElementById('cust-total');
+  const custNew = document.getElementById('cust-new');
+  const custs = liveData.customers;
+  if (!custs.length) {
+    // Show demo placeholder
+    custTotal.textContent='0';
+    custNew.textContent='0';
+    return;
+  }
+  custTotal.textContent = custs.length;
+  const now = Date.now();
+  const newCount = custs.filter(c=>now-new Date(c.SignupDate)<7*86400000).length;
+  custNew.textContent = newCount;
+  renderCustomers(custs);
+}
+
+function renderCustomers(custs) {
+  const list = document.getElementById('customer-list');
+  if (!custs.length) { list.innerHTML='<div class="empty"><div class="empty-icon">👥</div>No customers yet</div>'; return; }
+  list.innerHTML = custs.slice(0,20).map((c,i)=>{
+    const initials = (c.Name||'?').split(' ').map(x=>x[0]).join('').toUpperCase().substring(0,2);
+    const isNew = c.SignupDate && (Date.now()-new Date(c.SignupDate)<7*86400000);
+    return `<div class="customer-card" onclick="openCustomerDetail(${i})">
+      <div class="customer-header">
+        <div class="customer-avatar">${initials}</div>
+        <div style="flex:1;min-width:0">
+          <div class="customer-name">${c.Name||'Unknown'}</div>
+          <div class="customer-email">${c.Email||'No email'}</div>
+        </div>
+        <span class="customer-badge ${isNew?'badge-new':'badge-returning'}">${isNew?'NEW':'Returning'}</span>
+      </div>
+      <div class="customer-stats">
+        <div class="customer-stat"><div class="customer-stat-val">${c.Orders||0}</div><div class="customer-stat-lbl">Orders</div></div>
+        <div class="customer-stat"><div class="customer-stat-val">${c.TotalSpend?'$'+c.TotalSpend:'$0'}</div><div class="customer-stat-lbl">Spent</div></div>
+        <div class="customer-stat"><div class="customer-stat-val">${c.Status||'Active'}</div><div class="customer-stat-lbl">Status</div></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterCustomers(q) {
+  if (!q) { renderCustomers(liveData.customers); return; }
+  const filtered = liveData.customers.filter(c=>(c.Name||'').toLowerCase().includes(q.toLowerCase())||(c.Email||'').toLowerCase().includes(q.toLowerCase()));
+  renderCustomers(filtered);
+}
+
+function openCustomerDetail(i) {
+  const c = liveData.customers[i];
+  if (!c) return;
+  document.getElementById('customer-detail-body').innerHTML = `
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#fff;margin:0 auto 12px">${(c.Name||'?').split(' ').map(x=>x[0]).join('').substring(0,2)}</div>
+      <div style="font-size:20px;font-weight:800">${c.Name||'Unknown'}</div>
+      <div style="color:var(--muted);font-size:13px">${c.Email||'No email'}</div>
+    </div>
+    <div class="settings-group">
+      <div class="settings-row"><div class="settings-info"><div class="settings-label">Status</div></div><span class="tag tag-green">${c.Status||'Active'}</span></div>
+      <div class="settings-row"><div class="settings-info"><div class="settings-label">Signed Up</div><div class="settings-desc">${c.SignupDate||'Unknown'}</div></div></div>
+      <div class="settings-row"><div class="settings-info"><div class="settings-label">Total Orders</div></div><span>${c.Orders||0}</span></div>
+      <div class="settings-row" style="border-bottom:none"><div class="settings-info"><div class="settings-label">Total Spent</div></div><span style="color:var(--green)">${c.TotalSpend?'$'+c.TotalSpend:'$0'}</span></div>
+    </div>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="mailto:${c.Email}" style="flex:1;text-align:center">✉️ Email</a>
+      <button class="btn btn-secondary" style="flex:1" onclick="closeModal('customer-detail-modal')">Close</button>
+    </div>
+  `;
+  document.getElementById('customer-detail-modal').classList.add('open');
+}
+
+function openSetupCustomers() {
+  document.getElementById('customer-setup-modal').classList.add('open');
+}
+
+async function refreshKB() {
+  const entries = liveData.kbEntries || liveData.kbEntries === 0 ? liveData.kbEntries : '—';
+  document.getElementById('kb-entries').textContent = entries || '—';
+  document.getElementById('kb-convs').textContent = liveData.conversations.length || '—';
+  document.getElementById('kb-categories').textContent = liveData.kbCategories || '—';
+}
+
+function exportLeads() {
+  const convs = liveData.conversations;
+  if (!convs.length) { showToast('No data to export yet','error'); return; }
+  const headers = ['Timestamp','SessionId','Question','Answer','Route','Score'];
+  const rows = convs.map(c=>headers.map(h=>`"${(c[h]||'').toString().replace(/"/g,'""')}"`).join(','));
+  const csv = [headers.join(','),...rows].join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download = `elevate-leads-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+  showToast('✅ Leads exported!','success');
+}
+
+// ===== AGENT MODAL =====
+const AGENT_INFO = {
+  fa:{name:'Frontend Agent',role:'First contact · Routes all chats · Reads KB',icon:'🤖',desc:'First AI your visitors talk to. Reads the Knowledge Base before every reply, routes hot leads to Service Advisor, design requests to Design Agent, and orders to Production. Saves every conversation automatically.',wfId:'zNvOqpoavkRDxIc0'},
+  sa:{name:'Service Advisor Agent',role:'Pricing · Proposals · Lead qualification',icon:'💼',desc:'Handles hot leads from the Frontend Agent. Provides pricing, sends proposals, and qualifies prospects. Uses OpenRouter with advanced prompting to match client needs to your service packages.',wfId:'eTbD6TSlbgQrdKLJ'},
+  da:{name:'Design Agent',role:'Design briefs · Visual proposals · Approval required',icon:'🎨',desc:'Handles all design requests. Creates detailed briefs and proposals. Has a built-in approval step — you must approve before anything is sent to the client.',wfId:'FlUEMALntk2OytPp'},
+  pa:{name:'Production Agent',role:'Orders · Confirmations · Delivery',icon:'📦',desc:'Manages client orders end-to-end. Sends order confirmations, tracks delivery, and notifies clients automatically via email.',wfId:'DbnvncAGfEGVzQ4i'},
+};
+function openAgentModal(agent) {
+  const info = AGENT_INFO[agent];
+  document.getElementById('modal-agent-name').textContent = info.icon+' '+info.name;
+  document.getElementById('modal-agent-role').textContent = info.role;
+  document.getElementById('modal-agent-body').innerHTML = `
+    <div class="banner info" style="margin-bottom:14px"><span class="banner-icon">ℹ️</span><div class="banner-text">${info.desc}</div></div>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="https://elevatedsocial111.app.n8n.cloud/workflow/${info.wfId}" target="_blank" style="flex:1;text-align:center">⚙️ Edit Workflow</a>
+      <button class="btn btn-secondary" onclick="testChatbot()" style="flex:1">🧪 Test</button>
+    </div>`;
+  document.getElementById('agent-modal').classList.add('open');
+}
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+// ===== CHATBOT TEST =====
+function testChatbot() {
+  document.getElementById('test-modal').classList.add('open');
+  document.getElementById('test-result').textContent='Response will appear here...';
+  document.getElementById('test-result').style.color='var(--muted)';
+}
+async function sendTestMsg() {
+  const msg = document.getElementById('test-msg').value.trim();
+  if (!msg) return;
+  const resultEl = document.getElementById('test-result');
+  resultEl.innerHTML = '<div class="spinner"></div> Sending...';
+  resultEl.style.color='var(--muted)';
+  try {
+    const r = await fetch('https://elevatedsocial111.app.n8n.cloud/webhook/elevate-social-chat', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({message:msg,sessionId:'dashboard-test-'+Date.now(),source:'owner-dashboard'})
+    });
+    if (r.ok) {
+      const data = await r.json().catch(()=>null);
+      const reply = data?.reply||data?.response||data?.message||data?.text||JSON.stringify(data);
+      resultEl.style.color='var(--text)'; resultEl.textContent=reply;
+      showToast('✅ Agent replied!','success');
+    } else { throw new Error('HTTP '+r.status); }
+  } catch(e) {
+    resultEl.style.color='var(--red)';
+    resultEl.textContent='❌ Could not reach agent. Check webhook is live in n8n.\n\nError: '+e.message;
+  }
+}
+
+// ===== CONNECTION TEST =====
+function testConnection() {
+  if (!S.n8nKey) { showToast('Add API key first','error'); return; }
+  const btn = document.getElementById('btn-test-conn');
+  btn.textContent='🔌 Testing...';
+  n8nFetch('/api/v1/workflows?limit=1').then(d=>{
+    if (d) { showToast('✅ Connected!','success'); btn.textContent='✅ Connected!'; }
+    else { showToast('❌ Connection failed','error'); btn.textContent='❌ Failed'; }
+    setTimeout(()=>btn.textContent='🔌 Test n8n Connection', 2500);
+  });
+}
+
+// ===== SHARE =====
+function downloadDashboard() {
+  const html = document.documentElement.outerHTML;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([html],{type:'text/html'}));
+  a.download = 'elevate-social-dashboard.html';
+  a.click();
+  showToast('✅ Downloading...','success');
+}
+function copyShareInstructions() {
+  const text = `📊 ELEVATE SOCIAL BUSINESS DASHBOARD
+
+HOW TO OPEN:
+1. Download: elevate-social-dashboard.html
+2. Open in Chrome or Safari on your phone
+3. Create your own 4-digit PIN when prompted
+
+ADD TO HOME SCREEN:
+• iPhone: Safari → Share → "Add to Home Screen"
+• Android: Chrome → ⋮ → "Add to Home Screen"
+
+HOST FREE (access from anywhere):
+• Go to app.netlify.com/drop
+• Drag & drop the HTML file → get a free URL!
+
+TO SEE LIVE DATA (get from owner):
+• n8n API key
+• Google Sheet ID
+→ Enter in Dashboard → Settings tab`;
+  navigator.clipboard.writeText(text).then(()=>showToast('📋 Copied!','success'));
+}
+
+// ===== UTILS =====
+function openSheet() {
+  window.open('https://docs.google.com/spreadsheets/d/'+(S.sheetId||'1a7aSQogDcZ4iF0W9Q4UgWuYmuejQxpXKeTNvZowtKJg')+'/edit','_blank');
+}
+function showToast(msg,type='') {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.className='show '+type;
+  setTimeout(()=>t.className='',3000);
+}
+function timeAgo(ts) {
+  if (!ts) return '—';
+  const d=(Date.now()-new Date(ts))/1000;
+  if(d<60)return Math.round(d)+'s ago';
+  if(d<3600)return Math.round(d/60)+'min ago';
+  if(d<86400)return Math.round(d/3600)+'hr ago';
+  return Math.round(d/86400)+'d ago';
+}
+
+// ===== AUTO REFRESH =====
+setInterval(()=>{ if (document.getElementById('app').classList.contains('visible')) refreshAll(); }, 60000);
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open')}));
+
+init();
+</script>
+</body>
+</html>
