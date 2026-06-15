@@ -21,6 +21,27 @@ Keep responses short and helpful (2-4 sentences max). Be conversational. If some
 
 Never make up specific case studies or client results. If asked something outside your scope, suggest booking a free call.`;
 
+const TOPIC_KEYWORDS = [
+  "marketing","social media","content","brand","branding","website","design",
+  "seo","automation","ai","growth","business","instagram","facebook","tiktok",
+  "linkedin","ads","advertising","email","leads","clients","customers",
+  "pricing","price","cost","package","plan","audit","strategy","consulting",
+  "logo","video","post","caption","schedule","analytics","campaign","elevate",
+  "ellie","service","help","hi","hello","hey","thanks","thank","book",
+  "call","contact","start","small business","restaurant","contractor",
+  "plumber","landscap","clean","revenue","sales","online","digital","local",
+  "quote","question","info","what","how","when","where","who","can","do you",
+];
+
+function isTopicRelevant(msg: string): boolean {
+  const lower = msg.toLowerCase().trim();
+  if (lower.split(/\s+/).length <= 3) return true;
+  return TOPIC_KEYWORDS.some((kw) => lower.includes(kw));
+}
+
+const OFF_TOPIC_REPLY =
+  "That's a bit outside my lane! 😊 I'm Ellie, Elevate Social's AI assistant — I help with marketing, AI automation, website design, and business growth for small businesses. Want to chat about any of those, or book a free strategy call?";
+
 export function ChatBot() {
   const { t, i18n } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -61,11 +82,35 @@ export function ChatBot() {
   const sendMessage = async () => {
     const text = input.trim();
     if (!text || loading) return;
+
+    // Offline guard — preserve input so user can retry
+    if (!navigator.onLine) {
+      setMessages((prev) => [...prev, {
+        id: Date.now().toString(), role: "assistant" as const,
+        content: "You appear to be offline. Please check your connection and try again! 📡",
+        ts: Date.now(),
+      }]);
+      return;
+    }
+
+    // Topic filter — reply without API call
+    if (!isTopicRelevant(text)) {
+      setInput("");
+      setMessages((prev) => [...prev,
+        { id: Date.now().toString(), role: "user" as const, content: text, ts: Date.now() },
+        { id: (Date.now() + 1).toString(), role: "assistant" as const, content: OFF_TOPIC_REPLY, ts: Date.now() },
+      ]);
+      return;
+    }
+
     setInput("");
 
     const userMsg: Message = { id: Date.now().toString(), role: "user", content: text, ts: Date.now() };
     setMessages((prev) => [...prev, userMsg]);
     setLoading(true);
+
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 35000);
 
     try {
       let sessionId = "";
@@ -77,18 +122,23 @@ export function ChatBot() {
         }
       }
 
-      const res = await fetch("https://elevatedsocial111.app.n8n.cloud/webhook/elevate-social-frontend-agent", {
+      const res = await fetch(import.meta.env.VITE_N8N_CHAT_WEBHOOK_URL || "", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+          signal: ctrl.signal,
         body: JSON.stringify({
           message: text,
           sessionId,
           channel: "lovable_website",
           language: (typeof window !== "undefined" && window.localStorage.getItem("site_translate_lang")) || i18n.language || "en",
+            referrer: document.referrer,
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            timestamp: new Date().toISOString(),
         }),
       });
 
-      const raw = await res.text();
+      clearTimeout(timer);
+    const raw = await res.text();
       let reply = t("chat.error");
       try {
         const data = JSON.parse(raw);
@@ -104,10 +154,11 @@ export function ChatBot() {
         ...prev,
         { id: (Date.now() + 1).toString(), role: "assistant", content: reply, ts: Date.now() },
       ]);
-    } catch {
+    } catch (err: unknown) {
+      const isAbort = err instanceof Error && err.name === "AbortError";
       setMessages((prev) => [
         ...prev,
-        { id: (Date.now() + 1).toString(), role: "assistant", content: t("chat.error"), ts: Date.now() },
+        { id: (Date.now() + 1).toString(), role: "assistant", content: isAbort ? "That took a bit too long — please try again in a moment! ⏱️" : t("chat.error"), ts: Date.now() },
       ]);
     } finally {
       setLoading(false);
@@ -160,13 +211,13 @@ export function ChatBot() {
             </div>
             <div className="flex items-center gap-2">
               <button
-                onClick={() => setMinimized(!minimized)}
+                aria-label="Minimize chat" onClick={() => setMinimized(!minimized)}
                 className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-white/70 transition hover:bg-white/20"
               >
                 <Minimize2 className="h-3.5 w-3.5" />
               </button>
               <button
-                onClick={() => setOpen(false)}
+                aria-label="Close chat" onClick={() => setOpen(false)}
                 className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-white/70 transition hover:bg-white/20"
               >
                 <X className="h-3.5 w-3.5" />
