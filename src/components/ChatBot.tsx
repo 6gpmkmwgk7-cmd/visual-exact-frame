@@ -6,7 +6,7 @@ interface Message {
   id: string;
   role: "user" | "assistant";
   content: string;
-  ts: number;
+  ts: number;h
 }
 
 const SYSTEM_PROMPT = `You are Ellie, the AI assistant for Elevate Social — an AI-powered marketing and automation agency for small businesses. You are warm, professional, knowledgeable, and concise.
@@ -144,7 +144,7 @@ export function ChatBot() {
         }
       }
 
-      const res = await fetch(import.meta.env.VITE_N8N_CHAT_WEBHOOK_URL || "", {
+      const res = await fetch(import.meta.env.VITE_N8N_CHAT_WEBHOOK_URL || "https://elevatedsocial111.app.n8n.cloud/webhook/elevate-social-frontend-agent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
           signal: ctrl.signal,
