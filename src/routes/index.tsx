@@ -599,7 +599,7 @@ function HomePage() {
                   ))}
                 </ul>
                 <Link
-                  to="/contact"
+                  to="/checkout"
                   className={`mt-8 inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold ${
                     s.featured
                       ? "bg-gradient-gold text-white shadow-glow"
