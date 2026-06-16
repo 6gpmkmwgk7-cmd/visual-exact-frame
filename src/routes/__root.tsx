@@ -76,14 +76,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a72c2cd0-43fd-4227-a08a-6bc462b0fa4d/id-preview-2e8b8798--dd493c23-2777-4545-9e33-2fdde941f057.lovable.app-1781148726068.png" },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a72c2cd0-43fd-4227-a08a-6bc462b0fa4d/id-preview-2e8b8798--dd493c23-2777-4545-9e33-2fdde941f057.lovable.app-1781148726068.png" },
         { name: "google-site-verification", content: "vRcacka93KC1ZsRfyXJT917jcRSS4q6S6VCt1AmWL2k" },
-        { property: "og:url", content: "https://www.elevatesocially.com/" },
+        { property: "og:url", content: "https://elevatesocial.ca/" },
         { property: "og:locale", content: "en_CA" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "icon", type: "image/png", href: logo },
       { rel: "apple-touch-icon", href: logo },
-      { rel: "canonical", href: "https://www.elevatesocially.com/" },
+      { rel: "canonical", href: "https://elevatesocial.ca/" },
     ],
     scripts: [{
       type: "application/ld+json",
@@ -92,11 +92,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         "@graph": [
           {
             "@type": ["Organization", "LocalBusiness"],
-            "@id": "https://www.elevatesocially.com/#organization",
+            "@id": "https://elevatesocial.ca/#organization",
             "name": "Elevate Social",
             "description": "AI-powered marketing, automation, content creation, website design, and business growth agency helping small businesses increase customers and improve operations.",
             "url": "https://www.elevatesocially.com",
-            "logo": "https://www.elevatesocially.com/logo.png",
+            "logo": "https://elevatesocial.ca/logo.png",
             "email": "masalaminglecatering@gmail.com",
             "address": { "@type": "PostalAddress", "addressCountry": "CA" },
             "priceRange": "$$",
@@ -105,20 +105,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           },
           {
             "@type": "WebSite",
-            "@id": "https://www.elevatesocially.com/#website",
+            "@id": "https://elevatesocial.ca/#website",
             "url": "https://www.elevatesocially.com",
             "name": "Elevate Social",
             "description": "AI-powered marketing and business growth agency for small businesses",
-            "publisher": { "@id": "https://www.elevatesocially.com/#organization" },
+            "publisher": { "@id": "https://elevatesocial.ca/#organization" },
             "potentialAction": {
               "@type": "SearchAction",
-              "target": "https://www.elevatesocially.com/?s={search_term_string}",
+              "target": "https://elevatesocial.ca/?s={search_term_string}",
               "query-input": "required name=search_term_string"
             }
           },
           {
             "@type": "Service",
-            "provider": { "@id": "https://www.elevatesocially.com/#organization" },
+            "provider": { "@id": "https://elevatesocial.ca/#organization" },
             "name": "AI Marketing and Automation Services",
             "description": "AI-powered marketing, social media management, website design, business automation, content creation, and SEO services for small businesses.",
             "areaServed": "Canada",
