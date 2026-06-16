@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 
 // STRIPE PAYMENT LINKS — Replace with real URLs from https://dashboard.stripe.com/payment-links
 const STRIPE_LINKS: Record<string, string> = {
-  'business-launch': 'https://buy.stripe.com/REPLACE_ME_BUSINESS_LAUNCH',
-  'ai-content': 'https://buy.stripe.com/REPLACE_ME_AI_CONTENT',
-  'ai-workflow': 'https://buy.stripe.com/REPLACE_ME_AI_WORKFLOW',
-  'ai-growth': 'https://buy.stripe.com/REPLACE_ME_AI_GROWTH',
+  'business-launch': 'https://buy.stripe.com/5kQbJ34X69ky4yn34G3ZK00',
+  'ai-content': 'https://buy.stripe.com/cNi3cxblufIWfd1fRs3ZK01',
+  'ai-workflow': 'https://buy.stripe.com/cNi28tblu7cq0i734G3ZK02',
+  'ai-growth': 'https://buy.stripe.com/9B6fZjdtC9kyc0PcFg3ZK03',
 };
 
 // PAYPAL CLIENT ID — Replace from https://developer.paypal.com/dashboard/applications
