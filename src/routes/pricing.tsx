@@ -13,7 +13,7 @@ export const Route = createFileRoute("/pricing")({
       { name: "twitter:title", content: "Pricing Plans | Affordable AI Marketing for Small Businesses – Elevate Social" },
       { name: "twitter:description", content: "Transparent, affordable pricing for AI marketing, automation, and web design. Built for small businesses." },
     ],
-    links: [{ rel: "canonical", href: "https://elevatesocially.com/pricing" }],
+    links: [{ rel: "canonical", href: "https://www.elevatesocially.com/pricing" }],
   }),
   component: PricingPage,
 });

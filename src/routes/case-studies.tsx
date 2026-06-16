@@ -11,7 +11,7 @@ export const Route = createFileRoute("/case-studies")({
       { name: "twitter:title", content: "Case Studies | Real Results for Small Businesses – Elevate Social" },
       { name: "twitter:description", content: "Real growth stories from small businesses using Elevate Social's AI marketing and automation services." },
     ],
-    links: [{ rel: "canonical", href: "https://elevatesocially.com/case-studies" }],
+    links: [{ rel: "canonical", href: "https://www.elevatesocially.com/case-studies" }],
   }),
   component: CaseStudiesPage,
 });

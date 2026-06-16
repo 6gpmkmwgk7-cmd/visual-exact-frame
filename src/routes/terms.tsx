@@ -6,7 +6,7 @@ export const Route = createFileRoute("/terms")({
       { title: "Terms of Service – Elevate Social" },
       { name: "description", content: "Read Elevate Social's terms of service governing use of our AI marketing, automation, website design, and business growth agency services." },
     ],
-    links: [{ rel: "canonical", href: "https://elevatesocially.com/terms" }],
+    links: [{ rel: "canonical", href: "https://www.elevatesocially.com/terms" }],
   }),
   component: TermsPage,
 });

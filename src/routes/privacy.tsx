@@ -6,7 +6,7 @@ export const Route = createFileRoute("/privacy")({
       { title: "Privacy Policy – Elevate Social" },
       { name: "description", content: "Elevate Social's privacy policy explains how we collect, use, and protect your personal information when you use our AI marketing and automation services." },
     ],
-    links: [{ rel: "canonical", href: "https://elevatesocially.com/privacy" }],
+    links: [{ rel: "canonical", href: "https://www.elevatesocially.com/privacy" }],
   }),
   component: PrivacyPage,
 });

@@ -14,7 +14,7 @@ export const Route = createFileRoute("/about")({
       { name: "twitter:title", content: "About Elevate Social | AI-Powered Marketing Agency" },
       { name: "twitter:description", content: "We help small businesses grow with AI marketing, automation, and web design. Learn our story and mission." },
     ],
-    links: [{ rel: "canonical", href: "https://elevatesocially.com/about" }],
+    links: [{ rel: "canonical", href: "https://www.elevatesocially.com/about" }],
   }),
   component: AboutPage,
 });

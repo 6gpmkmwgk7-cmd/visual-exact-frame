@@ -17,7 +17,7 @@ export const Route = createFileRoute("/ai-solutions")({
       { name: "twitter:title", content: "AI Solutions for Small Business | Chatbots, Automation & More – Elevate Social" },
       { name: "twitter:description", content: "AI chatbots, marketing automation, content generation, and smart workflows — built for small and local businesses." },
     ],
-    links: [{ rel: "canonical", href: "https://elevatesocially.com/ai-solutions" }],
+    links: [{ rel: "canonical", href: "https://www.elevatesocially.com/ai-solutions" }],
   }),
   component: AiSolutionsPage,
 });

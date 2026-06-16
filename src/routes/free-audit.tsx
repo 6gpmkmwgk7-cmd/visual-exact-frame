@@ -17,7 +17,7 @@ export const Route = createFileRoute("/free-audit")({
       { name: "twitter:title", content: "Free Marketing Audit | AI Analysis of Your Business – Elevate Social" },
       { name: "twitter:description", content: "Free AI marketing audit for your small business. Discover quick wins and growth opportunities in minutes." },
     ],
-    links: [{ rel: "canonical", href: "https://elevatesocially.com/free-audit" }],
+    links: [{ rel: "canonical", href: "https://www.elevatesocially.com/free-audit" }],
   }),
   component: FreeAuditPage,
 });

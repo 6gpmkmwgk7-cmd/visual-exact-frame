@@ -116,7 +116,7 @@ export const Route = createFileRoute("/")({
       { name: "twitter:title", content: "Elevate Social | AI Marketing Agency for Small Businesses" },
       { name: "twitter:description", content: "AI-powered marketing, automation & web design for small businesses. Grow smarter, automate faster, scale further." },
     ],
-    links: [{ rel: "canonical", href: "https://elevatesocially.com/" }],
+    links: [{ rel: "canonical", href: "https://www.elevatesocially.com/" }],
   }),
   component: HomePage,
 });

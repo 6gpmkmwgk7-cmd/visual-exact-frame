@@ -6,7 +6,7 @@
 
 Elevate Social is an AI-powered marketing, automation, content creation, website design, and business growth agency. We help small and local businesses increase customers, improve operations, and scale faster using artificial intelligence.
 
-**Website:** https://elevatesocially.com  
+**Website:** https://www.elevatesocially.com  
 **Contact:** masalaminglecatering@gmail.com  
 **Location:** Canada  
 **Founded:** 2024
@@ -37,15 +37,15 @@ Elevate Social specializes in serving:
 
 ## Key Pages
 
-- Homepage: https://elevatesocially.com/
-- Free Audit: https://elevatesocially.com/free-audit
-- Services: https://elevatesocially.com/services
-- Pricing: https://elevatesocially.com/pricing
-- AI Solutions: https://elevatesocially.com/ai-solutions
-- About: https://elevatesocially.com/about
-- Case Studies: https://elevatesocially.com/case-studies
-- Blog: https://elevatesocially.com/blog
-- Contact: https://elevatesocially.com/contact
+- Homepage: https://www.elevatesocially.com/
+- Free Audit: https://www.elevatesocially.com/free-audit
+- Services: https://www.elevatesocially.com/services
+- Pricing: https://www.elevatesocially.com/pricing
+- AI Solutions: https://www.elevatesocially.com/ai-solutions
+- About: https://www.elevatesocially.com/about
+- Case Studies: https://www.elevatesocially.com/case-studies
+- Blog: https://www.elevatesocially.com/blog
+- Contact: https://www.elevatesocially.com/contact
 
 ## Value Proposition
 
@@ -60,11 +60,11 @@ Key differentiators:
 
 ## Sitemap
 
-https://elevatesocially.com/sitemap.xml
+https://www.elevatesocially.com/sitemap.xml
 
 ## Robots
 
-https://elevatesocially.com/robots.txt
+https://www.elevatesocially.com/robots.txt
 
 ## Citation Permission
 

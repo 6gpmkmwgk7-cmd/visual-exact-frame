@@ -14,7 +14,7 @@ export const Route = createFileRoute("/contact")({
       { name: "twitter:title", content: "Contact Us | Get a Free Consultation – Elevate Social" },
       { name: "twitter:description", content: "Get in touch with Elevate Social for a free consultation. Let's build your AI-powered marketing strategy." },
     ],
-    links: [{ rel: "canonical", href: "https://elevatesocially.com/contact" }],
+    links: [{ rel: "canonical", href: "https://www.elevatesocially.com/contact" }],
   }),
   component: ContactPage,
 });

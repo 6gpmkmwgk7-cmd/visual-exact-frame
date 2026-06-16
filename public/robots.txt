@@ -28,4 +28,4 @@ Allow: /
 User-agent: ClaudeBot
 Allow: /
 
-Sitemap: https://elevatesocially.com/sitemap.xml
+Sitemap: https://www.elevatesocially.com/sitemap.xml
