@@ -1,4 +1,5 @@
 const env = import.meta.env;
+export const SITE_NAME = "Elevate Social";
 
 // ── First-time visitor promo ──────────────────────────────────────────────────
 const PROMO_CODE   = env.VITE_PROMO_CODE    || "";
