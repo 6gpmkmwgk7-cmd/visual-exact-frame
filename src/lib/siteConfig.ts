@@ -30,4 +30,4 @@ export const STRIPE_LINKS = {
 // ── PayPal (routes to internal /checkout page) ────────────────────────────────
 export const PAYPAL_ENABLED   = env.VITE_ENABLE_PAYPAL    === "true";
 export const PAYPAL_CLIENT_ID = env.VITE_PAYPAL_CLIENT_ID || "";
-export const N8N_WEBHOOK_URL  = env.VITE_N8N_FRONTEND_AGENT_URL || "";
+export const N8N_WEBHOOK_URL  = env.VITE_N8N_FRONTEND_AGENT_URL || "https://elevatedsocial111.app.n8n.cloud/webhook/elevate-social-frontend-agent";
