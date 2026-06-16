@@ -95,7 +95,7 @@ function CheckoutPage() {
   const handleStripe = () => {
     const url = STRIPE_LINKS[pkg];
     if (!url || url.includes('REPLACE_ME')) {
-      window.location.href = `mailto:masalaminglecatering@gmail.com?subject=Order: ${plan.name}&body=I'd like to purchase the ${plan.name} package (${plan.price}${plan.billing}).`;
+      window.location.href = `mailto:socialselavates@gmail.com?subject=Order: ${plan.name}&body=I'd like to purchase the ${plan.name} package (${plan.price}${plan.billing}).`;
       return;
     }
     window.location.href = url + `?client_reference_id=${pkg}&success_url=${encodeURIComponent(window.location.origin + '/payment-success')}&cancel_url=${encodeURIComponent(window.location.origin + '/payment-cancel')}`;
@@ -158,7 +158,7 @@ function CheckoutPage() {
           {/* PayPal */}
           {PAYPAL_CLIENT_ID === 'AXq5plyctSjcgwWZHFOStdrxyMklS-3QwXGm5r3CNRZfwUb1AYnTPzN5PwLdeesC8PcauCmF-w6yroW1' ? (
             <button
-              onClick={() => window.location.href = `mailto:masalaminglecatering@gmail.com?subject=PayPal Order: ${plan.name}&body=I'd like to pay via PayPal for the ${plan.name} package (${plan.price}${plan.billing}).`}
+              onClick={() => window.location.href = `mailto:socialselavates@gmail.com?subject=PayPal Order: ${plan.name}&body=I'd like to pay via PayPal for the ${plan.name} package (${plan.price}${plan.billing}).`}
               className="w-full flex items-center justify-center gap-3 bg-[#FFC439] hover:bg-[#f0b429] text-[#003087] font-bold py-4 px-6 rounded-xl transition-all text-base shadow-md hover:shadow-lg"
             >
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -182,7 +182,7 @@ function CheckoutPage() {
               🔒 256-bit SSL encryption. Your payment is 100% secure.
             </p>
             <p className="text-xs text-muted-foreground mt-1">
-              Questions? Email <a href="mailto:masalaminglecatering@gmail.com" className="underline hover:text-foreground transition-colors">masalaminglecatering@gmail.com</a>
+              Questions? Email <a href="mailto:socialselavates@gmail.com" className="underline hover:text-foreground transition-colors">socialselavates@gmail.com</a>
             </p>
           </div>
         </div>

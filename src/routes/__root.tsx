@@ -97,7 +97,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
             "description": "AI-powered marketing, automation, content creation, website design, and business growth agency helping small businesses increase customers and improve operations.",
             "url": "https://www.elevatesocially.com",
             "logo": "https://www.elevatesocially.com/logo.png",
-            "email": "masalaminglecatering@gmail.com",
+            "email": "socialselavates@gmail.com",
             "address": { "@type": "PostalAddress", "addressCountry": "CA" },
             "priceRange": "$$",
             "areaServed": "Canada",

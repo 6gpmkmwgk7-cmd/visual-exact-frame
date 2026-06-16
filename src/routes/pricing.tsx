@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { ArrowRight, BadgeCheck, CheckCircle2, Sparkles, Rocket, Bot, Share2 } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { ParticleField } from "@/components/ParticleField";
+import { STRIPE_LINKS, withPromo, markVisitorAsReturning } from "@/lib/siteConfig";
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({
@@ -25,6 +27,7 @@ const tiers = [
     includes: ["Facebook Setup", "Instagram Setup", "LinkedIn Setup", "Professional Bio Writing", "CTA Optimization", "Keywords & Hashtags"],
     best: ["New businesses", "Local services", "Startups"],
     cta: "Launch My Presence",
+    stripeLink: STRIPE_LINKS.businessPresence,
   },
   {
     icon: Share2, name: "AI Content Engine", price: "$299", suffix: "/mo",
@@ -32,6 +35,7 @@ const tiers = [
     includes: ["30-Day Content Calendar", "30 Captions", "Hashtag Strategy", "Content Planning", "Canva Design Briefs"],
     best: ["Restaurants", "Service businesses", "Growing brands"],
     discount: true, cta: "Start Growing",
+    stripeLink: STRIPE_LINKS.contentEngine,
   },
   {
     icon: Bot, name: "AI Workflow Automation Setup", price: "$299", suffix: "one-time",
@@ -39,6 +43,7 @@ const tiers = [
     includes: ["Lead Capture Workflow", "Google Sheets CRM", "Telegram/Email Alerts", "Client Intake Forms", "Booking & Follow-up"],
     best: ["Local businesses", "Contractors", "Service companies"],
     discount: true, cta: "Automate My Business",
+    stripeLink: STRIPE_LINKS.aiAutomation,
   },
   {
     icon: Sparkles, name: "AI Growth System", price: "$499", suffix: "/mo", featured: true,
@@ -46,10 +51,15 @@ const tiers = [
     includes: ["Lead Capture Systems", "AI Automation", "Client Onboarding Automation", "Appointment Booking Workflows", "AI Assistant Setup"],
     best: ["Established businesses", "Contractors", "Scaling brands"],
     cta: "Get the Full System",
+    stripeLink: STRIPE_LINKS.growthSystem,
   },
 ];
 
 function PricingPage() {
+  useEffect(() => {
+    markVisitorAsReturning();
+  }, []);
+
   return (
     <>
       <section className="relative overflow-hidden bg-gradient-animated text-white">
@@ -76,16 +86,15 @@ function PricingPage() {
               Four packages designed to launch, grow, and automate your business.
             </p>
           </Reveal>
-              {/* 25% FIRST-TIMER DISCOUNT BANNER */}
-              <Reveal delay={360}>
-                <div className="mt-8 inline-flex items-center gap-3 rounded-2xl border border-cyan/30 bg-cyan/5 px-6 py-3.5 text-sm">
-                  <BadgeCheck className="h-5 w-5 shrink-0 text-cyan" />
-                  <span>
-                    <span className="font-semibold text-cyan">New clients save 25%</span>
-                    <span className="text-white/75"> — mention it when you book your free audit.</span>
-                  </span>
-                </div>
-              </Reveal>
+          <Reveal delay={360}>
+            <div className="mt-8 inline-flex items-center gap-3 rounded-2xl border border-cyan/30 bg-cyan/5 px-6 py-3.5 text-sm">
+              <BadgeCheck className="h-5 w-5 shrink-0 text-cyan" />
+              <span>
+                <span className="font-semibold text-cyan">New clients save 25%</span>
+                <span className="text-white/75"> — discount applied automatically at checkout.</span>
+              </span>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -105,11 +114,11 @@ function PricingPage() {
                     Most Popular
                   </span>
                 )}
-              {t.discount && (
-                <span className="absolute -top-3 right-4 animate-pulse rounded-full bg-cyan px-3 py-1 text-xs font-bold text-navy">
-                  Save 25%
-                </span>
-              )}
+                {t.discount && (
+                  <span className="absolute -top-3 right-4 animate-pulse rounded-full bg-cyan px-3 py-1 text-xs font-bold text-navy">
+                    Save 25%
+                  </span>
+                )}
                 <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${t.featured ? "bg-gradient-gold text-white" : "bg-gradient-accent text-white"} transition hover:scale-110 hover:rotate-3`}>
                   <t.icon className="h-6 w-6" />
                 </div>
@@ -144,14 +153,16 @@ function PricingPage() {
                   </div>
                 </div>
 
-                <Link
-                  to="/contact"
+                <a
+                  href={withPromo(t.stripeLink || "")}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`btn-premium mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-semibold transition ${
                     t.featured ? "bg-gradient-gold text-white shadow-glow hover:opacity-95" : "bg-primary text-primary-foreground hover:opacity-90"
                   }`}
                 >
                   {t.cta} <ArrowRight className="h-4 w-4" />
-                </Link>
+                </a>
               </div>
             </Reveal>
           ))}

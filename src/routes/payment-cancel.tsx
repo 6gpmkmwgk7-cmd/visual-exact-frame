@@ -38,7 +38,7 @@ function PaymentCancelPage() {
         </div>
         <p className="text-xs text-muted-foreground">
           Have questions?{' '}
-          <a href="mailto:masalaminglecatering@gmail.com" className="underline hover:text-foreground transition-colors">
+          <a href="mailto:socialselavates@gmail.com" className="underline hover:text-foreground transition-colors">
             Contact us
           </a>{' '}
           — we're happy to help.

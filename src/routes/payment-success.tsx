@@ -35,8 +35,8 @@ function PaymentSuccessPage() {
         </div>
         <p className="text-xs text-muted-foreground mb-6">
           Questions? Email us at{' '}
-          <a href="mailto:masalaminglecatering@gmail.com" className="underline hover:text-foreground transition-colors">
-            masalaminglecatering@gmail.com
+          <a href="mailto:socialselavates@gmail.com" className="underline hover:text-foreground transition-colors">
+            socialselavates@gmail.com
           </a>
         </p>
         <Link to="/" className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity">
