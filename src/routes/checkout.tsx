@@ -10,7 +10,7 @@ const STRIPE_LINKS: Record<string, string> = {
 };
 
 // PAYPAL CLIENT ID — Replace from https://developer.paypal.com/dashboard/applications
-const PAYPAL_CLIENT_ID = 'YOUR_PAYPAL_CLIENT_ID';
+const PAYPAL_CLIENT_ID = 'AXq5plyctSjcgwWZHFOStdrxyMklS-3QwXGm5r3CNRZfwUb1AYnTPzN5PwLdeesC8PcauCmF-w6yroW1';
 
 const PACKAGES: Record<string, {
   name: string; price: string; billing: string; description: string;
@@ -66,7 +66,7 @@ function CheckoutPage() {
 
   useEffect(() => {
     if (window.paypal) { setPaypalLoaded(true); return; }
-    if (PAYPAL_CLIENT_ID === 'YOUR_PAYPAL_CLIENT_ID') return;
+    if (PAYPAL_CLIENT_ID === 'AXq5plyctSjcgwWZHFOStdrxyMklS-3QwXGm5r3CNRZfwUb1AYnTPzN5PwLdeesC8PcauCmF-w6yroW1') return;
     const script = document.createElement('script');
     script.src = `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=USD`;
     script.onload = () => setPaypalLoaded(true);
@@ -156,7 +156,7 @@ function CheckoutPage() {
           </div>
 
           {/* PayPal */}
-          {PAYPAL_CLIENT_ID === 'YOUR_PAYPAL_CLIENT_ID' ? (
+          {PAYPAL_CLIENT_ID === 'AXq5plyctSjcgwWZHFOStdrxyMklS-3QwXGm5r3CNRZfwUb1AYnTPzN5PwLdeesC8PcauCmF-w6yroW1' ? (
             <button
               onClick={() => window.location.href = `mailto:masalaminglecatering@gmail.com?subject=PayPal Order: ${plan.name}&body=I'd like to pay via PayPal for the ${plan.name} package (${plan.price}${plan.billing}).`}
               className="w-full flex items-center justify-center gap-3 bg-[#FFC439] hover:bg-[#f0b429] text-[#003087] font-bold py-4 px-6 rounded-xl transition-all text-base shadow-md hover:shadow-lg"
