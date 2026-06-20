@@ -1,7 +1,7 @@
 import { createFileRoute, useSearch, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
-import { isFirstTimeVisitor, CHECKOUT_WEBHOOK_URL } from '@/lib/siteConfig';
+import { isFirstTimeVisitor, markVisitorAsReturning, PAYPAL_CLIENT_ID, CHECKOUT_WEBHOOK_URL } from '@/lib/siteConfig';
 
 const CHECKOUT_N8N_KEYS: Record<string, string> = {
   'business-launch': 'business_presence',
@@ -10,8 +10,6 @@ const CHECKOUT_N8N_KEYS: Record<string, string> = {
   'ai-growth':       'growth_system',
 };
 
-// PAYPAL CLIENT ID — Replace from https://developer.paypal.com/dashboard/applications
-const PAYPAL_CLIENT_ID = 'AXq5plyctSjcgwWZHFOStdrxyMklS-3QwXGm5r3CNRZfwUb1AYnTPzN5PwLdeesC8PcauCmF-w6yroW1';
 
 const PACKAGES: Record<string, {
   name: string; price: string; billing: string; description: string;
@@ -69,14 +67,14 @@ function CheckoutPage() {
   const plan = PACKAGES[pkg] || PACKAGES['ai-growth'];
   const [firstTimer, setFirstTimer] = useState(false);
   const [paypalLoaded, setPaypalLoaded] = useState(false);
-  useEffect(() => { setFirstTimer(isFirstTimeVisitor()); }, []);
+  useEffect(() => { setFirstTimer(isFirstTimeVisitor()); markVisitorAsReturning(); }, []);
   const [paypalRendered, setPaypalRendered] = useState(false);
   const [stripeLoading, setStripeLoading] = useState(false);
   const [stripeError, setStripeError] = useState<string | null>(null);
 
   useEffect(() => {
     if (window.paypal) { setPaypalLoaded(true); return; }
-    if (PAYPAL_CLIENT_ID === 'AXq5plyctSjcgwWZHFOStdrxyMklS-3QwXGm5r3CNRZfwUb1AYnTPzN5PwLdeesC8PcauCmF-w6yroW1') return;
+    if (!PAYPAL_CLIENT_ID) return;
     const script = document.createElement('script');
     script.src = `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=USD`;
     script.onload = () => setPaypalLoaded(true);
@@ -87,7 +85,10 @@ function CheckoutPage() {
     if (!paypalLoaded || !window.paypal || paypalRendered) return;
     const container = document.getElementById('paypal-button-container');
     if (!container) return;
-    const amount = (firstTimer && plan.firstTimeOnly && plan.discountedPrice ? plan.discountedPrice : plan.price).replace('$', '').replace(',', '');
+    const basePrice = parseFloat(plan.price.replace('$', '').replace(',', ''));
+    const amount = (firstTimer && plan.firstTimeOnly)
+      ? String(Math.round(basePrice * 0.75))
+      : String(basePrice);
     window.paypal.Buttons({
       style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'paypal', height: 48 },
       createOrder: (_data: any, actions: any) => actions.order.create({
@@ -109,7 +110,7 @@ function CheckoutPage() {
       const res = await fetch(CHECKOUT_WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ package: CHECKOUT_N8N_KEYS[pkg] }),
+        body: JSON.stringify({ package: CHECKOUT_N8N_KEYS[pkg], firstTimer: isFirstTimeVisitor() }),
       });
       if (!res.ok) throw new Error(`Checkout unavailable (${res.status})`);
       const data = await res.json();
@@ -129,7 +130,7 @@ function CheckoutPage() {
         </Link>
 
         {/* Package summary */}
-        <div className="rounded-2xl border border-border bg-card p-8 mb-6 mt-4">
+        <div className="rounded-2xl border border-border bg-card p-5 sm:p-8 mb-6 mt-4">
           {plan.popular && (
             <span className="inline-block bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full mb-3">
               ⭐ MOST POPULAR
@@ -170,7 +171,7 @@ function CheckoutPage() {
         </div>
 
         {/* Payment */}
-        <div className="rounded-2xl border border-border bg-card p-8">
+        <div className="rounded-2xl border border-border bg-card p-5 sm:p-8">
           <h2 className="text-xl font-bold text-foreground mb-6">Complete Your Order</h2>
 
           {/* Stripe */}
@@ -202,7 +203,7 @@ function CheckoutPage() {
           </div>
 
           {/* PayPal */}
-          {PAYPAL_CLIENT_ID === 'AXq5plyctSjcgwWZHFOStdrxyMklS-3QwXGm5r3CNRZfwUb1AYnTPzN5PwLdeesC8PcauCmF-w6yroW1' ? (
+          {!PAYPAL_CLIENT_ID ? (
             <button
               onClick={() => window.location.href = `mailto:socialselavates@gmail.com?subject=PayPal Order: ${plan.name}&body=I'd like to pay via PayPal for the ${plan.name} package (${plan.price}${plan.billing}).`}
               className="w-full flex items-center justify-center gap-3 bg-[#FFC439] hover:bg-[#f0b429] text-[#003087] font-bold py-4 px-6 rounded-xl transition-all text-base shadow-md hover:shadow-lg"

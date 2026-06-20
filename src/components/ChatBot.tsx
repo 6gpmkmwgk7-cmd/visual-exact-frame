@@ -129,7 +129,7 @@ export function ChatBot() {
     return (
       <button
         onClick={() => { setOpen(true); setMinimized(false); }}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-purple-600 to-indigo-600 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 flex items-center justify-center"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-purple-600 to-indigo-600 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 flex items-center justify-center"
         aria-label="Open chat with Ellie"
       >
         <MessageCircle className="w-6 h-6" />
@@ -141,7 +141,7 @@ export function ChatBot() {
     <div
       role="dialog"
       aria-label="Chat with Ellie"
-      className={`fixed bottom-6 right-6 z-50 w-[360px] max-w-[calc(100vw-1.5rem)] rounded-2xl shadow-2xl bg-white border border-gray-200 flex flex-col overflow-hidden transition-all duration-200 ${minimized ? "h-[60px]" : "h-[520px]"}`}
+      className={`fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] rounded-2xl shadow-2xl bg-white border border-gray-200 flex flex-col overflow-hidden transition-all duration-200 ${minimized ? "h-[60px]" : "h-[520px] max-h-[calc(100dvh-5rem)]"}`}
     >
       {/* Header */}
       <div className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white flex-shrink-0">

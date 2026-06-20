@@ -71,7 +71,7 @@ function PricingPage() {
         <div className="pointer-events-none absolute -top-32 right-0 h-96 w-96 rounded-full bg-electric/25 blur-3xl animate-float" />
         <div className="pointer-events-none absolute -bottom-40 -left-20 h-80 w-80 rounded-full bg-purple/20 blur-3xl animate-float" style={{ animationDelay: "2s" }} />
         <ParticleField count={18} />
-        <div className="relative z-10 max-w-3xl mx-auto px-4 pt-28 pb-16 text-center">
+        <div className="relative z-10 max-w-3xl mx-auto px-4 pt-16 pb-10 sm:pt-24 sm:pb-14 md:pt-28 md:pb-16 text-center">
           <Reveal>
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-electric/10 border border-electric/20 text-electric text-sm font-semibold mb-6">
               <BadgeCheck className="h-4 w-4" />
@@ -82,13 +82,13 @@ function PricingPage() {
           </Reveal>
         </div>
       </section>
-      <section className="pt-10 pb-24 px-4">
+      <section className="pt-8 pb-14 px-4 md:pb-24">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
           {tiers.map((t, i) => {
             const Icon = t.icon;
             return (
               <Reveal key={i} delay={i * 0.1}>
-                <div className={`relative flex flex-col h-full rounded-3xl border p-8 transition-all duration-300 hover:shadow-2xl ${t.featured ? "border-electric bg-electric/5 shadow-electric/20 shadow-lg" : "border-border bg-card"}`}>
+                <div className={`relative flex flex-col h-full rounded-3xl border p-5 sm:p-8 transition-all duration-300 hover:shadow-2xl ${t.featured ? "border-electric bg-electric/5 shadow-electric/20 shadow-lg" : "border-border bg-card"}`}>
                   {t.badge && (
                     <div className={`absolute -top-4 ${t.featured ? "left-1/2 -translate-x-1/2" : "right-6"} px-4 py-1 rounded-full text-xs font-bold text-white ${t.featured ? "bg-electric" : "bg-green-500"}`}>
                       {t.badge}
@@ -155,7 +155,7 @@ function PricingPage() {
           })}
         </div>
         <Reveal delay={0.4}>
-          <div className="max-w-3xl mx-auto mt-16 text-center rounded-3xl border border-border bg-card p-10">
+          <div className="max-w-3xl mx-auto mt-12 text-center rounded-3xl border border-border bg-card p-6 sm:p-10">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-electric/10 border border-electric/20 text-electric text-xs font-semibold mb-4">
               <Sparkles className="h-3.5 w-3.5" /> Custom Solutions
             </div>

@@ -32,7 +32,7 @@ export function SiteHeader() {
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan/40 to-transparent" />
 
           <div className="relative mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-5 md:py-7">
-            <Link to="/" className="group flex items-center gap-5 md:gap-7 min-w-0">
+            <Link to="/" className="group flex items-center gap-2 sm:gap-4 md:gap-7 min-w-0">
               <span className="relative shrink-0">
                 <span
                   aria-hidden
@@ -46,14 +46,14 @@ export function SiteHeader() {
                 <img
                   src={logo}
                   alt="Elevate Social Agency"
-                  className="relative h-[72px] w-[72px] md:h-[88px] md:w-[88px] object-contain bg-white p-2 rounded-full ring-1 ring-white/40 shadow-[0_8px_40px_-4px_rgba(6,182,212,0.55)] transition-all duration-500 group-hover:scale-[1.04] group-hover:shadow-[0_10px_60px_-4px_rgba(6,182,212,0.75)] animate-logo-in"
+                  className="relative h-[48px] w-[48px] sm:h-[72px] sm:w-[72px] md:h-[88px] md:w-[88px] object-contain bg-white p-1.5 sm:p-2 rounded-full ring-1 ring-white/40 shadow-[0_8px_40px_-4px_rgba(6,182,212,0.55)] transition-all duration-500 group-hover:scale-[1.04] group-hover:shadow-[0_10px_60px_-4px_rgba(6,182,212,0.75)] animate-logo-in"
                 />
 
                 <span className="pointer-events-none absolute -inset-2 rounded-full ring-2 ring-cyan/20 animate-ping-soft" />
               </span>
 
               <span className="flex flex-col leading-none min-w-0">
-                <span className="font-display text-[2rem] sm:text-4xl md:text-[2.75rem] font-black tracking-tight text-white drop-shadow-[0_2px_18px_rgba(6,182,212,0.25)]">
+                <span className="font-display text-[1.35rem] sm:text-[2rem] md:text-[2.75rem] font-black tracking-tight text-white drop-shadow-[0_2px_18px_rgba(6,182,212,0.25)]">
                   <span className="text-white">Elevate</span>{" "}
                   <span
                     style={{
@@ -69,20 +69,20 @@ export function SiteHeader() {
                   </span>
                 </span>
 
-                <span className="mt-2.5 flex items-center gap-2.5">
-                  <span className="text-[11px] font-bold uppercase tracking-[0.32em] text-white/60">
+                <span className="mt-1 sm:mt-2.5 flex flex-wrap items-center gap-2">
+                  <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.25em] sm:tracking-[0.32em] text-white/60">
                     {t("header.agency")}
                   </span>
 
-                  <span className="h-3 w-px bg-white/20" />
+                  <span className="hidden sm:block h-3 w-px bg-white/20" />
 
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-cyan/40 bg-gradient-to-r from-cyan/15 via-blue-500/10 to-purple/15 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-cyan-200 shadow-[0_0_18px_-4px_rgba(6,182,212,0.6)] backdrop-blur">
+                  <span className="inline-flex items-center gap-1 sm:gap-1.5 rounded-full border border-cyan/40 bg-gradient-to-r from-cyan/15 via-blue-500/10 to-purple/15 px-2 sm:px-2.5 py-0.5 sm:py-1 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-cyan-200 shadow-[0_0_18px_-4px_rgba(6,182,212,0.6)] backdrop-blur">
                     <span className="relative flex h-1.5 w-1.5">
                       <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan/70 opacity-75" />
                       <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-cyan" />
                     </span>
 
-                    <Sparkles className="h-2.5 w-2.5" /> {t("header.ai_powered")}
+                    <Sparkles className="h-2 w-2 sm:h-2.5 sm:w-2.5" /> {t("header.ai_powered")}
                   </span>
                 </span>
 

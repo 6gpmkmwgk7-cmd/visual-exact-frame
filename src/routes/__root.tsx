@@ -183,7 +183,7 @@ function RootComponent() {
         {/* PREMIUM ANNOUNCEMENT BAR */}
         <div className="relative overflow-hidden border-b border-white/[0.06]" style={{background:'linear-gradient(135deg,#050c18 0%,#071524 50%,#050c18 100%)'}}>
           <div className="pointer-events-none absolute inset-0" style={{background:'radial-gradient(ellipse 70% 200% at 50% 50%,rgba(0,212,255,0.06) 0%,transparent 70%)',animation:'barGlow 5s ease-in-out infinite alternate'}} />
-          <div className="relative mx-auto flex flex-wrap items-center justify-center gap-x-4 gap-y-1 px-6 py-2.5 text-sm">
+          <div className="relative mx-auto flex flex-wrap items-center justify-center gap-x-3 gap-y-1 px-3 py-2 sm:gap-x-4 sm:px-6 sm:py-2.5 text-xs sm:text-sm">
             <span className="relative flex h-1.5 w-1.5 shrink-0">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan opacity-60" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-cyan" />

@@ -310,7 +310,7 @@ function HomePage() {
         <div className="absolute inset-0 bg-mesh animate-drift" />
         <div className="absolute inset-0 bg-gradient-to-b from-navy/30 via-navy/60 to-navy" />
         {/* Premium 3D AI Orbital Core */}
-        <div className="pointer-events-none absolute" style={{top:'50%',right:'4%',width:'310px',height:'310px',transform:'translateY(-50%)',perspective:'800px'}}>
+        <div className="pointer-events-none absolute hidden lg:block" style={{top:'50%',right:'4%',width:'310px',height:'310px',transform:'translateY(-50%)',perspective:'800px'}}>
           {/* Outer ring + glowing nodes */}
           <div style={{position:'absolute',inset:0,borderRadius:'50%',border:'1.5px solid rgba(0,212,255,0.28)',animation:'orbit3d 16s linear infinite',filter:'drop-shadow(0 0 5px rgba(0,212,255,0.18))'}}>
             <div style={{position:'absolute',top:'50%',left:0,width:'10px',height:'10px',borderRadius:'50%',background:'#00D4FF',transform:'translateY(-50%) translateX(-50%)',boxShadow:'0 0 16px #00D4FF,0 0 32px rgba(0,212,255,0.55)',animation:'dot-pulse 2.5s ease-in-out infinite'}} />
@@ -343,14 +343,14 @@ function HomePage() {
 
         <ParticleField count={26} />
 
-        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 py-24 md:py-32 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="relative mx-auto grid max-w-7xl items-center gap-8 px-4 py-14 sm:px-6 sm:py-20 md:gap-12 md:py-28 lg:py-32 lg:grid-cols-[1.05fr_0.95fr]">
           <div style={{transform:'perspective(1000px) rotateX('+(-parallax.y*2)+'deg) rotateY('+(parallax.x*2)+'deg)',transition:'transform 0.2s ease-out'}}>
             <Reveal>
               <div className="inline-flex items-center gap-2 rounded-full border border-cyan/30 bg-cyan/10 px-4 py-1.5 text-xs font-semibold text-cyan backdrop-blur">
                 <Sparkles className="h-3.5 w-3.5" /> {t("home.hero.badge")}
               </div>
             </Reveal>
-            <h1 className="mt-6 font-display text-5xl font-bold leading-[1.05] md:text-7xl flex flex-wrap items-baseline gap-x-1">
+            <h1 className="mt-4 sm:mt-6 font-display text-4xl font-bold leading-[1.08] sm:text-5xl md:text-7xl flex flex-wrap items-baseline gap-x-1">
               <BlurText
                 as="span"
                 text={t("home.hero.title_pre")}
@@ -375,17 +375,17 @@ function HomePage() {
               </p>
             </Reveal>
             <Reveal delay={360}>
-              <div className="mt-10 flex flex-wrap gap-4">
+              <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
                 <Link
                   to="/free-audit"
-                  className="btn-premium group inline-flex items-center gap-2 rounded-full bg-gradient-gold px-7 py-3.5 text-sm font-semibold text-white shadow-glow transition hover:scale-105"
+                  className="btn-premium group inline-flex items-center justify-center gap-2 rounded-full bg-gradient-gold px-7 py-3.5 text-sm font-semibold text-white shadow-glow transition hover:scale-105"
                 >
                   <ShinyText text={t("home.hero.cta_audit")} color="rgba(255,255,255,0.85)" shineColor="#ffffff" speed={3} />
                   <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
                 </Link>
                 <Link
                   to="/case-studies"
-                  className="btn-premium inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/10"
+                  className="btn-premium inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-7 py-3.5 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/10"
                 >
                   {t("home.hero.cta_cases")}
                 </Link>
@@ -403,10 +403,10 @@ function HomePage() {
           </div>
 
 
-          {/* AI Dashboard mockup with parallax */}
+          {/* AI Dashboard mockup with parallax — hidden on mobile to keep hero clean */}
           <Reveal variant="zoom" delay={400}>
             <div
-              className="relative transition-transform duration-300"
+              className="relative hidden md:block transition-transform duration-300"
               style={{ transform: `perspective(1200px) rotateY(${parallax.x * 6}deg) rotateX(${parallax.y * -6}deg)` }}
             >
               <AIDashboardMockup />
@@ -449,7 +449,7 @@ function HomePage() {
 
 
       {/* WHY ELEVATE SOCIAL EXISTS */}
-      <section className="relative overflow-hidden py-24">
+      <section className="relative overflow-hidden py-14 md:py-24">
         <div className="absolute inset-0 grid-pattern opacity-30" />
         <div className="relative mx-auto max-w-4xl px-6 text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-electric">{t("home.purpose.eyebrow")}</p>
@@ -467,7 +467,7 @@ function HomePage() {
       </section>
 
       {/* WHY AI MATTERS */}
-      <section className="relative overflow-hidden bg-secondary/50 py-24">
+      <section className="relative overflow-hidden bg-secondary/50 py-14 md:py-24">
         <div className="relative mx-auto max-w-7xl px-6">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-sm font-semibold uppercase tracking-wider text-electric">{t("home.why.eyebrow")}</p>
@@ -497,8 +497,8 @@ function HomePage() {
       </section>
 
       {/* AI BUSINESS LAUNCH SYSTEM */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
-        <div className="relative overflow-hidden rounded-3xl border border-cyan/30 bg-gradient-hero p-10 text-white shadow-glow md:p-16">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-14 md:py-24">
+        <div className="relative overflow-hidden rounded-3xl border border-cyan/30 bg-gradient-hero p-6 text-white shadow-glow sm:p-10 md:p-16">
           <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-purple/30 blur-3xl" />
           <div className="absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-cyan/20 blur-3xl" />
 
@@ -541,7 +541,7 @@ function HomePage() {
       </section>
 
       {/* HOW WE HELP YOU GROW */}
-      <section className="relative overflow-hidden py-24">
+      <section className="relative overflow-hidden py-14 md:py-24">
         <div className="absolute inset-0 grid-pattern opacity-20" />
         <div className="relative mx-auto max-w-7xl px-6">
           <div className="mx-auto max-w-2xl text-center">
@@ -573,7 +573,7 @@ function HomePage() {
       </section>
 
       {/* SERVICES (Pricing) */}
-      <section className="bg-secondary/50 py-24">
+      <section className="bg-secondary/50 py-14 md:py-24">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-semibold uppercase tracking-wider text-electric">{t("home.pricing.eyebrow")}</p>
@@ -585,7 +585,7 @@ function HomePage() {
             </p>
 
               {/* 25% FIRST-TIMER DISCOUNT BANNER */}
-              <div className="mt-8 inline-flex items-center gap-3 rounded-2xl border border-cyan/30 bg-cyan/5 px-6 py-3.5 text-sm">
+              <div className="mt-6 flex items-start sm:items-center gap-3 rounded-2xl border border-cyan/30 bg-cyan/5 px-4 py-3 sm:px-6 sm:py-3.5 text-sm text-left sm:text-center">
                 <BadgeCheck className="h-5 w-5 shrink-0 text-cyan" />
                 <span>
                   <span className="font-semibold text-cyan">New clients save 25%</span>
@@ -598,7 +598,7 @@ function HomePage() {
             {services.map((s) => (
               <div
                 key={s.title}
-                className={`relative flex flex-col rounded-3xl border p-8 transition hover:-translate-y-1 ${
+                className={`relative flex flex-col rounded-3xl border p-5 sm:p-8 transition hover:-translate-y-1 ${
                   s.featured
                     ? "border-cyan bg-navy text-white shadow-glow lg:scale-105"
                     : "border-border bg-card hover:border-electric/40 hover:shadow-elegant"
@@ -612,7 +612,7 @@ function HomePage() {
                 <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${s.featured ? "bg-gradient-gold" : "bg-gradient-accent"} text-white`}>
                   <s.icon className="h-6 w-6" />
                 </div>
-                <h3 className="mt-5 font-display text-2xl font-bold">{s.title}</h3>
+                <h3 className="mt-4 font-display text-xl sm:text-2xl font-bold">{s.title}</h3>
                 <p className={`mt-2 text-sm ${s.featured ? "text-white/70" : "text-muted-foreground"}`}>{s.desc}</p>
                 <div className="mt-5">
                   {firstTimer && s.firstTimeOnly && s.discountedPrice ? (
@@ -647,7 +647,7 @@ function HomePage() {
                 </ul>
                 <Link
                   to="/checkout"
-                  className={`mt-8 inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold ${
+                  className={`mt-auto pt-6 flex w-full items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold ${
                     s.featured
                       ? "bg-gradient-gold text-white shadow-glow"
                       : "bg-primary text-primary-foreground hover:opacity-90"
@@ -676,8 +676,8 @@ function HomePage() {
 
 
       {/* SECURE PAYMENT METHODS */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
-        <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-10 md:p-14">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12 md:py-24">
+        <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 sm:p-10 md:p-14">
           <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-cyan/10 blur-3xl" />
           <div className="absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-purple/10 blur-3xl" />
           <div className="relative mx-auto max-w-3xl text-center">
@@ -692,7 +692,7 @@ function HomePage() {
             </p>
 
           </div>
-          <div className="relative mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="relative mt-10 grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
             {paymentMethods.map((p) => (
               <div key={p.name} className="flex h-24 flex-col items-center justify-center gap-2 rounded-2xl border border-border bg-background/60 p-4 backdrop-blur transition hover:-translate-y-1 hover:border-cyan/40 hover:shadow-glow">
                 <span className="text-2xl font-bold tracking-tight text-foreground">{p.icon || <CreditCard className="h-6 w-6 text-electric" />}</span>
@@ -710,7 +710,7 @@ function HomePage() {
 
 
       {/* MEET THE AI SYSTEMS */}
-      <section className="relative overflow-hidden bg-navy py-24 text-white">
+      <section className="relative overflow-hidden bg-navy py-14 md:py-24 text-white">
         <div className="absolute inset-0 grid-pattern opacity-20" />
         <div className="absolute inset-0 bg-mesh" />
         <div className="absolute -top-40 right-1/4 h-96 w-96 rounded-full bg-electric/20 blur-3xl" />
@@ -766,7 +766,7 @@ function HomePage() {
       </section>
 
       {/* Four-Agent AI System */}
-      <section className="relative overflow-hidden py-24">
+      <section className="relative overflow-hidden py-14 md:py-24">
         <div className="absolute inset-0 grid-pattern opacity-20" />
         <div className="absolute -top-32 right-0 h-80 w-80 rounded-full bg-cyan/10 blur-3xl" />
         <div className="absolute -bottom-32 left-0 h-80 w-80 rounded-full bg-purple/10 blur-3xl" />
@@ -844,7 +844,7 @@ function HomePage() {
       </section>
 
       {/* AI WORKFLOW AUTOMATION SETUP */}
-      <section className="bg-secondary/50 py-24">
+      <section className="bg-secondary/50 py-14 md:py-24">
         <div className="mx-auto max-w-7xl px-6">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:items-center">
             <Reveal>
@@ -891,7 +891,7 @@ function HomePage() {
       </section>
 
       {/* INDUSTRIES */}
-      <section className="bg-secondary/50 py-24">
+      <section className="bg-secondary/50 py-14 md:py-24">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-sm font-semibold uppercase tracking-wider text-electric">{t("home.industries.eyebrow")}</p>
@@ -912,7 +912,7 @@ function HomePage() {
       </section>
 
       {/* DEMONSTRATION PROJECTS */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-14 md:py-24">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-electric">Demonstration Projects</p>
           <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">
@@ -944,7 +944,7 @@ function HomePage() {
       </section>
 
       {/* TECHNOLOGY STACK — scrolling marquee */}
-      <section className="bg-secondary/50 py-24">
+      <section className="bg-secondary/50 py-12 md:py-24">
         <div className="mx-auto max-w-7xl px-6">
           <Reveal>
             <div className="mx-auto max-w-2xl text-center">
@@ -961,8 +961,8 @@ function HomePage() {
       </section>
 
       {/* FREE AUDIT */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
-        <div className="relative overflow-hidden rounded-3xl border border-cyan/30 bg-gradient-hero p-10 text-white shadow-glow md:p-16">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-14 md:py-24">
+        <div className="relative overflow-hidden rounded-3xl border border-cyan/30 bg-gradient-hero p-6 text-white shadow-glow sm:p-10 md:p-16">
           <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-purple/30 blur-3xl" />
           <div className="absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-cyan/20 blur-3xl" />
           <div className="relative grid gap-10 lg:grid-cols-2 lg:items-center">
@@ -998,7 +998,7 @@ function HomePage() {
       </section>
 
       {/* FOUNDER */}
-      <section className="relative overflow-hidden bg-secondary/40 py-24">
+      <section className="relative overflow-hidden bg-secondary/40 py-14 md:py-24">
         <div className="absolute -top-32 -left-20 h-80 w-80 rounded-full bg-electric/10 blur-3xl" />
         <div className="absolute -bottom-32 -right-20 h-80 w-80 rounded-full bg-purple/10 blur-3xl" />
         <div className="relative mx-auto max-w-5xl px-6">
@@ -1063,7 +1063,7 @@ function HomePage() {
       </section>
 
       {/* CASE STUDIES */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-14 md:py-24">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-electric">{t("home.cases.eyebrow")}</p>
           <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">
@@ -1121,7 +1121,7 @@ function HomePage() {
       </section>
 
       {/* USE CASES — How We Help Local Businesses */}
-      <section className="bg-secondary/50 py-24">
+      <section className="bg-secondary/50 py-14 md:py-24">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-sm font-semibold uppercase tracking-wider text-electric">{t("home.usecases.eyebrow")}</p>
@@ -1167,7 +1167,7 @@ function HomePage() {
 
 
       {/* FAQ */}
-      <section className="mx-auto max-w-3xl px-6 py-24">
+      <section className="mx-auto max-w-3xl px-4 sm:px-6 py-12 md:py-24">
         <div className="text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-electric">FAQ</p>
           <h2 className="mt-3 font-display text-4xl font-bold md:text-5xl">{t("home.faq.title")}</h2>
@@ -1179,11 +1179,11 @@ function HomePage() {
       </section>
 
       {/* FINAL CTA */}
-      <section className="relative overflow-hidden bg-navy py-24 text-white">
+      <section className="relative overflow-hidden bg-navy py-14 md:py-24 text-white">
         <div className="absolute inset-0 grid-pattern opacity-20" />
         <div className="absolute inset-0 bg-mesh" />
-        <div className="relative mx-auto max-w-3xl px-6 text-center">
-          <h2 className="font-display text-5xl font-bold md:text-6xl">
+        <div className="relative mx-auto max-w-3xl px-4 sm:px-6 text-center">
+          <h2 className="font-display text-3xl font-bold sm:text-4xl md:text-5xl lg:text-6xl">
             Ready To Grow Your Business With <span className="text-gradient">AI?</span>
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-white/75">
