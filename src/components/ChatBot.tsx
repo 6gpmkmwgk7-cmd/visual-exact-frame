@@ -105,7 +105,7 @@ export function ChatBot() {
         typeof data.message === "string" ? data.message :
         typeof data.text === "string" ? data.text :
         typeof data.output === "string" ? data.output :
-        "Thanks for your message! Our team will follow up with you shortly. You can also reach us at masalaminglecatering@gmail.com";
+        "Thanks for your message! Our team will follow up with you shortly. You can also reach us at socialselavates@gmail.com";
 
       setMessages(prev => [...prev, { id: uid(), role: "assistant", content: reply, ts: Date.now() }]);
     } catch (err: unknown) {
@@ -141,10 +141,10 @@ export function ChatBot() {
     <div
       role="dialog"
       aria-label="Chat with Ellie"
-      className={`fixed bottom-6 right-6 z-50 w-[360px] max-w-[calc(100vw-1.5rem)] rounded-2xl shadow-2xl bg-gray-900 border border-gray-700 flex flex-col overflow-hidden transition-all duration-200 ${minimized ? "h-[60px]" : "h-[520px]"}`}
+      className={`fixed bottom-6 right-6 z-50 w-[360px] max-w-[calc(100vw-1.5rem)] rounded-2xl shadow-2xl bg-white border border-gray-200 flex flex-col overflow-hidden transition-all duration-200 ${minimized ? "h-[60px]" : "h-[520px]"}`}
     >
       {/* Header */}
-      <div className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-700 to-indigo-700 text-white flex-shrink-0">
+      <div className="flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white flex-shrink-0">
         <Sparkles className="w-5 h-5 opacity-80" />
         <div className="flex-1 min-w-0">
           <p className="font-semibold text-sm leading-tight">Ellie</p>
@@ -161,13 +161,13 @@ export function ChatBot() {
       {!minimized && (
         <>
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-900">
+          <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
             {messages.map(msg => (
               <div key={msg.id} className={`flex gap-2 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
-                <div className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center ${msg.role === "user" ? "bg-purple-600 text-white" : "bg-indigo-900 text-indigo-300"}`}>
+                <div className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center ${msg.role === "user" ? "bg-purple-600 text-white" : "bg-indigo-100 text-indigo-700"}`}>
                   {msg.role === "user" ? <User className="w-3.5 h-3.5" /> : <Bot className="w-3.5 h-3.5" />}
                 </div>
-                <div className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm leading-relaxed whitespace-pre-wrap ${msg.role === "user" ? "bg-purple-600 text-white rounded-tr-sm" : "bg-gray-800 text-gray-100 border border-gray-700 rounded-tl-sm"}`}>
+                <div className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm leading-relaxed whitespace-pre-wrap ${msg.role === "user" ? "bg-purple-600 text-white rounded-tr-sm" : "bg-white text-gray-800 border border-gray-200 rounded-tl-sm"}`}>
                   {msg.content}
                 </div>
               </div>
@@ -175,10 +175,10 @@ export function ChatBot() {
 
             {sending && (
               <div className="flex gap-2">
-                <div className="w-7 h-7 rounded-full bg-indigo-900 text-indigo-300 flex items-center justify-center flex-shrink-0">
+                <div className="w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center flex-shrink-0">
                   <Bot className="w-3.5 h-3.5" />
                 </div>
-                <div className="bg-gray-800 border border-gray-700 rounded-2xl rounded-tl-sm px-3 py-2.5">
+                <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-sm px-3 py-2.5">
                   <div className="flex gap-1 items-center">
                     <span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "0ms" }} />
                     <span className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: "150ms" }} />
@@ -189,13 +189,13 @@ export function ChatBot() {
             )}
 
             {error && (
-              <p className="text-xs text-red-400 bg-red-900/20 border border-red-800 rounded-lg px-3 py-2">{error}</p>
+              <p className="text-xs text-red-500 bg-red-50 border border-red-100 rounded-lg px-3 py-2">{error}</p>
             )}
             <div ref={bottomRef} />
           </div>
 
           {/* Input */}
-          <div className="flex-shrink-0 border-t border-gray-700 bg-gray-800 p-3">
+          <div className="flex-shrink-0 border-t border-gray-200 bg-white p-3">
             <div className="flex items-end gap-2">
               <textarea
                 ref={inputRef}
@@ -205,21 +205,21 @@ export function ChatBot() {
                 placeholder="Ask me anything..."
                 rows={1}
                 disabled={sending}
-                className="flex-1 resize-none rounded-xl border border-gray-600 bg-gray-700 text-white placeholder-gray-400 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent disabled:opacity-50 overflow-y-auto"
+                className="flex-1 resize-none rounded-xl border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent disabled:opacity-50 overflow-y-auto"
                 style={{ minHeight: "40px", maxHeight: "96px" }}
                 aria-label="Chat message input"
               />
               <button
                 onClick={sendMessage}
                 disabled={!input.trim() || sending}
-                className="flex-shrink-0 w-9 h-9 rounded-xl bg-purple-600 text-white flex items-center justify-center hover:bg-purple-500 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="flex-shrink-0 w-9 h-9 rounded-xl bg-purple-600 text-white flex items-center justify-center hover:bg-purple-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                 aria-label="Send message"
               >
                 <Send className="w-4 h-4" />
               </button>
             </div>
             {input.length > MAX_CHARS * 0.8 && (
-              <p className="text-xs text-gray-500 mt-1 text-right">{input.length}/{MAX_CHARS}</p>
+              <p className="text-xs text-gray-400 mt-1 text-right">{input.length}/{MAX_CHARS}</p>
             )}
           </div>
         </>

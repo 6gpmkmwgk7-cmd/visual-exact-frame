@@ -1,12 +1,13 @@
 import { createFileRoute, useSearch, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
+import { Loader2 } from 'lucide-react';
+import { isFirstTimeVisitor, CHECKOUT_WEBHOOK_URL } from '@/lib/siteConfig';
 
-// STRIPE PAYMENT LINKS — Replace with real URLs from https://dashboard.stripe.com/payment-links
-const STRIPE_LINKS: Record<string, string> = {
-  'business-launch': 'https://buy.stripe.com/5kQbJ34X69ky4yn34G3ZK00',
-  'ai-content': 'https://buy.stripe.com/cNi3cxblufIWfd1fRs3ZK01',
-  'ai-workflow': 'https://buy.stripe.com/cNi28tblu7cq0i734G3ZK02',
-  'ai-growth': 'https://buy.stripe.com/9B6fZjdtC9kyc0PcFg3ZK03',
+const CHECKOUT_N8N_KEYS: Record<string, string> = {
+  'business-launch': 'business_presence',
+  'ai-content':      'content_engine',
+  'ai-workflow':     'automation',
+  'ai-growth':       'growth_system',
 };
 
 // PAYPAL CLIENT ID — Replace from https://developer.paypal.com/dashboard/applications
@@ -15,6 +16,7 @@ const PAYPAL_CLIENT_ID = 'AXq5plyctSjcgwWZHFOStdrxyMklS-3QwXGm5r3CNRZfwUb1AYnTPz
 const PACKAGES: Record<string, {
   name: string; price: string; billing: string; description: string;
   features: string[]; color: string; popular?: boolean;
+  discountedPrice?: string; firstTimeOnly?: boolean;
 }> = {
   'business-launch': {
     name: 'Business Presence Launch',
@@ -27,6 +29,8 @@ const PACKAGES: Record<string, {
   'ai-content': {
     name: 'AI Content Engine',
     price: '$299',
+    discountedPrice: '$224',
+    firstTimeOnly: true,
     billing: '/mo',
     description: 'Done-for-you AI content creation — posts, captions, emails & blogs every month on autopilot.',
     features: ['30 social media posts/mo', '4 SEO blog articles/mo', 'Email marketing campaigns', 'AI video scripts', 'Monthly performance report'],
@@ -35,6 +39,8 @@ const PACKAGES: Record<string, {
   'ai-workflow': {
     name: 'AI Workflow Automation',
     price: '$299',
+    discountedPrice: '$224',
+    firstTimeOnly: true,
     billing: 'one-time',
     description: 'Custom AI automation system for your business — save 20+ hours per week with smart workflows.',
     features: ['Lead capture automation', 'Email follow-up sequences', 'CRM integration', 'Booking automation', 'Custom AI chatbot'],
@@ -61,8 +67,12 @@ function CheckoutPage() {
   const search = useSearch({ from: '/checkout' });
   const pkg = ((search as any).package as string) || 'ai-growth';
   const plan = PACKAGES[pkg] || PACKAGES['ai-growth'];
+  const [firstTimer, setFirstTimer] = useState(false);
   const [paypalLoaded, setPaypalLoaded] = useState(false);
+  useEffect(() => { setFirstTimer(isFirstTimeVisitor()); }, []);
   const [paypalRendered, setPaypalRendered] = useState(false);
+  const [stripeLoading, setStripeLoading] = useState(false);
+  const [stripeError, setStripeError] = useState<string | null>(null);
 
   useEffect(() => {
     if (window.paypal) { setPaypalLoaded(true); return; }
@@ -77,7 +87,7 @@ function CheckoutPage() {
     if (!paypalLoaded || !window.paypal || paypalRendered) return;
     const container = document.getElementById('paypal-button-container');
     if (!container) return;
-    const amount = plan.price.replace('$', '').replace(',', '');
+    const amount = (firstTimer && plan.firstTimeOnly && plan.discountedPrice ? plan.discountedPrice : plan.price).replace('$', '').replace(',', '');
     window.paypal.Buttons({
       style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'paypal', height: 48 },
       createOrder: (_data: any, actions: any) => actions.order.create({
@@ -92,13 +102,23 @@ function CheckoutPage() {
     setPaypalRendered(true);
   }, [paypalLoaded, pkg, plan, paypalRendered]);
 
-  const handleStripe = () => {
-    const url = STRIPE_LINKS[pkg];
-    if (!url || url.includes('REPLACE_ME')) {
-      window.location.href = `mailto:socialselavates@gmail.com?subject=Order: ${plan.name}&body=I'd like to purchase the ${plan.name} package (${plan.price}${plan.billing}).`;
-      return;
+  const handleStripe = async () => {
+    setStripeLoading(true);
+    setStripeError(null);
+    try {
+      const res = await fetch(CHECKOUT_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ package: CHECKOUT_N8N_KEYS[pkg] }),
+      });
+      if (!res.ok) throw new Error(`Checkout unavailable (${res.status})`);
+      const data = await res.json();
+      if (!data.checkoutUrl) throw new Error('No checkout URL returned');
+      window.location.href = data.checkoutUrl;
+    } catch (err) {
+      setStripeError(err instanceof Error ? err.message : 'Checkout failed. Please try again.');
+      setStripeLoading(false);
     }
-    window.location.href = url + `?client_reference_id=${pkg}&success_url=${encodeURIComponent(window.location.origin + '/payment-success')}&cancel_url=${encodeURIComponent(window.location.origin + '/payment-cancel')}`;
   };
 
   return (
@@ -120,9 +140,25 @@ function CheckoutPage() {
           </span>
           <h1 className="text-3xl font-bold text-foreground mb-2">{plan.name}</h1>
           <p className="text-muted-foreground mb-5 text-sm leading-relaxed">{plan.description}</p>
-          <div className="flex items-end gap-1 mb-5">
-            <span className="text-5xl font-black text-foreground">{plan.price}</span>
-            <span className="text-muted-foreground mb-1 text-lg">{plan.billing}</span>
+          <div className="mb-5">
+            {firstTimer && plan.firstTimeOnly && plan.discountedPrice ? (
+              <>
+                <div className="flex items-end gap-1">
+                  <span className="text-5xl font-black text-electric">{plan.discountedPrice}</span>
+                  <span className="text-muted-foreground mb-1 text-lg">{plan.billing}</span>
+                </div>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="line-through text-muted-foreground text-sm">{plan.price}</span>
+                  <span className="text-xs font-semibold text-green-500">25% off</span>
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">First-time customers only — mention this discount when you book</p>
+              </>
+            ) : (
+              <div className="flex items-end gap-1">
+                <span className="text-5xl font-black text-foreground">{plan.price}</span>
+                <span className="text-muted-foreground mb-1 text-lg">{plan.billing}</span>
+              </div>
+            )}
           </div>
           <ul className="space-y-2">
             {plan.features.map((f) => (
@@ -140,14 +176,24 @@ function CheckoutPage() {
           {/* Stripe */}
           <button
             onClick={handleStripe}
-            className="w-full flex items-center justify-center gap-3 bg-[#635BFF] hover:bg-[#5144e0] text-white font-semibold py-4 px-6 rounded-xl transition-all mb-4 text-base shadow-md hover:shadow-lg"
+            disabled={stripeLoading}
+            className="w-full flex items-center justify-center gap-3 bg-[#635BFF] hover:bg-[#5144e0] text-white font-semibold py-4 px-6 rounded-xl transition-all mb-1 text-base shadow-md hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <rect width="24" height="24" rx="6" fill="white" fillOpacity="0.2"/>
-              <path d="M11.5 7.5c0-.8.7-1.5 1.8-1.5 1.3 0 2.2.6 2.2 1.7 0 .9-.7 1.4-2.2 1.8-2.1.5-3.6 1.4-3.6 3.3 0 2 1.7 3.2 4 3.2 1.4 0 2.8-.4 3.6-1.1l-.7-1.4c-.7.6-1.8 1-2.9 1-1.1 0-1.9-.5-1.9-1.4 0-.8.7-1.3 2.2-1.7 2.2-.6 3.6-1.4 3.6-3.4 0-1.8-1.6-3.1-3.8-3.1-1.3 0-2.5.4-3.3 1l.7 1.4c.6-.5 1.5-.9 2.6-.9z" fill="white"/>
-            </svg>
-            Pay with Card (Stripe)
+            {stripeLoading ? (
+              <><Loader2 className="h-5 w-5 animate-spin" /> Processing…</>
+            ) : (
+              <>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <rect width="24" height="24" rx="6" fill="white" fillOpacity="0.2"/>
+                  <path d="M11.5 7.5c0-.8.7-1.5 1.8-1.5 1.3 0 2.2.6 2.2 1.7 0 .9-.7 1.4-2.2 1.8-2.1.5-3.6 1.4-3.6 3.3 0 2 1.7 3.2 4 3.2 1.4 0 2.8-.4 3.6-1.1l-.7-1.4c-.7.6-1.8 1-2.9 1-1.1 0-1.9-.5-1.9-1.4 0-.8.7-1.3 2.2-1.7 2.2-.6 3.6-1.4 3.6-3.4 0-1.8-1.6-3.1-3.8-3.1-1.3 0-2.5.4-3.3 1l.7 1.4c.6-.5 1.5-.9 2.6-.9z" fill="white"/>
+                </svg>
+                Pay with Card (Stripe)
+              </>
+            )}
           </button>
+          {stripeError && (
+            <p className="text-xs text-red-500 text-center mt-2 mb-2">{stripeError}</p>
+          )}
 
           <div className="flex items-center gap-3 my-5">
             <div className="flex-1 border-t border-border" />

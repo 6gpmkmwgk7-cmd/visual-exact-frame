@@ -14,8 +14,11 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PaymentSuccessRouteImport } from './routes/payment-success'
+import { Route as PaymentCancelRouteImport } from './routes/payment-cancel'
 import { Route as FreeAuditRouteImport } from './routes/free-audit'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as CaseStudiesRouteImport } from './routes/case-studies'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AiSolutionsRouteImport } from './routes/ai-solutions'
@@ -47,6 +50,16 @@ const PricingRoute = PricingRouteImport.update({
   path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PaymentSuccessRoute = PaymentSuccessRouteImport.update({
+  id: '/payment-success',
+  path: '/payment-success',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaymentCancelRoute = PaymentCancelRouteImport.update({
+  id: '/payment-cancel',
+  path: '/payment-cancel',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FreeAuditRoute = FreeAuditRouteImport.update({
   id: '/free-audit',
   path: '/free-audit',
@@ -55,6 +68,11 @@ const FreeAuditRoute = FreeAuditRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CaseStudiesRoute = CaseStudiesRouteImport.update({
@@ -89,8 +107,11 @@ export interface FileRoutesByFullPath {
   '/ai-solutions': typeof AiSolutionsRoute
   '/blog': typeof BlogRoute
   '/case-studies': typeof CaseStudiesRoute
+  '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/free-audit': typeof FreeAuditRoute
+  '/payment-cancel': typeof PaymentCancelRoute
+  '/payment-success': typeof PaymentSuccessRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
@@ -103,8 +124,11 @@ export interface FileRoutesByTo {
   '/ai-solutions': typeof AiSolutionsRoute
   '/blog': typeof BlogRoute
   '/case-studies': typeof CaseStudiesRoute
+  '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/free-audit': typeof FreeAuditRoute
+  '/payment-cancel': typeof PaymentCancelRoute
+  '/payment-success': typeof PaymentSuccessRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
@@ -118,8 +142,11 @@ export interface FileRoutesById {
   '/ai-solutions': typeof AiSolutionsRoute
   '/blog': typeof BlogRoute
   '/case-studies': typeof CaseStudiesRoute
+  '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/free-audit': typeof FreeAuditRoute
+  '/payment-cancel': typeof PaymentCancelRoute
+  '/payment-success': typeof PaymentSuccessRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
   '/services': typeof ServicesRoute
@@ -134,8 +161,11 @@ export interface FileRouteTypes {
     | '/ai-solutions'
     | '/blog'
     | '/case-studies'
+    | '/checkout'
     | '/contact'
     | '/free-audit'
+    | '/payment-cancel'
+    | '/payment-success'
     | '/pricing'
     | '/privacy'
     | '/services'
@@ -148,8 +178,11 @@ export interface FileRouteTypes {
     | '/ai-solutions'
     | '/blog'
     | '/case-studies'
+    | '/checkout'
     | '/contact'
     | '/free-audit'
+    | '/payment-cancel'
+    | '/payment-success'
     | '/pricing'
     | '/privacy'
     | '/services'
@@ -162,8 +195,11 @@ export interface FileRouteTypes {
     | '/ai-solutions'
     | '/blog'
     | '/case-studies'
+    | '/checkout'
     | '/contact'
     | '/free-audit'
+    | '/payment-cancel'
+    | '/payment-success'
     | '/pricing'
     | '/privacy'
     | '/services'
@@ -177,8 +213,11 @@ export interface RootRouteChildren {
   AiSolutionsRoute: typeof AiSolutionsRoute
   BlogRoute: typeof BlogRoute
   CaseStudiesRoute: typeof CaseStudiesRoute
+  CheckoutRoute: typeof CheckoutRoute
   ContactRoute: typeof ContactRoute
   FreeAuditRoute: typeof FreeAuditRoute
+  PaymentCancelRoute: typeof PaymentCancelRoute
+  PaymentSuccessRoute: typeof PaymentSuccessRoute
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
   ServicesRoute: typeof ServicesRoute
@@ -223,6 +262,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/payment-success': {
+      id: '/payment-success'
+      path: '/payment-success'
+      fullPath: '/payment-success'
+      preLoaderRoute: typeof PaymentSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payment-cancel': {
+      id: '/payment-cancel'
+      path: '/payment-cancel'
+      fullPath: '/payment-cancel'
+      preLoaderRoute: typeof PaymentCancelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/free-audit': {
       id: '/free-audit'
       path: '/free-audit'
@@ -235,6 +288,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/case-studies': {
@@ -281,8 +341,11 @@ const rootRouteChildren: RootRouteChildren = {
   AiSolutionsRoute: AiSolutionsRoute,
   BlogRoute: BlogRoute,
   CaseStudiesRoute: CaseStudiesRoute,
+  CheckoutRoute: CheckoutRoute,
   ContactRoute: ContactRoute,
   FreeAuditRoute: FreeAuditRoute,
+  PaymentCancelRoute: PaymentCancelRoute,
+  PaymentSuccessRoute: PaymentSuccessRoute,
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
   ServicesRoute: ServicesRoute,
@@ -292,3 +355,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

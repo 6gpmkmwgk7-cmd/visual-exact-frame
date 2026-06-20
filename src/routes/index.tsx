@@ -9,7 +9,7 @@ import { ParticleField } from "@/components/ParticleField";
 import { AIDashboardMockup } from "@/components/AIDashboardMockup";
 import { NetworkNodes } from "@/components/NetworkNodes";
 import { LogoMarquee } from "@/components/LogoMarquee";
-
+import { isFirstTimeVisitor, markVisitorAsReturning } from "@/lib/siteConfig";
 
 import heroBg from "@/assets/hero-bg.jpg";
 import {
@@ -152,28 +152,32 @@ const launchSystem = [
 const services = [
   {
     icon: Rocket,
-    badge: "From $149",
+    originalPrice: 149, discountedPrice: null as number | null,
+    billingType: "one-time" as const, firstTimeOnly: false,
     title: "Business Presence Launch",
     desc: "Get your business looking professional online in days.",
     items: ["Facebook Setup", "Instagram Setup", "LinkedIn Setup", "Professional Bio Writing", "CTA Optimization", "Keywords & Hashtags"],
   },
   {
     icon: Share2,
-    badge: "From $299/mo",
+    originalPrice: 299, discountedPrice: 224 as number | null,
+    billingType: "monthly" as const, firstTimeOnly: true,
     title: "AI Content Engine",
     desc: "AI-powered content systems that keep your brand consistent.",
     items: ["30-Day Content Calendar", "30 Captions", "Hashtag Strategy", "Content Planning", "Canva Design Briefs"],
   },
   {
     icon: Workflow,
-    badge: "From $299",
+    originalPrice: 299, discountedPrice: 224 as number | null,
+    billingType: "one-time" as const, firstTimeOnly: true,
     title: "AI Workflow Automation Setup",
     desc: "Practical AI workflows that capture leads, organize info, and reduce manual work.",
     items: ["Lead Capture Workflow", "Google Sheets CRM", "Telegram/Email Alerts", "Client Intake Forms", "Booking & Follow-up"],
   },
   {
     icon: Bot,
-    badge: "From $499/mo",
+    originalPrice: 499, discountedPrice: null as number | null,
+    billingType: "monthly" as const, firstTimeOnly: false,
     title: "AI Growth System",
     desc: "Complete AI system for lead generation and business automation.",
     items: ["Lead Capture Systems", "AI Automation", "Client Onboarding Automation", "Appointment Booking Workflows", "AI Assistant Setup"],
@@ -274,6 +278,8 @@ function HomePage() {
   const { t } = useTranslation();
   const heroRef = useRef<HTMLDivElement | null>(null);
   const [parallax, setParallax] = useState({ x: 0, y: 0 });
+  const [firstTimer, setFirstTimer] = useState(false);
+  useEffect(() => { setFirstTimer(isFirstTimeVisitor()); markVisitorAsReturning(); }, []);
 
 
 
@@ -287,7 +293,7 @@ function HomePage() {
 
   return (
     <>
-      <style>{'@keyframes orbit3d{from{transform:rotateX(68deg) rotateZ(0deg)}to{transform:rotateX(68deg) rotateZ(360deg)}}@keyframes spin3dX{from{transform:rotateX(0deg) rotateY(30deg)}to{transform:rotateX(360deg) rotateY(30deg)}}'}</style>{/* HERO */}
+      <style>{'@keyframes orbit3d{from{transform:rotateX(68deg) rotateZ(0deg)}to{transform:rotateX(68deg) rotateZ(360deg)}}@keyframes spin3dX{from{transform:rotateX(0deg) rotateY(30deg)}to{transform:rotateX(360deg) rotateY(30deg)}}@keyframes core-pulse{0%,100%{box-shadow:0 0 24px rgba(0,212,255,0.7),0 0 48px rgba(139,92,246,0.35);opacity:0.85}50%{box-shadow:0 0 40px rgba(0,212,255,1),0 0 80px rgba(139,92,246,0.65);opacity:1}}@keyframes dot-pulse{0%,100%{opacity:0.45}50%{opacity:1}}'}</style>{/* HERO */}
       <section
         ref={heroRef}
         onMouseMove={onHeroMove}
@@ -302,7 +308,28 @@ function HomePage() {
         />
         <div className="absolute inset-0 grid-pattern opacity-20" />
         <div className="absolute inset-0 bg-mesh animate-drift" />
-        <div className="absolute inset-0 bg-gradient-to-b from-navy/30 via-navy/60 to-navy" /><div className="pointer-events-none absolute inset-0" style={{perspective:'900px',perspectiveOrigin:'68% 45%'}}><div style={{position:'absolute',top:'50%',right:'5%',marginTop:'-155px',width:'310px',height:'310px',borderRadius:'50%',border:'1.5px solid rgba(0,212,255,0.14)',animation:'orbit3d 14s linear infinite'}} /><div style={{position:'absolute',top:'50%',right:'9%',marginTop:'-100px',width:'200px',height:'200px',borderRadius:'50%',border:'1px solid rgba(139,92,246,0.12)',animation:'orbit3d 9s linear infinite reverse',animationDelay:'-5s'}} /><div style={{position:'absolute',top:'50%',right:'13%',marginTop:'-58px',width:'116px',height:'116px',borderRadius:'50%',border:'1px solid rgba(0,212,255,0.09)',animation:'spin3dX 6s linear infinite',animationDelay:'-2s'}} /></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-navy/30 via-navy/60 to-navy" />
+        {/* Premium 3D AI Orbital Core */}
+        <div className="pointer-events-none absolute" style={{top:'50%',right:'4%',width:'310px',height:'310px',transform:'translateY(-50%)',perspective:'800px'}}>
+          {/* Outer ring + glowing nodes */}
+          <div style={{position:'absolute',inset:0,borderRadius:'50%',border:'1.5px solid rgba(0,212,255,0.28)',animation:'orbit3d 16s linear infinite',filter:'drop-shadow(0 0 5px rgba(0,212,255,0.18))'}}>
+            <div style={{position:'absolute',top:'50%',left:0,width:'10px',height:'10px',borderRadius:'50%',background:'#00D4FF',transform:'translateY(-50%) translateX(-50%)',boxShadow:'0 0 16px #00D4FF,0 0 32px rgba(0,212,255,0.55)',animation:'dot-pulse 2.5s ease-in-out infinite'}} />
+            <div style={{position:'absolute',top:'18%',right:'8%',width:'5px',height:'5px',borderRadius:'50%',background:'rgba(0,212,255,0.7)',boxShadow:'0 0 8px rgba(0,212,255,0.6)',animation:'dot-pulse 2.5s ease-in-out infinite 1.2s'}} />
+          </div>
+          {/* Mid ring (reversed, purple) */}
+          <div style={{position:'absolute',inset:'48px',borderRadius:'50%',border:'1px solid rgba(139,92,246,0.28)',animation:'orbit3d 10s linear infinite reverse',animationDelay:'-4s',filter:'drop-shadow(0 0 4px rgba(139,92,246,0.2))'}}>
+            <div style={{position:'absolute',top:0,left:'50%',width:'8px',height:'8px',borderRadius:'50%',background:'#8B5CF6',transform:'translateX(-50%) translateY(-50%)',boxShadow:'0 0 14px #8B5CF6,0 0 28px rgba(139,92,246,0.5)',animation:'dot-pulse 2s ease-in-out infinite 0.7s'}} />
+            <div style={{position:'absolute',bottom:'10%',right:'5%',width:'4px',height:'4px',borderRadius:'50%',background:'rgba(139,92,246,0.8)',boxShadow:'0 0 6px rgba(139,92,246,0.6)',animation:'dot-pulse 2s ease-in-out infinite 1.5s'}} />
+          </div>
+          {/* Inner ring (perpendicular, gold accent) */}
+          <div style={{position:'absolute',inset:'88px',borderRadius:'50%',border:'1px solid rgba(255,193,7,0.22)',animation:'spin3dX 7s linear infinite',animationDelay:'-2s'}}>
+            <div style={{position:'absolute',top:'50%',right:0,width:'5px',height:'5px',borderRadius:'50%',background:'rgba(255,193,7,0.9)',transform:'translateY(-50%) translateX(50%)',boxShadow:'0 0 10px rgba(255,193,7,0.7)',animation:'dot-pulse 1.8s ease-in-out infinite 0.3s'}} />
+          </div>
+          {/* Glowing core */}
+          <div style={{position:'absolute',top:'50%',left:'50%',width:'28px',height:'28px',borderRadius:'50%',transform:'translate(-50%,-50%)',background:'radial-gradient(circle,rgba(0,212,255,0.95) 0%,rgba(139,92,246,0.7) 45%,transparent 70%)',animation:'core-pulse 2s ease-in-out infinite'}} />
+          {/* Core halo */}
+          <div style={{position:'absolute',top:'50%',left:'50%',width:'64px',height:'64px',borderRadius:'50%',transform:'translate(-50%,-50%)',background:'radial-gradient(circle,rgba(0,212,255,0.1) 0%,transparent 65%)',animation:'core-pulse 2s ease-in-out infinite 1s'}} />
+        </div>
 
         {/* Floating glow orbs with parallax */}
         <div
@@ -587,8 +614,28 @@ function HomePage() {
                 </div>
                 <h3 className="mt-5 font-display text-2xl font-bold">{s.title}</h3>
                 <p className={`mt-2 text-sm ${s.featured ? "text-white/70" : "text-muted-foreground"}`}>{s.desc}</p>
-                <div className="mt-5 flex items-baseline gap-1">
-                  <span className={`font-display text-4xl font-bold ${s.featured ? "text-white" : "text-foreground"}`}>{s.badge}</span>
+                <div className="mt-5">
+                  {firstTimer && s.firstTimeOnly && s.discountedPrice ? (
+                    <>
+                      <div className="flex items-baseline gap-1">
+                        <span className={`font-display text-4xl font-bold ${s.featured ? "text-white" : "text-electric"}`}>${s.discountedPrice}</span>
+                        {s.billingType === "monthly" && <span className={`text-sm mb-1 ${s.featured ? "text-white/70" : "text-muted-foreground"}`}>/mo</span>}
+                      </div>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="line-through text-muted-foreground text-sm">${s.originalPrice}</span>
+                        <span className="text-xs font-semibold text-green-500">25% off</span>
+                      </div>
+                      <p className="text-xs text-muted-foreground mt-0.5">First-time customers only</p>
+                    </>
+                  ) : (
+                    <div className="flex items-baseline gap-1">
+                      <span className={`font-display text-4xl font-bold ${s.featured ? "text-white" : "text-foreground"}`}>${s.originalPrice}</span>
+                      {s.billingType === "monthly" && <span className={`text-sm mb-1 ${s.featured ? "text-white/70" : "text-muted-foreground"}`}>/mo</span>}
+                    </div>
+                  )}
+                  <p className={`text-xs mt-1 ${s.featured ? "text-white/60" : "text-muted-foreground"}`}>
+                    {s.billingType === "monthly" ? "Billed monthly" : "One-time payment"}
+                  </p>
                 </div>
                 <ul className="mt-6 space-y-2.5">
                   {s.items.map((i) => (

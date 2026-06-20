@@ -46,6 +46,9 @@ function ContactPage() {
       business: String(fd.get("business") || "").trim(),
       email: String(fd.get("email") || "").trim(),
       phone: String(fd.get("phone") || "").trim(),
+      industry: String(fd.get("industry") || "").trim(),
+      website: String(fd.get("website") || "").trim(),
+      budget: String(fd.get("budget") || "").trim(),
       services,
       message: String(fd.get("message") || "").trim(),
       timestamp: new Date().toISOString(),
@@ -153,6 +156,17 @@ function ContactPage() {
                     <Field label="Phone Number" name="phone" />
                     <Field label="Industry" name="industry" />
                     <Field label="Website" name="website" placeholder="https://" />
+                    <div className="sm:col-span-2">
+                      <label className="text-sm font-medium">Monthly Budget</label>
+                      <select name="budget" className="mt-2 w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none transition focus:border-cyan focus:ring-2 focus:ring-cyan/30">
+                        <option value="">Not sure yet</option>
+                        <option value="Under $300">Under $300</option>
+                        <option value="$300–$700">$300–$700</option>
+                        <option value="$700–$1,500">$700–$1,500</option>
+                        <option value="$1,500–$3,000">$1,500–$3,000</option>
+                        <option value="$3,000+">$3,000+</option>
+                      </select>
+                    </div>
                   </div>
 
                   <div className="mt-5">
@@ -172,7 +186,7 @@ function ContactPage() {
 
                   <div className="mt-5">
                     <label className="text-sm font-medium">Describe your goals</label>
-                    <textarea rows={4} className="mt-2 w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/30" placeholder="Where are you today, and where do you want to be?" />
+                    <textarea rows={4} name="message" className="mt-2 w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/30" placeholder="Where are you today, and where do you want to be?" />
                   </div>
 
                   {errorMsg && <p className="mt-3 text-center text-sm text-red-400">{errorMsg}</p>}
