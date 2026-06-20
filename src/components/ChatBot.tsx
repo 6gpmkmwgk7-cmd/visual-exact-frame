@@ -205,7 +205,7 @@ export function ChatBot() {
                 placeholder="Ask me anything..."
                 rows={1}
                 disabled={sending}
-                className="flex-1 resize-none rounded-xl border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent disabled:opacity-50 overflow-y-auto"
+                className="flex-1 resize-none rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent disabled:opacity-50 overflow-y-auto"
                 style={{ minHeight: "40px", maxHeight: "96px" }}
                 aria-label="Chat message input"
               />

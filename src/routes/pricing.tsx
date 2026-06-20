@@ -1,9 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowRight, BadgeCheck, CheckCircle2, Sparkles, Rocket, Bot, Zap, Star, Loader2 } from "lucide-react";
+import { ArrowRight, BadgeCheck, CheckCircle2, Sparkles, Rocket, Bot, Zap, Star } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { ParticleField } from "@/components/ParticleField";
-import { PAYPAL_ENABLED, CHECKOUT_WEBHOOK_URL, isFirstTimeVisitor, markVisitorAsReturning } from "@/lib/siteConfig";
+import { PAYPAL_ENABLED, isFirstTimeVisitor, markVisitorAsReturning } from "@/lib/siteConfig";
 
 export const Route = createFileRoute("/pricing")({
   component: PricingPage,
@@ -59,40 +59,9 @@ const CHECKOUT_KEYS: Record<string, string> = {
   growthSystem:     "ai-growth",
 };
 
-const N8N_KEYS: Record<string, string> = {
-  businessPresence: "business_presence",
-  contentEngine:    "content_engine",
-  aiAutomation:     "automation",
-  growthSystem:     "growth_system",
-};
-
 function PricingPage() {
   const [firstTimer, setFirstTimer] = useState(false);
-  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
-  const [errorPlan, setErrorPlan] = useState<string | null>(null);
-  const [checkoutError, setCheckoutError] = useState<string | null>(null);
   useEffect(() => { setFirstTimer(isFirstTimeVisitor()); markVisitorAsReturning(); }, []);
-
-  async function handleCheckout(planId: string) {
-    setLoadingPlan(planId);
-    setErrorPlan(null);
-    setCheckoutError(null);
-    try {
-      const res = await fetch(CHECKOUT_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ package: N8N_KEYS[planId] }),
-      });
-      if (!res.ok) throw new Error(`Checkout unavailable (${res.status})`);
-      const data = await res.json();
-      if (!data.checkoutUrl) throw new Error("No checkout URL returned");
-      window.location.href = data.checkoutUrl;
-    } catch (err) {
-      setErrorPlan(planId);
-      setCheckoutError(err instanceof Error ? err.message : "Checkout failed. Please try again.");
-      setLoadingPlan(null);
-    }
-  }
   return (
     <main className="min-h-screen bg-background text-foreground overflow-hidden">
       <section className="relative overflow-hidden bg-gradient-animated text-white">
@@ -164,19 +133,13 @@ function PricingPage() {
                     </ul>
                   </div>
                   <p className="text-xs text-muted-foreground mb-5"><span className="font-semibold">Best for:</span> {t.best}</p>
-                  <button
-                    onClick={() => handleCheckout(t.planId)}
-                    disabled={loadingPlan !== null}
-                    className={`flex items-center justify-center gap-2 w-full py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-200 mb-1 disabled:opacity-60 disabled:cursor-not-allowed ${t.featured ? "bg-electric text-white hover:bg-electric/90" : "bg-foreground text-background hover:bg-foreground/90"}`}
+                  <Link
+                    to="/checkout"
+                    search={{ package: CHECKOUT_KEYS[t.planId] } as any}
+                    className={`flex items-center justify-center gap-2 w-full py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-200 mb-3 ${t.featured ? "bg-electric text-white hover:bg-electric/90" : "bg-foreground text-background hover:bg-foreground/90"}`}
                   >
-                    {loadingPlan === t.planId
-                      ? <><Loader2 className="h-4 w-4 animate-spin" /> Processing…</>
-                      : <>{t.cta} <ArrowRight className="h-4 w-4" /></>
-                    }
-                  </button>
-                  {errorPlan === t.planId && checkoutError && (
-                    <p className="text-xs text-red-500 text-center mb-2">{checkoutError}</p>
-                  )}
+                    {t.cta} <ArrowRight className="h-4 w-4" />
+                  </Link>
                   {PAYPAL_ENABLED && (
                     <Link to="/checkout" search={{ package: CHECKOUT_KEYS[t.planId], price: String(t.originalPrice), name: t.name }}
                       className="flex items-center justify-center gap-2 w-full py-3 px-6 rounded-xl font-semibold text-sm border border-border bg-background hover:bg-muted transition-all duration-200">
