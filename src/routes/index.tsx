@@ -661,6 +661,12 @@ function HomePage() {
           <div className="mx-auto mt-10 max-w-3xl rounded-2xl border border-border bg-card/60 p-5 text-center text-sm text-muted-foreground backdrop-blur">
             {t("home.pricing.note")}
           </div>
+          <div className="mx-auto mt-4 max-w-3xl flex items-center justify-center gap-4 rounded-2xl border border-rose-400/30 bg-rose-400/5 px-5 py-4 text-sm text-center">
+            <span className="text-2xl shrink-0">❤️</span>
+            <p className="text-muted-foreground">
+              <span className="font-semibold text-foreground">5% of every order</span> is donated to children and families suffering from the destruction of war. Your purchase makes a real difference.
+            </p>
+          </div>
 
         </div>
       </section>

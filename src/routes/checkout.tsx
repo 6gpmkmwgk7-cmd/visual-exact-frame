@@ -1,7 +1,7 @@
 import { createFileRoute, useSearch, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
-import { isFirstTimeVisitor, markVisitorAsReturning, PAYPAL_CLIENT_ID, CHECKOUT_WEBHOOK_URL } from '@/lib/siteConfig';
+import { isFirstTimeVisitor, markVisitorAsReturning, PAYPAL_ENABLED, PAYPAL_LINKS, CHECKOUT_WEBHOOK_URL } from '@/lib/siteConfig';
 
 const CHECKOUT_N8N_KEYS: Record<string, string> = {
   'business-launch': 'business_presence',
@@ -59,49 +59,14 @@ export const Route = createFileRoute('/checkout')({
   component: CheckoutPage,
 });
 
-declare global { interface Window { paypal?: any; } }
-
 function CheckoutPage() {
   const search = useSearch({ from: '/checkout' });
   const pkg = ((search as any).package as string) || 'ai-growth';
   const plan = PACKAGES[pkg] || PACKAGES['ai-growth'];
   const [firstTimer, setFirstTimer] = useState(false);
-  const [paypalLoaded, setPaypalLoaded] = useState(false);
   useEffect(() => { setFirstTimer(isFirstTimeVisitor()); markVisitorAsReturning(); }, []);
-  const [paypalRendered, setPaypalRendered] = useState(false);
   const [stripeLoading, setStripeLoading] = useState(false);
   const [stripeError, setStripeError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (window.paypal) { setPaypalLoaded(true); return; }
-    if (!PAYPAL_CLIENT_ID) return;
-    const script = document.createElement('script');
-    script.src = `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=USD`;
-    script.onload = () => setPaypalLoaded(true);
-    document.body.appendChild(script);
-  }, []);
-
-  useEffect(() => {
-    if (!paypalLoaded || !window.paypal || paypalRendered) return;
-    const container = document.getElementById('paypal-button-container');
-    if (!container) return;
-    const basePrice = parseFloat(plan.price.replace('$', '').replace(',', ''));
-    const amount = (firstTimer && plan.firstTimeOnly)
-      ? String(Math.round(basePrice * 0.75))
-      : String(basePrice);
-    window.paypal.Buttons({
-      style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'paypal', height: 48 },
-      createOrder: (_data: any, actions: any) => actions.order.create({
-        purchase_units: [{ amount: { value: amount }, description: plan.name }],
-      }),
-      onApprove: (_data: any, actions: any) =>
-        actions.order.capture().then(() => {
-          window.location.href = `/payment-success?method=paypal&package=${pkg}`;
-        }),
-      onError: () => alert('PayPal payment failed. Please try again or use card.'),
-    }).render('#paypal-button-container');
-    setPaypalRendered(true);
-  }, [paypalLoaded, pkg, plan, paypalRendered]);
 
   const handleStripe = async () => {
     setStripeLoading(true);
@@ -203,30 +168,36 @@ function CheckoutPage() {
           </div>
 
           {/* PayPal */}
-          {!PAYPAL_CLIENT_ID ? (
-            <button
-              onClick={() => window.location.href = `mailto:socialselavates@gmail.com?subject=PayPal Order: ${plan.name}&body=I'd like to pay via PayPal for the ${plan.name} package (${plan.price}${plan.billing}).`}
-              className="w-full flex items-center justify-center gap-3 bg-[#FFC439] hover:bg-[#f0b429] text-[#003087] font-bold py-4 px-6 rounded-xl transition-all text-base shadow-md hover:shadow-lg"
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="6" fill="#003087"/>
-                <text x="4" y="16" fontSize="9" fontWeight="bold" fill="#FFC439">PayPal</text>
-              </svg>
-              Pay with PayPal
-            </button>
-          ) : (
-            <div id="paypal-button-container" className="min-h-[52px]">
-              {!paypalLoaded && (
-                <div className="w-full flex items-center justify-center bg-[#FFC439]/80 text-[#003087] font-bold py-4 rounded-xl opacity-60 text-base">
-                  Loading PayPal...
-                </div>
-              )}
-            </div>
+          {PAYPAL_ENABLED && (
+            (() => {
+              const links = PAYPAL_LINKS[pkg as keyof typeof PAYPAL_LINKS];
+              const url = links
+                ? ((firstTimer && plan.firstTimeOnly && links.firstTimer) ? links.firstTimer : links.regular)
+                : null;
+              if (!url) return null;
+              return (
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-3 bg-[#FFC439] hover:bg-[#f0b429] text-[#003087] font-bold py-4 px-6 rounded-xl transition-all text-base shadow-md hover:shadow-lg"
+                >
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <rect width="24" height="24" rx="6" fill="#003087"/>
+                    <text x="4" y="16" fontSize="9" fontWeight="bold" fill="#FFC439">PayPal</text>
+                  </svg>
+                  Pay with PayPal
+                </a>
+              );
+            })()
           )}
 
           <div className="mt-6 pt-5 border-t border-border text-center">
             <p className="text-xs text-muted-foreground">
               🔒 256-bit SSL encryption. Your payment is 100% secure.
+            </p>
+            <p className="text-xs text-muted-foreground mt-2">
+              ❤️ <span className="font-semibold text-foreground">5% of every order</span> is donated to children and families suffering from the destruction of war.
             </p>
             <p className="text-xs text-muted-foreground mt-1">
               Questions? Email <a href="mailto:socialselavates@gmail.com" className="underline hover:text-foreground transition-colors">socialselavates@gmail.com</a>

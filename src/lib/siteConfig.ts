@@ -27,9 +27,26 @@ export const STRIPE_LINKS = {
   growthSystem:     env.VITE_STRIPE_GROWTH_SYSTEM_URL     || "https://buy.stripe.com/9B6fZjdtC9kyc0PcFg3ZK03",
 } as const;
 
-// ── PayPal (routes to internal /checkout page) ────────────────────────────────
-export const PAYPAL_ENABLED   = env.VITE_ENABLE_PAYPAL    === "true";
-export const PAYPAL_CLIENT_ID = env.VITE_PAYPAL_CLIENT_ID || "";
+// ── PayPal NCP Payment Links ──────────────────────────────────────────────────
+export const PAYPAL_ENABLED = env.VITE_ENABLE_PAYPAL === "true";
+export const PAYPAL_LINKS = {
+  'business-launch': {
+    regular:    "https://www.paypal.com/ncp/payment/8YSATM2BUPHEN",
+    firstTimer: null,
+  },
+  'ai-content': {
+    regular:    "https://www.paypal.com/ncp/payment/GCCV8YC3T9UMU",
+    firstTimer: "https://www.paypal.com/ncp/payment/367XXQA4G8U2G",
+  },
+  'ai-workflow': {
+    regular:    "https://www.paypal.com/ncp/payment/2DMJTWP4L9KTG",
+    firstTimer: "https://www.paypal.com/ncp/payment/MHCVUB8F6VDZC",
+  },
+  'ai-growth': {
+    regular:    "https://www.paypal.com/ncp/payment/9R5PRE3643XK4",
+    firstTimer: null,
+  },
+} as const;
 export const N8N_WEBHOOK_URL  = env.VITE_N8N_FRONTEND_AGENT_URL || "https://elevatedsocial111.app.n8n.cloud/webhook/elevate-social-frontend-agent";
 
 // ── Dynamic Checkout (n8n → Stripe Checkout Sessions) ─────────────────────────
