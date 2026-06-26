@@ -154,15 +154,7 @@ function PricingPage() {
             );
           })}
         </div>
-        <Reveal delay={0.3}>
-          <div className="max-w-3xl mx-auto mt-8 flex items-center justify-center gap-4 rounded-2xl border border-rose-400/30 bg-rose-400/5 px-6 py-4 text-sm text-center">
-            <span className="text-2xl shrink-0">❤️</span>
-            <p className="text-muted-foreground">
-              <span className="font-semibold text-foreground">5% of every order</span> is donated to children and families suffering from the destruction of war. Your purchase makes a real difference.
-            </p>
-          </div>
-        </Reveal>
-        <Reveal delay={0.4}>
+<Reveal delay={0.4}>
           <div className="max-w-3xl mx-auto mt-12 text-center rounded-3xl border border-border bg-card p-6 sm:p-10">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-electric/10 border border-electric/20 text-electric text-xs font-semibold mb-4">
               <Sparkles className="h-3.5 w-3.5" /> Custom Solutions
