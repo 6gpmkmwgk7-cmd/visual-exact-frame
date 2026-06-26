@@ -32,14 +32,18 @@ function applySelectedLanguageToWidget() {
 
   const googleCode = GOOGLE_LANG_MAP[selected] || selected;
 
-  window.setTimeout(() => {
+  let attempts = 0;
+  const tryApply = () => {
     const combo = document.querySelector(".goog-te-combo") as HTMLSelectElement | null;
-
     if (combo) {
       combo.value = googleCode;
       combo.dispatchEvent(new Event("change"));
+    } else if (attempts < 10) {
+      attempts++;
+      window.setTimeout(tryApply, 500);
     }
-  }, 700);
+  };
+  window.setTimeout(tryApply, 500);
 }
 
 export function GoogleTranslateBridge() {
