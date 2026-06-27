@@ -18,7 +18,7 @@ export const RTL_LANGUAGES = ["ar", "ur"];
 const getSavedLanguage = () => {
   if (typeof window === "undefined") return "en";
 
-  const savedLanguage = window.localStorage.getItem("elevate_lang");
+  const savedLanguage = window.localStorage.getItem("site_translate_lang");
 
   const isSupported = SUPPORTED_LANGUAGES.some(
     (language) => language.code === savedLanguage
@@ -48,7 +48,7 @@ export function applyLanguage(lng: string) {
   }
 
   if (typeof window !== "undefined") {
-    window.localStorage.setItem("elevate_lang", lng);
+    window.localStorage.setItem("site_translate_lang", lng);
   }
 }
 
