@@ -196,9 +196,6 @@ function CheckoutPage() {
             <p className="text-xs text-muted-foreground">
               🔒 256-bit SSL encryption. Your payment is 100% secure.
             </p>
-            <p className="text-xs text-muted-foreground mt-2">
-              ❤️ <span className="font-semibold text-foreground">5% of every order</span> is donated to children and families suffering from the destruction of war.
-            </p>
             <p className="text-xs text-muted-foreground mt-1">
               Questions? Email <a href="mailto:socialselavates@gmail.com" className="underline hover:text-foreground transition-colors">socialselavates@gmail.com</a>
             </p>
